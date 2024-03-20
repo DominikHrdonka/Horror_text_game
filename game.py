@@ -10,17 +10,44 @@ class Game:
         print("That is lost in a black hole of oblivion.")
         print("You get up slowly from the floor. The wood creaks beneath your feet.")
         print("You need to find your way out of here.")
-        self.main_loop()
+        user_input = input(f"What do you want to do? (explore, quit) > ")
+        self.main_loop(user_input)
     
     def explore(self):
         print("You decided to explore!")
-        print(f"{self.current_location.description}") 
+        print("-----------------------")
+        print(f"{self.current_location.description}")
+    
+    #### opening the door
+    def open_the_door(self):
+        print("You decided to open the door!")
+        print("----------------------------")
+        print("You press the knob but nothing happens.\nThe door is locked! ")
         
-    def main_loop(self):
+    ### opening the wardrobe
+    def open_the_wardrobe(self):
+        print("You decided to open the wardrobe!")
+        print("---------------------------------")
+        print("The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... a key!")
+        
+
+        
+    def main_loop(self, user_input):
         while not self.game_over:
-            user_input = input("What do you want to do? (explore, quit) > ")
             if user_input == "explore":
+                user_input = None
                 self.explore()
-            if user_input == "quit":
+
+            elif user_input == "open the door":
+                user_input = None
+                self.open_the_door()
+                
+            elif user_input == "open the wardrobe":
+                user_input = None
+                self.open_the_wardrobe()
+                ### change locatio to get new choices
+
+            elif user_input == "quit":
                 self.game_over = True
+            user_input = input(f"What do you want to do? ({self.current_location.choices}) > ")
 

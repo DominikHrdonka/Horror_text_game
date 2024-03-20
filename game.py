@@ -16,8 +16,6 @@ class Game:
             if key in self.locations:
                 self.current_location = self.locations[key]
                 break
-            else:
-                print("You can't go there")
                 ### make a loop to repeat when wrong output
     
     ### Method to add items to inventory
@@ -51,7 +49,7 @@ class Game:
         print("-----------------------------------")
         print("You unlocked the door with the key!")
         print("-----------------------------------")
-        self.inventory.remove("key")
+        self.change_location("unlocked door")
 
     ### opening the wardrobe
     def open_the_wardrobe(self):
@@ -75,7 +73,7 @@ class Game:
         print("You decided to close the wardrobe.")
         print("------------------------")
         self.change_location("dark room")
-        print(f"{self.current_location.description}")
+        print(f"{self.current_location.description_next}")
 
     ### taking the key
     def take_key(self):
@@ -83,6 +81,29 @@ class Game:
         print("You took the key!")
         print("-----------------")
         self.add_item("key")
+        self.change_location("wardrobe without key")
+    
+    ### going to the kitchen
+    def go_kitchen(self):
+        print("---------------------")
+        print("You entered the room!")
+        print("---------------------")
+        self.change_location("kitchen")
+        print(f"{self.current_location.description}")
+    
+    def take_scalpel(self):
+        print("---------------------")
+        print("You took the scalpel!")
+        print("---------------------")
+        self.add_item("scalpel")
+        self.change_location("kitchen without scalpel")
+
+    def examine_sink(self):
+        print("--------------------------------")
+        print("You decided to examine the sink!")
+        print("--------------------------------")
+        self.change_location("sink")
+        print(f"{self.current_location.description}")
 
 
     def main_loop(self, user_input):
@@ -92,11 +113,14 @@ class Game:
 
             elif user_input == "open the door":
                 if "key" in self.inventory:
-                    user_input == None
                     self.open_door_with_key()
                 else:
-                    user_input = None
                     self.open_the_locked_door()
+                user_input == None
+
+            elif user_input == "go to the next room":
+                user_input == None
+                self.go_kitchen()
                 
             elif user_input == "open the wardrobe":
                 user_input = None
@@ -109,13 +133,18 @@ class Game:
             elif user_input == "take the key":
                 user_input == None
                 self.take_key()
-                ### Somehow I need to delete the option
-                ### to take the key again from the
-                ### wardrobe options
 
             elif user_input == "close the wardrobe":
                 user_input == None
                 self.close_wardrobe()
+            
+            elif user_input == "examine the sink":
+                user_input == None
+                self.examine_sink()
+
+            elif user_input == "take the scalpel":
+                user_input == None
+                self.take_scalpel()
 
 
             elif user_input == "quit":

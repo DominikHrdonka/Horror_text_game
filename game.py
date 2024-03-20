@@ -11,11 +11,13 @@ class Game:
 
     ### method to change current location
     def change_location(self, key):
-        if key in self.locations:
-            self.current_location = self.locations[key]
-        else:
-            print("Location doesn't exist")
-            ### make a loop to repeat when wrong output
+        while True:
+            if key in self.locations:
+                self.current_location = self.locations[key]
+                break
+            else:
+                print("You can't go there")
+                ### make a loop to repeat when wrong output
             
     def start_game(self):
         print("You open your eyes slowly. Your head is throbbing.")
@@ -36,7 +38,8 @@ class Game:
         print("You decided to open the door!")
         print("----------------------------")
         print("You press the knob but nothing happens.\nThe door is locked! ")
-        
+        self.change_location("door")
+
     ### opening the wardrobe
     def open_the_wardrobe(self):
         print("You decided to open the wardrobe!")
@@ -44,17 +47,26 @@ class Game:
         self.change_location("wardrobe")
         print(f"{self.current_location.description}")
     
+    ### going to the window
     def going_to_window(self):
         print("You decided to go to the window!")
         print("--------------------------------")
         self.change_location("window")
         print(f"{self.current_location.description}")
+
+    ### closing the wardrobe
+    def close_wardrobe(self):
+        print("You decided to close the wardrobe.")
+        print("------------------------")
+        self.change_location("dark room")
+        print(f"{self.current_location.description}")
+
+
         
 
     def main_loop(self, user_input):
         while not self.game_over:
             if user_input == "explore":
-                user_input = None
                 self.explore()
 
             elif user_input == "open the door":
@@ -69,8 +81,15 @@ class Game:
                 user_input == None
                 self.going_to_window()
 
+            elif user_input == "close the wardrobe":
+                user_input == None
+                self.close_wardrobe()
+
 
             elif user_input == "quit":
                 self.game_over = True
             user_input = input(f"What do you want to do? ({self.current_location.choices}) > ")
+            
+
+        
 

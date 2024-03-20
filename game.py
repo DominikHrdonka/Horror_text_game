@@ -4,6 +4,7 @@ class Game:
         self.game_over = False
         self.current_location = None
         self.locations = {}
+
     ### method to add Location instances to the dictionary
     def add_location(self, key, location):
         self.locations[key] = location
@@ -42,6 +43,12 @@ class Game:
         print("---------------------------------")
         self.change_location("wardrobe")
         print(f"{self.current_location.description}")
+    
+    def going_to_window(self):
+        print("You decided to go to the window!")
+        print("--------------------------------")
+        self.change_location("window")
+        print(f"{self.current_location.description}")
         
 
     def main_loop(self, user_input):
@@ -57,8 +64,11 @@ class Game:
             elif user_input == "open the wardrobe":
                 user_input = None
                 self.open_the_wardrobe()
+            
+            elif user_input == "go to the window":
+                user_input == None
+                self.going_to_window()
 
-                ### change location to get new choices
 
             elif user_input == "quit":
                 self.game_over = True

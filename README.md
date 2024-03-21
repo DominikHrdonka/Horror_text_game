@@ -4,7 +4,7 @@
 # - make changes to explore function - probably make changes
 # so that you start in the dark room with the appropiate 
 # options. 
-# - 
+# - FINISH THE DIALOGUE!!!! going on with question_three etc.
 # - check whether the sink_without_scalpel changes properly after taking the scalpel
 # 
 # - IMPORTANT - I need to be able to change available choices. For example, when you open the door with the key, you need new choice to become available: go to another room

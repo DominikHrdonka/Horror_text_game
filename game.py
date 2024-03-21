@@ -152,6 +152,11 @@ class Game:
             question_one()
         if dialogue_input == "2":
             question_two()
+        dialogue_input = input(">>Choose number: 1. Who is SHE?/2. There's just us. I guess..<<")
+        if dialogue_input == "1":
+            pass
+        if dialogue_input == "2":
+            pass
 
     ### Child function of the dialogue - question branches
         def start_dialogue():
@@ -188,7 +193,11 @@ class Game:
             print(">>In hell...<<")
             time.sleep(2)
             print(">>Is she... Is she still gone?<<")
-            dialogue_input = input(">>Choose number: 1. Who is SHE?/2. There's just us. I guess..<<")
+
+        
+        def question_three():
+            pass
+
 
         
 

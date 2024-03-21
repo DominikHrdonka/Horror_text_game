@@ -89,6 +89,7 @@ def main():
     game.add_location("kitchen", kitchen)
     game.add_location("sink", sink)
     game.add_location("kitchen without scalpel", kitchen_without_scalpel)
+    game.add_location("keyhole", keyhole)
 
     # Defining current location
     game.current_location = dark_room

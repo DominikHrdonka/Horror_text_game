@@ -1,3 +1,4 @@
+import time
 from location import Location
 class Game:
     def __init__(self):
@@ -71,6 +72,7 @@ class Game:
         print("--------------------------")
         print("The doll's empty eyes make you shudder.\nYou carefully take it it in your hands. A memory pops out.\nA dark memory screaming at you from within.\nA flash of a vision – you're in your room. She came for a visit.\nShe stinks from alcohol and for some reason you are scared.\nShe grins at you, her teeth rotten and disgusting...\nYou put the doll back in the wardrobe.")
         print("--------------------------")
+
     ### going to the window
     def going_to_window(self):
         print("--------------------------------")
@@ -107,6 +109,7 @@ class Game:
         print(f"{self.current_location.description}")
         print("--------------------------")
     
+    ### Taking the scalpel
     def take_scalpel(self):
         print("---------------------")
         print("You took the scalpel!")
@@ -116,6 +119,7 @@ class Game:
         print(f"{self.current_location.description}")
         print("--------------------------")
 
+    ##Examining the sink
     def examine_sink(self):
         print("--------------------------------")
         print("You decided to examine the sink!")
@@ -124,18 +128,29 @@ class Game:
         print(f"{self.current_location.description}")
         print("--------------------------")
 
+    ### Examining the green door
     def examine_green_door(self):
         print("----------------------------")
         print("You approach the green door.")
         print("----------------------------")
-        self.change_location("sink")
+        self.change_location("keyhole")
         print(f"{self.current_location.description}")
         print("--------------------------")
 
     def talk_to_creature(self):
-        
+        print("-----------------------")
+        print("You take a deep breath.")
+        print("-----------------------")
+        print(">> Hello? Can you hear me?<<")
+        time.sleep(2)
+        print("The rumbling continues...")
+        time.sleep(2)
+        print(">>Hey! Over here!<<")
+        time.sleep(2)
+        print(">>What do you want?<<")
 
-    ### MAIN LOOP OF THE GAME
+
+########### MAIN LOOP OF THE GAME ################
     def main_loop(self, user_input):
         while not self.game_over:
             if user_input == "explore":
@@ -183,6 +198,10 @@ class Game:
             elif user_input == "examine the green door":
                 user_input == None
                 self.examine_green_door()
+
+            elif user_input == "talk to the creature":
+                user_input == None
+                self.talk_to_creature()
 
             elif user_input == "quit":
                 self.game_over = True

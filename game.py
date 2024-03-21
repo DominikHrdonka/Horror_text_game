@@ -124,6 +124,17 @@ class Game:
         print(f"{self.current_location.description}")
         print("--------------------------")
 
+    def examine_green_door(self):
+        print("----------------------------")
+        print("You approach the green door.")
+        print("----------------------------")
+        self.change_location("sink")
+        print(f"{self.current_location.description}")
+        print("--------------------------")
+
+    def talk_to_creature(self):
+        
+
     ### MAIN LOOP OF THE GAME
     def main_loop(self, user_input):
         while not self.game_over:
@@ -168,7 +179,10 @@ class Game:
             elif user_input == "take the scalpel":
                 user_input == None
                 self.take_scalpel()
-
+            
+            elif user_input == "examine the green door":
+                user_input == None
+                self.examine_green_door()
 
             elif user_input == "quit":
                 self.game_over = True

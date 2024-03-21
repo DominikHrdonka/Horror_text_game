@@ -48,9 +48,9 @@ def main():
 
     kitchen = Location(
         "kitchen",
-        "You are in a kitchen. The smell is even worse here.\nAnd you can see why. There is something in the sink.\nAll covered in blood that's also dripping on the floor.",
+        "You are in a kitchen. The smell is even worse here.\nAnd you can see why. There is something in the sink.\nAll covered in blood that's also dripping on the floor.\nThe tiles of the kitchen are old and worn just as a green door on the left.\nYou can hear some rumbling behind it.",
         "Kitchen - with a massacred raccoon in the sink.",
-        "examine the sink, go back to the room, open the next door"
+        "examine the sink, go back to the room, examine the green door"
     )
     
     sink = Location(
@@ -67,6 +67,12 @@ def main():
         "The scalpel will come in handy.\nNow, what about the green door? It seems to be opened",
         "open the green door, go back to the room"
 
+    )
+    keyhole = Location(
+        "keyhole",
+        "The rumbling is definitely coming from the other side!\nYou can feel your heart pounding loudly in your chest. Too loudly.\nYou crouch down and slowly move your eye to the keyhole.\nThe keyhole is small but you can see the creature on the other side.\nIts chest is heaving up and down. Whatever it is, it is in pain.",
+        "The keyhole – window to another world.",
+        "talk to the creature, move away"
     )
 
     # Creating instances of Items

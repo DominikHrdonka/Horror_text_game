@@ -4,11 +4,15 @@
 # - make changes to explore function - probably make changes
 # so that you start in the dark room with the appropiate 
 # options. 
-# - add method to picking up the doll and the key
-# - add new class Inventory? and add key to it - probably the same way we did with location in Game class? using dictionary
-# - allow opening the door only with the key!!!!
+# - 
+# - check whether the sink_without_scalpel changes properly after taking the scalpel
 # 
-# This text-game is supposed to demonstrate my skills in OOP.
+# - IMPORTANT - I need to be able to change available choices. For example, when you open the door with the key, you need new choice to become available: go to another room
+# 
+# 
+# 
+# 
+This text-game is supposed to demonstrate my skills in OOP.
 # 
 # I am starting small:
 #

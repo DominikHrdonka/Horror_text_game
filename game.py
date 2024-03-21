@@ -136,18 +136,63 @@ class Game:
         self.change_location("keyhole")
         print(f"{self.current_location.description}")
         print("--------------------------")
+    
+    def move_away(self):
+        print("-----------------------------")
+        print("You turn back to the kitchen.")
+        print("-----------------------------")
+        self.change_location("kitchen")
+        print(f"{self.current_location.description_next}")
 
+    ###Talking to the creature: dialogue
     def talk_to_creature(self):
-        print("-----------------------")
-        print("You take a deep breath.")
-        print("-----------------------")
-        print(">> Hello? Can you hear me?<<")
-        time.sleep(2)
-        print("The rumbling continues...")
-        time.sleep(2)
-        print(">>Hey! Over here!<<")
-        time.sleep(2)
-        print(">>What do you want?<<")
+        start_dialogue()
+        dialogue_input = input("Choose number: 1. Who are you?/2. Where are we? ")
+        if dialogue_input == "1":
+            question_one()
+        if dialogue_input == "2":
+            question_two()
+
+    ### Child function of the dialogue - question branches
+        def start_dialogue():
+            print("-----------------------")
+            print("You take a deep breath.")
+            print("-----------------------")
+            print(">> Hello? Can you hear me?<<")
+            time.sleep(2)
+            print("The rumbling continues...")
+            time.sleep(2)
+            print(">>Hey! Over here!<<")
+            time.sleep(2)
+            print(">>What do you want?<<")
+
+
+            ### Question 1 method: Who are you ###
+        def question_one():
+            time.sleep(2)
+            print(">>Urgh... WHO I am? More like WHAT I am.<<")
+            time.sleep(2)
+            print(">>So much pain...<<")
+            time.sleep(2)
+            print(">>So much horror...<<")
+            time.sleep(2)
+            print(">>HELP ME!!!<<")
+            input("Press Enter to continue")
+            dialogue_input = input("2. Where are we?")
+            if dialogue_input == "2":
+                question_two()
+
+            ### Question 2 method: Where are we ###
+        def question_two():
+            time.sleep(2)
+            print(">>In hell...<<")
+            time.sleep(2)
+            print(">>Is she... Is she still gone?<<")
+            dialogue_input = input(">>Choose number: 1. Who is SHE?/2. There's just us. I guess..<<")
+
+        
+
+
 
 
 ########### MAIN LOOP OF THE GAME ################
@@ -198,6 +243,9 @@ class Game:
             elif user_input == "examine the green door":
                 user_input == None
                 self.examine_green_door()
+            elif user_input == "move away":
+                user_input == None
+                self.move_away()
 
             elif user_input == "talk to the creature":
                 user_input == None

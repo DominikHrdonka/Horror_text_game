@@ -152,11 +152,19 @@ class Game:
             question_one()
         if dialogue_input == "2":
             question_two()
-        dialogue_input = input(">>Choose number: 1. Who is SHE?/2. There's just us. I guess..<<")
+        dialogue_input = input(">>Choose number: 1. Who is SHE?/2. There's just us. I guess...<<")
+        if dialogue_input == "1":
+            question_three()
+        if dialogue_input == "2":
+            question_four()
+        dialogue_input = input(">>Choose number: 1. How can we get out of here?/2.")
         if dialogue_input == "1":
             pass
         if dialogue_input == "2":
             pass
+
+        def dialogue_pause():
+            time.sleep(2)
 
     ### Child function of the dialogue - question branches
         def start_dialogue():
@@ -164,23 +172,23 @@ class Game:
             print("You take a deep breath.")
             print("-----------------------")
             print(">> Hello? Can you hear me?<<")
-            time.sleep(2)
+            dialogue_pause()
             print("The rumbling continues...")
-            time.sleep(2)
+            dialogue_pause()
             print(">>Hey! Over here!<<")
-            time.sleep(2)
+            dialogue_pause()
             print(">>What do you want?<<")
 
 
             ### Question 1 method: Who are you ###
         def question_one():
-            time.sleep(2)
+            dialogue_pause()
             print(">>Urgh... WHO I am? More like WHAT I am.<<")
-            time.sleep(2)
+            dialogue_pause()
             print(">>So much pain...<<")
-            time.sleep(2)
+            dialogue_pause()
             print(">>So much horror...<<")
-            time.sleep(2)
+            dialogue_pause()
             print(">>HELP ME!!!<<")
             input("Press Enter to continue")
             dialogue_input = input("2. Where are we?")
@@ -189,14 +197,42 @@ class Game:
 
             ### Question 2 method: Where are we ###
         def question_two():
-            time.sleep(2)
+            dialogue_pause()
             print(">>In hell...<<")
-            time.sleep(2)
+            dialogue_pause()
             print(">>Is she... Is she still gone?<<")
 
         
         def question_three():
-            pass
+            dialogue_pause()
+            print(">>Our Mother? What kind of question is that?\nShe is the one who feeds us.")
+            dialogue_pause()
+            print(">>Who carresses us.<<")
+            dialogue_pause()
+            print("Who punishes us...<<")
+            dialogue_pause()
+            print("*sobbing*")
+            dialogue_pause()
+            print(">>I don't want her to come back...<<")
+            dialogue_input = input("2. There's just us. I guess...")
+            if dialogue_input == "2":
+                question_four()
+            
+            def question_four():
+                dialogue_pause()
+                print(">>Good... that is very good. We must rest.")
+                dialogue_pause()
+                print(">>Before she comes back<<")
+
+            def question_five():
+                dialogue_pause()
+                print(">>We can't. We're bound to this place.<<")
+                dialogue_pause()
+                print(">>Forever.")
+                dialogue_pause()
+                print(">>And now... let me rest. I must be strong when she comes back.<<")
+
+
 
 
         

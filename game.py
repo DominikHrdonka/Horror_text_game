@@ -23,11 +23,13 @@ class Game:
         self.inventory.append(item)
             
     def start_game(self):
+        print("==================================================")
         print("You open your eyes slowly. Your head is throbbing.")
         print("The room is dimly lit, not anything like your memory.")
         print("That is lost in a black hole of oblivion.")
         print("You get up slowly from the floor. The wood creaks beneath your feet.")
         print("You need to find your way out of here.")
+        print("--------------------------")
         user_input = input(f"What do you want to do? (explore, quit) > ")
         self.main_loop(user_input)
     
@@ -36,6 +38,7 @@ class Game:
         print("You decided to explore!")
         print("-----------------------")
         print(f"{self.current_location.description}")
+        print("--------------------------")
     
     #### trying to open the lockeddoor
     def open_the_locked_door(self):
@@ -44,12 +47,14 @@ class Game:
         print("----------------------------")
         print("You press the knob but nothing happens.\nThe door is locked! ")
         self.change_location("door")
+        print("--------------------------")
     
     def open_door_with_key(self):
         print("-----------------------------------")
         print("You unlocked the door with the key!")
         print("-----------------------------------")
         self.change_location("unlocked door")
+        print("--------------------------")
 
     ### opening the wardrobe
     def open_the_wardrobe(self):
@@ -58,7 +63,14 @@ class Game:
         print("---------------------------------")
         self.change_location("wardrobe")
         print(f"{self.current_location.description}")
+        print("--------------------------")
     
+    def examine_doll(self):
+        print("--------------------------")
+        print("You're examining the doll.")
+        print("--------------------------")
+        print("The doll's empty eyes make you shudder.\nYou carefully take it it in your hands. A memory pops out.\nA dark memory screaming at you from within.\nA flash of a vision – you're in your room. She came for a visit.\nShe stinks from alcohol and for some reason you are scared.\nShe grins at you, her teeth rotten and disgusting...\nYou put the doll back in the wardrobe.")
+        print("--------------------------")
     ### going to the window
     def going_to_window(self):
         print("--------------------------------")
@@ -66,6 +78,7 @@ class Game:
         print("--------------------------------")
         self.change_location("window")
         print(f"{self.current_location.description}")
+        print("--------------------------")
 
     ### closing the wardrobe
     def close_wardrobe(self):
@@ -74,6 +87,7 @@ class Game:
         print("------------------------")
         self.change_location("dark room")
         print(f"{self.current_location.description_next}")
+        print("--------------------------")
 
     ### taking the key
     def take_key(self):
@@ -82,6 +96,7 @@ class Game:
         print("-----------------")
         self.add_item("key")
         self.change_location("wardrobe without key")
+        print("--------------------------")
     
     ### going to the kitchen
     def go_kitchen(self):
@@ -90,6 +105,7 @@ class Game:
         print("---------------------")
         self.change_location("kitchen")
         print(f"{self.current_location.description}")
+        print("--------------------------")
     
     def take_scalpel(self):
         print("---------------------")
@@ -97,6 +113,8 @@ class Game:
         print("---------------------")
         self.add_item("scalpel")
         self.change_location("kitchen without scalpel")
+        print(f"{self.current_location.description}")
+        print("--------------------------")
 
     def examine_sink(self):
         print("--------------------------------")
@@ -104,8 +122,9 @@ class Game:
         print("--------------------------------")
         self.change_location("sink")
         print(f"{self.current_location.description}")
+        print("--------------------------")
 
-
+    ### MAIN LOOP OF THE GAME
     def main_loop(self, user_input):
         while not self.game_over:
             if user_input == "explore":
@@ -137,6 +156,10 @@ class Game:
             elif user_input == "close the wardrobe":
                 user_input == None
                 self.close_wardrobe()
+            
+            elif user_input == "examine the doll":
+                user_input == None
+                self.examine_doll()
             
             elif user_input == "examine the sink":
                 user_input == None

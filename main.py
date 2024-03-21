@@ -18,13 +18,13 @@ def main():
         "wardrobe",
         "The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... a key!",
         "The wardrobe - a sad reminder of life long gone.",
-        "take the key, take the doll, close the wardrobe"
+        "take the key, examine the doll, close the wardrobe"
         )
     wardrobe_without_key = Location(
         "wardrobe without key",
         "The wardrobe - a sad reminder of life long gone.",
         "The wardrobe - a sad reminder of life long gone.",
-        "take the doll, close the wardrobe"
+        "examine the doll, close the wardrobe"
     )
     door = Location(
         "door",

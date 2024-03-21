@@ -137,6 +137,13 @@ class Game:
         print(f"{self.current_location.description}")
         print("--------------------------")
     
+    def go_back_room(self):
+        print("-----------------------------")
+        print("You go back to the dark room.")
+        print("-----------------------------")
+        self.change_location("dark room")
+        print(f"{self.current_location.description_next}")
+
     def move_away(self):
         print("-----------------------------")
         print("You turn back to the kitchen.")
@@ -146,23 +153,7 @@ class Game:
 
     ###Talking to the creature: dialogue
     def talk_to_creature(self):
-        start_dialogue()
-        dialogue_input = input("Choose number: 1. Who are you?/2. Where are we? ")
-        if dialogue_input == "1":
-            question_one()
-        if dialogue_input == "2":
-            question_two()
-        dialogue_input = input(">>Choose number: 1. Who is SHE?/2. There's just us. I guess...<<")
-        if dialogue_input == "1":
-            question_three()
-        if dialogue_input == "2":
-            question_four()
-        dialogue_input = input(">>Choose number: 1. How can we get out of here?/2.")
-        if dialogue_input == "1":
-            pass
-        if dialogue_input == "2":
-            pass
-
+        
         def dialogue_pause():
             time.sleep(2)
 
@@ -178,7 +169,6 @@ class Game:
             print(">>Hey! Over here!<<")
             dialogue_pause()
             print(">>What do you want?<<")
-
 
             ### Question 1 method: Who are you ###
         def question_one():
@@ -202,7 +192,7 @@ class Game:
             dialogue_pause()
             print(">>Is she... Is she still gone?<<")
 
-        
+    ### Question three method: Who is she?
         def question_three():
             dialogue_pause()
             print(">>Our Mother? What kind of question is that?\nShe is the one who feeds us.")
@@ -214,24 +204,39 @@ class Game:
             print("*sobbing*")
             dialogue_pause()
             print(">>I don't want her to come back...<<")
-            dialogue_input = input("2. There's just us. I guess...")
+            dialogue_input = input("2. There's just us. I guess... ")
             if dialogue_input == "2":
                 question_four()
             
-            def question_four():
-                dialogue_pause()
-                print(">>Good... that is very good. We must rest.")
-                dialogue_pause()
-                print(">>Before she comes back<<")
+        def question_four():
+            dialogue_pause()
+            print(">>Good... that is very good. We must rest.<<")
+            dialogue_pause()
+            print(">>Before she comes back.<")
 
-            def question_five():
-                dialogue_pause()
-                print(">>We can't. We're bound to this place.<<")
-                dialogue_pause()
-                print(">>Forever.")
-                dialogue_pause()
-                print(">>And now... let me rest. I must be strong when she comes back.<<")
-
+        def question_five():
+            dialogue_pause()
+            print(">>We can't. We're bound to this place.<<")
+            dialogue_pause()
+            print(">>Forever.<<")
+            dialogue_pause()
+            print(">>And now... let me rest. I must be strong when she comes back.<<")
+        
+    #### The dialogue itself ###
+        start_dialogue()
+        dialogue_input = input("Choose number: 1. Who are you?/2. Where are we? ")
+        if dialogue_input == "1":
+            question_one()
+        if dialogue_input == "2":
+            question_two()
+        dialogue_input = input("Choose number: 1. Who is SHE?/2. There's just us. I guess...<< ")
+        if dialogue_input == "1":
+            question_three()
+        if dialogue_input == "2":
+            question_four()
+        dialogue_input = input(">>Choose number: 1. How can we get out of here? ")
+        if dialogue_input == "1":
+            question_five()
 
 
 
@@ -272,6 +277,10 @@ class Game:
             elif user_input == "close the wardrobe":
                 user_input == None
                 self.close_wardrobe()
+            
+            elif user_input == "turn away":
+                user_input == None
+                self.go_back_room()
             
             elif user_input == "examine the doll":
                 user_input == None

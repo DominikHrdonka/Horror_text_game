@@ -1,5 +1,8 @@
 import time
 from location import Location
+import os
+
+
 class Game:
     def __init__(self):
         self.game_over = False
@@ -22,8 +25,14 @@ class Game:
     ### Method to add items to inventory
     def add_item(self, item):
         self.inventory.append(item)
+
+    ### Method to clear Terminal after every user input###
+    
             
     def start_game(self):
+
+        print("==================================================")
+        print("--------------WELCOME TO THE GAME-----------------")
         print("==================================================")
         print("You open your eyes slowly. Your head is throbbing.")
         print("The room is dimly lit, not anything like your memory.")
@@ -31,7 +40,7 @@ class Game:
         print("You get up slowly from the floor. The wood creaks beneath your feet.")
         print("You need to find your way out of here.")
         print("--------------------------")
-        user_input = input(f"What do you want to do? (explore, quit) > ")
+        user_input = input("What do you want to do? (explore, quit) > ").lower()
         self.main_loop(user_input)
     
     def explore(self):
@@ -239,14 +248,12 @@ class Game:
             question_five()
 
 
-
-        
-
-
-
-
 ########### MAIN LOOP OF THE GAME ################
     def main_loop(self, user_input):
+        ###Method to clear the terminal after every user input
+        def clear():
+            os.system('cls' if os.name == 'nt' else 'clear')
+
         while not self.game_over:
             if user_input == "explore":
                 self.explore()
@@ -297,6 +304,7 @@ class Game:
             elif user_input == "examine the green door":
                 user_input == None
                 self.examine_green_door()
+                
             elif user_input == "move away":
                 user_input == None
                 self.move_away()
@@ -307,7 +315,8 @@ class Game:
 
             elif user_input == "quit":
                 self.game_over = True
-            user_input = input(f"What do you want to do? ({self.current_location.choices}) > ")
+            user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
+            clear()
             
 
         

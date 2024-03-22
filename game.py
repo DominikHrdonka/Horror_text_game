@@ -224,6 +224,35 @@ class Game:
                 "1": (">>Who is SHE?<<", "answer_three"),
                 "2": (">>There's just us. I guess...<<", "answer_four")
             }
+        },
+        "answer_three": {
+            "lines": [
+                ">>Our Mother? What kind of question is that?<<",
+                ">>She is the one who feeds us.<<",
+                ">>Who carresses us.<<",
+                ">>Who punishes us.<<",
+                "*Quiet sobing*",
+                ">>I don't want her to come back...<<"
+            ],
+            "options": {
+                "1": {">>There's just us. I guess...<<", "answer_four"             }
+            }
+        },
+        "answer_four": {
+            "lines": [
+                ">>Good... that is very good. We must rest.<<",
+                ">>Before she comes back.<"
+            ],
+            "options": {
+                "1": (">>How can we get out of here?", "answer_five")
+            }
+        },
+        "answer_five": {
+            "lines": [
+                ">>We can't. We're bound to this place.<<",
+                ">>Forever<<",
+                ">>And now, let me rest. Before she comes back.<<"
+            ]
         }
     }
     
@@ -323,7 +352,7 @@ class Game:
             question_five()
 
 
-########### MAIN LOOP OF THE GAME ################
+########### MAIN LOOP OF THE GAME # #########
     def main_loop(self):
         ###Method to clear the terminal after every user input
         def clear():

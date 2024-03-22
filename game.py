@@ -2,6 +2,9 @@ import time
 from location import Location
 import os
 
+ ### Global method to create separators between descr. and inputs ###
+def separators():
+    print("-" * 25)
 
 class Game:
     def __init__(self):
@@ -9,6 +12,8 @@ class Game:
         self.current_location = None
         self.locations = {}
         self.inventory = []
+          
+   
 
     ### method to add Location instances to the dictionary
     def add_location(self, key, location):
@@ -24,6 +29,7 @@ class Game:
     ### Method to add items to inventory
     def add_item(self, item):
         self.inventory.append(item)
+
     
     ### Method to start the game with an intr
     def start_game(self):
@@ -36,7 +42,7 @@ class Game:
         print("That is lost in a black hole of oblivion.")
         print("You get up slowly from the floor. The wood creaks beneath your feet.")
         print("You need to find your way out of here.")
-        print("--------------------------------------")
+        separators()
         self.change_location("start")
         self.main_loop()
     
@@ -47,7 +53,7 @@ class Game:
         print("-----------------------")
         self.change_location("dark room")
         print(f"{self.current_location.description}")
-        print("--------------------------")
+        separators()
     
     ### Quiting the game
     def quit(self):
@@ -61,7 +67,7 @@ class Game:
         print("----------------------------")
         print("You press the knob but nothing happens.\nThe door is locked! ")
         self.change_location("door")
-        print("--------------------------")
+        separators()
     
     ### unlocking the door with the key
     def open_door_with_key(self):
@@ -78,11 +84,11 @@ class Game:
         if "key" not in self.inventory:
             self.change_location("wardrobe")
             print(f"{self.current_location.description}")
-            print("--------------------------")
+            separators()
         else:
             self.change_location("wardrobe without key")
             print(f"{self.current_location.description}")
-            print("--------------------------")
+            separators()
     
     ### examining the doll in the wardrobe
     def examine_doll(self):
@@ -90,7 +96,7 @@ class Game:
         print("You're examining the doll.")
         print("--------------------------")
         print("The doll's empty eyes make you shudder.\nYou carefully take it it in your hands. A memory pops out.\nA dark memory screaming at you from within.\nA flash of a vision – you're in your room. She came for a visit.\nShe stinks from alcohol and for some reason you are scared.\nShe grins at you, her teeth rotten and disgusting...\nYou put the doll back in the wardrobe.")
-        print("--------------------------")
+        separators()
 
     ### going to the window
     def going_to_window(self):
@@ -99,7 +105,7 @@ class Game:
         print("--------------------------------")
         self.change_location("window")
         print(f"{self.current_location.description}")
-        print("--------------------------")
+        separators()
 
     ### closing the wardrobe
     def close_wardrobe(self):
@@ -123,7 +129,7 @@ class Game:
         print("---------------------")
         self.change_location("kitchen")
         print(f"{self.current_location.description}")
-        print("--------------------------")
+        separators()
     
     ### Taking the scalpel
     def take_scalpel(self):
@@ -133,7 +139,7 @@ class Game:
         self.add_item("scalpel")
         self.change_location("sink without scalpel")
         print(f"{self.current_location.description}")
-        print("--------------------------")
+        separators()
 
     ##Examining the sink
     def examine_sink(self):
@@ -143,18 +149,18 @@ class Game:
         if "scalpel" not in self.inventory:    
             self.change_location("sink")
             print(f"{self.current_location.description}")
-            print("--------------------------")
+            separators()
         else:
             self.change_location("sink without scalpel")
             print(f"{self.current_location.description}")
-            print("--------------------------")
+            separators()
     def turn_away_sink(self):
         print("------------------------------")
         print("You turned away from the sink.")
         print("------------------------------")
         self.change_location("kitchen")
         print(f"{self.current_location.description_next}")
-        print("--------------------------")
+        separators()
 
 
     ### Examining the green door
@@ -164,7 +170,7 @@ class Game:
         print("----------------------------")
         self.change_location("keyhole")
         print(f"{self.current_location.description}")
-        print("--------------------------")
+        separators()
     
     ### getting back to the dark room
     def go_back_room(self):
@@ -173,7 +179,7 @@ class Game:
         print("-----------------------------")
         self.change_location("dark room")
         print(f"{self.current_location.description_next}")
-        print("--------------------------")
+        separators()
     
     ### Moving away from the green door
     def move_away(self):
@@ -182,7 +188,7 @@ class Game:
         print("-----------------------------")
         self.change_location("kitchen")
         print(f"{self.current_location.description_next}")
-        print("-----------------------------")
+        separators()
 
     ###Talking to the creature: dialogue
     def talk_to_creature(self):
@@ -193,9 +199,9 @@ class Game:
 
         ### Child function of the dialogue - question branches
         def start_dialogue():
-            print("-----------------------")
+            separators()
             print("You take a deep breath.")
-            print("-----------------------")
+            separators()
             print(">> Hello? Can you hear me?<<")
             dialogue_pause()
             print("The rumbling continues...")
@@ -203,7 +209,7 @@ class Game:
             print(">>Hey! Over here!<<")
             dialogue_pause()
             print(">>What do you want?<<")
-            print("---------------------")
+            separators()
 
         ### Question 1 method: Who are you ###
         def question_one():
@@ -215,7 +221,7 @@ class Game:
             print(">>So much horror...<<")
             dialogue_pause()
             print(">>HELP ME!!!<<")
-            print("--------------")
+            separators()
             dialogue_input = input("2. Where are we?")
             if dialogue_input == "2":
                 question_two()
@@ -226,7 +232,7 @@ class Game:
             print(">>In hell...<<")
             dialogue_pause()
             print(">>Is she... Is she still gone?<<")
-            print("--------------------------------")
+            separators()
 
         ### Question three method: Who is she?
         def question_three():
@@ -240,7 +246,7 @@ class Game:
             print("*sobbing*")
             dialogue_pause()
             print(">>I don't want her to come back...<<")
-            print("------------------------------------")
+            separators()
             dialogue_input = input("2. There's just us. I guess... ")
             if dialogue_input == "2":
                 question_four()
@@ -251,7 +257,7 @@ class Game:
             print(">>Good... that is very good. We must rest.<<")
             dialogue_pause()
             print(">>Before she comes back.<")
-            print("-------------------------")
+            separators()
         
         ### Question five method: How can we get out of here?
         def question_five():
@@ -261,7 +267,7 @@ class Game:
             print(">>Forever.<<")
             dialogue_pause()
             print(">>And now... let me rest. I must be strong when she comes back.<<")
-            print("-----------------------------------------------------------------")
+            separators()
         
     #### The dialogue itself ###
         start_dialogue()

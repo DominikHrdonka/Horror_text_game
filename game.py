@@ -131,7 +131,7 @@ class Game:
         print("You took the scalpel!")
         print("---------------------")
         self.add_item("scalpel")
-        self.change_location("kitchen without scalpel")
+        self.change_location("sink without scalpel")
         print(f"{self.current_location.description}")
         print("--------------------------")
 
@@ -140,9 +140,22 @@ class Game:
         print("--------------------------------")
         print("You decided to examine the sink!")
         print("--------------------------------")
-        self.change_location("sink")
-        print(f"{self.current_location.description}")
+        if "scalpel" not in self.inventory:    
+            self.change_location("sink")
+            print(f"{self.current_location.description}")
+            print("--------------------------")
+        else:
+            self.change_location("sink without scalpel")
+            print(f"{self.current_location.description}")
+            print("--------------------------")
+    def turn_away_sink(self):
+        print("------------------------------")
+        print("You turned away from the sink.")
+        print("------------------------------")
+        self.change_location("kitchen")
+        print(f"{self.current_location.description_next}")
         print("--------------------------")
+
 
     ### Examining the green door
     def examine_green_door(self):
@@ -160,6 +173,7 @@ class Game:
         print("-----------------------------")
         self.change_location("dark room")
         print(f"{self.current_location.description_next}")
+        print("--------------------------")
     
     ### Moving away from the green door
     def move_away(self):
@@ -168,6 +182,7 @@ class Game:
         print("-----------------------------")
         self.change_location("kitchen")
         print(f"{self.current_location.description_next}")
+        print("-----------------------------")
 
     ###Talking to the creature: dialogue
     def talk_to_creature(self):
@@ -188,6 +203,7 @@ class Game:
             print(">>Hey! Over here!<<")
             dialogue_pause()
             print(">>What do you want?<<")
+            print("---------------------")
 
         ### Question 1 method: Who are you ###
         def question_one():
@@ -199,7 +215,7 @@ class Game:
             print(">>So much horror...<<")
             dialogue_pause()
             print(">>HELP ME!!!<<")
-            input("Press Enter to continue")
+            print("--------------")
             dialogue_input = input("2. Where are we?")
             if dialogue_input == "2":
                 question_two()
@@ -210,6 +226,7 @@ class Game:
             print(">>In hell...<<")
             dialogue_pause()
             print(">>Is she... Is she still gone?<<")
+            print("--------------------------------")
 
         ### Question three method: Who is she?
         def question_three():
@@ -223,6 +240,7 @@ class Game:
             print("*sobbing*")
             dialogue_pause()
             print(">>I don't want her to come back...<<")
+            print("------------------------------------")
             dialogue_input = input("2. There's just us. I guess... ")
             if dialogue_input == "2":
                 question_four()
@@ -233,6 +251,7 @@ class Game:
             print(">>Good... that is very good. We must rest.<<")
             dialogue_pause()
             print(">>Before she comes back.<")
+            print("-------------------------")
         
         ### Question five method: How can we get out of here?
         def question_five():
@@ -242,6 +261,7 @@ class Game:
             print(">>Forever.<<")
             dialogue_pause()
             print(">>And now... let me rest. I must be strong when she comes back.<<")
+            print("-----------------------------------------------------------------")
         
     #### The dialogue itself ###
         start_dialogue()
@@ -314,6 +334,10 @@ class Game:
             elif user_input == "take the scalpel":
                 user_input == None
                 self.take_scalpel()
+            
+            elif user_input == "turn away":
+                user_input == None
+                self.turn_away_sink()
             
             elif user_input == "examine the green door":
                 user_input == None

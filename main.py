@@ -57,7 +57,7 @@ def main():
     kitchen = Location(
         "kitchen",
         "You are in a kitchen. The smell is even worse here.\nAnd you can see why. There is something in the sink.\nAll covered in blood that's also dripping on the floor.\nThe tiles of the kitchen are old and worn just as a green door on the left.\nYou can hear some rumbling behind it.",
-        "Kitchen - with a bloody sink.",
+        "Kitchen - with a bloody sink and a green door.",
         "examine the sink, go back to the room, examine the green door"
     )
     
@@ -68,14 +68,13 @@ def main():
         "take the scalpel, turn away"
 
     )
-
-    kitchen_without_scalpel = Location(
-        "kitchen without scalpel",
-        "The scalpel will come in handy.\nNow, what about the green door? It seems to be opened",
-        "The scalpel will come in handy.\nNow, what about the green door? It seems to be opened",
-        "examine the green door, go back to the room"
-
+    sink_without_scalpel = Location(
+        "sink without scalpel",
+        "The bloody sink - it makes no sense",
+        None,
+        "turn away"
     )
+
     keyhole = Location(
         "keyhole",
         "The rumbling is definitely coming from the other side!\nYou can feel your heart pounding loudly in your chest. Too loudly.\nYou crouch down and slowly move your eye to the keyhole.\nThe keyhole is small but you can see the creature on the other side.\nIts chest is heaving up and down. Whatever it is, it is in pain.",
@@ -97,7 +96,7 @@ def main():
     game.add_location("wardrobe without key", wardrobe_without_key)
     game.add_location("kitchen", kitchen)
     game.add_location("sink", sink)
-    game.add_location("kitchen without scalpel", kitchen_without_scalpel)
+    game.add_location("sink without scalpel", sink_without_scalpel)
     game.add_location("keyhole", keyhole)
 
     # Defining current location

@@ -24,10 +24,8 @@ class Game:
     ### Method to add items to inventory
     def add_item(self, item):
         self.inventory.append(item)
-
-    ### Method to clear Terminal after every user input###
     
-            
+    ### Method to start the game with an intr
     def start_game(self):
 
         print("==================================================")
@@ -65,12 +63,12 @@ class Game:
         self.change_location("door")
         print("--------------------------")
     
+    ### unlocking the door with the key
     def open_door_with_key(self):
         print("-----------------------------------")
         print("You unlocked the door with the key!")
         print("-----------------------------------")
         self.change_location("unlocked door")
-        print("--------------------------")
 
     ### opening the wardrobe
     def open_the_wardrobe(self):
@@ -81,6 +79,7 @@ class Game:
         print(f"{self.current_location.description}")
         print("--------------------------")
     
+    ### examining the doll in the wardrobe
     def examine_doll(self):
         print("--------------------------")
         print("You're examining the doll.")
@@ -100,11 +99,9 @@ class Game:
     ### closing the wardrobe
     def close_wardrobe(self):
         print("------------------------")
-        print("You decided to close the wardrobe.")
+        print("You closed the wardrobe.")
         print("------------------------")
         self.change_location("dark room")
-        print(f"{self.current_location.description_next}")
-        print("--------------------------")
 
     ### taking the key
     def take_key(self):
@@ -113,7 +110,6 @@ class Game:
         print("-----------------")
         self.add_item("key")
         self.change_location("wardrobe without key")
-        print("--------------------------")
     
     ### going to the kitchen
     def go_kitchen(self):
@@ -152,13 +148,15 @@ class Game:
         print(f"{self.current_location.description}")
         print("--------------------------")
     
+    ### getting back to the dark room
     def go_back_room(self):
         print("-----------------------------")
         print("You go back to the dark room.")
         print("-----------------------------")
         self.change_location("dark room")
         print(f"{self.current_location.description_next}")
-
+    
+    ### Moving away from the green door
     def move_away(self):
         print("-----------------------------")
         print("You turn back to the kitchen.")
@@ -169,10 +167,11 @@ class Game:
     ###Talking to the creature: dialogue
     def talk_to_creature(self):
         
+        ### implementing pause between speech lines
         def dialogue_pause():
             time.sleep(2)
 
-    ### Child function of the dialogue - question branches
+        ### Child function of the dialogue - question branches
         def start_dialogue():
             print("-----------------------")
             print("You take a deep breath.")
@@ -185,7 +184,7 @@ class Game:
             dialogue_pause()
             print(">>What do you want?<<")
 
-            ### Question 1 method: Who are you ###
+        ### Question 1 method: Who are you ###
         def question_one():
             dialogue_pause()
             print(">>Urgh... WHO I am? More like WHAT I am.<<")
@@ -200,14 +199,14 @@ class Game:
             if dialogue_input == "2":
                 question_two()
 
-            ### Question 2 method: Where are we ###
+        ### Question 2 method: Where are we ###
         def question_two():
             dialogue_pause()
             print(">>In hell...<<")
             dialogue_pause()
             print(">>Is she... Is she still gone?<<")
 
-    ### Question three method: Who is she?
+        ### Question three method: Who is she?
         def question_three():
             dialogue_pause()
             print(">>Our Mother? What kind of question is that?\nShe is the one who feeds us.")
@@ -222,13 +221,15 @@ class Game:
             dialogue_input = input("2. There's just us. I guess... ")
             if dialogue_input == "2":
                 question_four()
-            
+        
+        ### Question four method: There's only us...  
         def question_four():
             dialogue_pause()
             print(">>Good... that is very good. We must rest.<<")
             dialogue_pause()
             print(">>Before she comes back.<")
-
+        
+        ### Question five method: How can we get out of here?
         def question_five():
             dialogue_pause()
             print(">>We can't. We're bound to this place.<<")

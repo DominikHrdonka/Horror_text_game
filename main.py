@@ -103,7 +103,7 @@ def main():
     # Defining current location
     game.current_location = dark_room
 
-    # Actual game progress
+    # Starting the game
     game.start_game()
 
 

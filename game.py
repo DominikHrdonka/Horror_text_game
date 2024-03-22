@@ -75,9 +75,14 @@ class Game:
         print("---------------------------------")
         print("You decided to open the wardrobe!")
         print("---------------------------------")
-        self.change_location("wardrobe")
-        print(f"{self.current_location.description}")
-        print("--------------------------")
+        if "key" not in self.inventory:
+            self.change_location("wardrobe")
+            print(f"{self.current_location.description}")
+            print("--------------------------")
+        else:
+            self.change_location("wardrobe without key")
+            print(f"{self.current_location.description}")
+            print("--------------------------")
     
     ### examining the doll in the wardrobe
     def examine_doll(self):
@@ -294,7 +299,7 @@ class Game:
                 user_input == None
                 self.close_wardrobe()
             
-            elif user_input == "turn away":
+            elif user_input == "go back to the room":
                 user_input == None
                 self.go_back_room()
             

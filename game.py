@@ -190,7 +190,44 @@ class Game:
         print(f"{self.current_location.description_next}")
         separators()
 
-    ###Talking to the creature: dialogue
+ ########Talking to the creature: dialogue########
+    dialogue = {
+        "start": {
+            "lines": ["You take a deep breath.",
+                      ">> Hello? Can you hear me?<<",
+                      "The rumbling continues...",
+                      ">>Hey! Over here!<<",
+                      ">>What do you want?<<"
+            ],
+            "options": {
+                "1": (">>Who are you?<<", "answer_one"),
+                "2": (">>Where are we?<<", "answer_two")
+        }
+        },
+        "answer_one": {
+            "lines": [
+                ">>Urgh... WHO I am? More like WHAT I am.<<",
+                ">>So much pain...<<",
+                ">>So much horror...<<",
+                ">>HELP ME!!!<<"
+            ],
+            "options": {
+                "1": (">>Where are we?<<", "answer_two")
+            }
+        },
+        "answer_two": {
+            "lines": [
+                ">>In hell...<<",
+                ">>Is she... Is she still gone?<<"
+            ],
+            "options": {
+                "1": (">>Who is SHE?<<", "answer_three"),
+                "2": (">>There's just us. I guess...<<", "answer_four")
+            }
+        }
+    }
+    
+    
     def talk_to_creature(self):
         
         ### implementing pause between speech lines

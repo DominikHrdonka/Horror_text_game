@@ -11,9 +11,9 @@
 #
 #
 # NOTES ON WHAT YET NEEDS TO BE DONE:::::
+#  - refactor the dialogue by using dictionary of dictionaries
+# - FINISH THE DIALOGUE!!!!
 # 
-# - FINISH THE DIALOGUE!!!! going on with question_three etc.
-# - check whether the sink_without_scalpel changes properly after taking the scalpel
 # 
 # 
 # 

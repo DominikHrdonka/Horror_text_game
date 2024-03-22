@@ -7,9 +7,17 @@ def main():
     game = Game()
 
     # Creating instances of Location
+    
+    start = Location(
+        "start",
+        "",
+        "",
+        "explore, quit"
+    )
+    
     dark_room = Location(
         "dark room",
-        "As your eyes get used to the dark,\nyou start to distinguish a dark frame set on the opposite wall.\nA door! Next to it there's a black shadow of a wardrobe lurking,\nsitting quietly. The walls are empty. The air heavy with dust.\nOne window set in a wall like a dead painting.",
+        "As your eyes get used to the dark,\nyou start to distinguish a dark frame set on the opposite wall.\nA door! Next to it there's a black shadow of a wardrobe lurking,\nsitting quietly. The walls are empty, except for black mold. The air heavy with dust.\nOne window set in a wall like a dead painting.",
         "The same old dark room. Mold on the walls, wet stink. Is that fear?",
         "go to the window, open the door, open the wardrobe"
         )
@@ -80,6 +88,7 @@ def main():
 
 
     # Adding location to the game list of locations
+    game.add_location("start", start)
     game.add_location("dark room", dark_room)
     game.add_location("wardrobe", wardrobe)
     game.add_location("window", window)

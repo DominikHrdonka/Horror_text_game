@@ -14,13 +14,12 @@ class Game:
     def add_location(self, key, location):
         self.locations[key] = location
 
-    ### method to change current location
+    ### method to change current location - loop until correct input
     def change_location(self, key):
         while True:
             if key in self.locations:
                 self.current_location = self.locations[key]
                 break
-                ### make a loop to repeat when wrong output
     
     ### Method to add items to inventory
     def add_item(self, item):
@@ -39,18 +38,25 @@ class Game:
         print("That is lost in a black hole of oblivion.")
         print("You get up slowly from the floor. The wood creaks beneath your feet.")
         print("You need to find your way out of here.")
-        print("--------------------------")
-        user_input = input("What do you want to do? (explore, quit) > ").lower()
-        self.main_loop(user_input)
+        print("--------------------------------------")
+        self.change_location("start")
+        self.main_loop()
     
+    ### Exploring at the beginning of the game
     def explore(self):
         print("-----------------------")
         print("You decided to explore!")
         print("-----------------------")
+        self.change_location("dark room")
         print(f"{self.current_location.description}")
         print("--------------------------")
     
-    #### trying to open the lockeddoor
+    ### Quiting the game
+    def quit(self):
+        self.game_over = True
+        return self.game_over
+    
+    #### trying to open the locked door
     def open_the_locked_door(self):
         print("----------------------------")
         print("You decided to open the door!")
@@ -249,10 +255,12 @@ class Game:
 
 
 ########### MAIN LOOP OF THE GAME ################
-    def main_loop(self, user_input):
+    def main_loop(self):
         ###Method to clear the terminal after every user input
         def clear():
             os.system('cls' if os.name == 'nt' else 'clear')
+        user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
+        clear()
 
         while not self.game_over:
             if user_input == "explore":
@@ -314,7 +322,10 @@ class Game:
                 self.talk_to_creature()
 
             elif user_input == "quit":
-                self.game_over = True
+                user_input == None
+                self.quit()
+                break
+
             user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
             clear()
             

@@ -1,6 +1,7 @@
 import time
 from location import Location
 import os
+from dialogues import dialogues
 
  ### Global method to create separators between descr. and inputs ###
 def separators():
@@ -191,165 +192,28 @@ class Game:
         separators()
 
  ########Talking to the creature: dialogue########
-    dialogue = {
-        "start": {
-            "lines": ["You take a deep breath.",
-                      ">> Hello? Can you hear me?<<",
-                      "The rumbling continues...",
-                      ">>Hey! Over here!<<",
-                      ">>What do you want?<<"
-            ],
-            "options": {
-                "1": (">>Who are you?<<", "answer_one"),
-                "2": (">>Where are we?<<", "answer_two")
-        }
-        },
-        "answer_one": {
-            "lines": [
-                ">>Urgh... WHO I am? More like WHAT I am.<<",
-                ">>So much pain...<<",
-                ">>So much horror...<<",
-                ">>HELP ME!!!<<"
-            ],
-            "options": {
-                "1": (">>Where are we?<<", "answer_two")
-            }
-        },
-        "answer_two": {
-            "lines": [
-                ">>In hell...<<",
-                ">>Is she... Is she still gone?<<"
-            ],
-            "options": {
-                "1": (">>Who is SHE?<<", "answer_three"),
-                "2": (">>There's just us. I guess...<<", "answer_four")
-            }
-        },
-        "answer_three": {
-            "lines": [
-                ">>Our Mother? What kind of question is that?<<",
-                ">>She is the one who feeds us.<<",
-                ">>Who carresses us.<<",
-                ">>Who punishes us.<<",
-                "*Quiet sobing*",
-                ">>I don't want her to come back...<<"
-            ],
-            "options": {
-                "1": {">>There's just us. I guess...<<", "answer_four"             }
-            }
-        },
-        "answer_four": {
-            "lines": [
-                ">>Good... that is very good. We must rest.<<",
-                ">>Before she comes back.<"
-            ],
-            "options": {
-                "1": (">>How can we get out of here?", "answer_five")
-            }
-        },
-        "answer_five": {
-            "lines": [
-                ">>We can't. We're bound to this place.<<",
-                ">>Forever<<",
-                ">>And now, let me rest. Before she comes back.<<"
-            ]
-        }
-    }
+    
     
     
     def talk_to_creature(self):
         
-        ### implementing pause between speech lines
         def dialogue_pause():
             time.sleep(2)
 
-        ### Child function of the dialogue - question branches
-        def start_dialogue():
-            separators()
-            print("You take a deep breath.")
-            separators()
-            print(">> Hello? Can you hear me?<<")
-            dialogue_pause()
-            print("The rumbling continues...")
-            dialogue_pause()
-            print(">>Hey! Over here!<<")
-            dialogue_pause()
-            print(">>What do you want?<<")
-            separators()
-
-        ### Question 1 method: Who are you ###
-        def question_one():
-            dialogue_pause()
-            print(">>Urgh... WHO I am? More like WHAT I am.<<")
-            dialogue_pause()
-            print(">>So much pain...<<")
-            dialogue_pause()
-            print(">>So much horror...<<")
-            dialogue_pause()
-            print(">>HELP ME!!!<<")
-            separators()
-            dialogue_input = input("2. Where are we?")
-            if dialogue_input == "2":
-                question_two()
-
-        ### Question 2 method: Where are we ###
-        def question_two():
-            dialogue_pause()
-            print(">>In hell...<<")
-            dialogue_pause()
-            print(">>Is she... Is she still gone?<<")
-            separators()
-
-        ### Question three method: Who is she?
-        def question_three():
-            dialogue_pause()
-            print(">>Our Mother? What kind of question is that?\nShe is the one who feeds us.")
-            dialogue_pause()
-            print(">>Who carresses us.<<")
-            dialogue_pause()
-            print("Who punishes us...<<")
-            dialogue_pause()
-            print("*sobbing*")
-            dialogue_pause()
-            print(">>I don't want her to come back...<<")
-            separators()
-            dialogue_input = input("2. There's just us. I guess... ")
-            if dialogue_input == "2":
-                question_four()
-        
-        ### Question four method: There's only us...  
-        def question_four():
-            dialogue_pause()
-            print(">>Good... that is very good. We must rest.<<")
-            dialogue_pause()
-            print(">>Before she comes back.<")
-            separators()
-        
-        ### Question five method: How can we get out of here?
-        def question_five():
-            dialogue_pause()
-            print(">>We can't. We're bound to this place.<<")
-            dialogue_pause()
-            print(">>Forever.<<")
-            dialogue_pause()
-            print(">>And now... let me rest. I must be strong when she comes back.<<")
-            separators()
-        
-    #### The dialogue itself ###
-        start_dialogue()
-        dialogue_input = input("Choose number: 1. Who are you?/2. Where are we? ")
-        if dialogue_input == "1":
-            question_one()
-        if dialogue_input == "2":
-            question_two()
-        dialogue_input = input("Choose number: 1. Who is SHE?/2. There's just us. I guess...<< ")
-        if dialogue_input == "1":
-            question_three()
-        if dialogue_input == "2":
-            question_four()
-        dialogue_input = input(">>Choose number: 1. How can we get out of here? ")
-        if dialogue_input == "1":
-            question_five()
+        def play_dialogue(dialogue_key):
+            dialogue = dialogues[dialogue_key]
+            for line in dialogue["lines"]:
+                print(line)
+                dialogue_pause()
+            if "options" in dialogue:
+                for option_key, (option_text, _) in dialogue["options"].items():
+                    print(f"{option_key}. {option_text}")
+            choice = input("Choose an option: ")
+            next_dialogue_key = dialogue["options"].get(choice, [None, None])[1]
+            if next_dialogue_key:
+                play_dialogue(next_dialogue_key)
+            
+        play_dialogue("start")
 
 
 ########### MAIN LOOP OF THE GAME # #########

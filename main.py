@@ -58,7 +58,7 @@ def main() -> None:
         "kitchen",
         "You are in a kitchen. The smell is even worse here.\nAnd you can see why. There is something in the sink.\nAll covered in blood that's also dripping on the floor.\nThe tiles of the kitchen are old and worn just as a green door on the left.\nYou can hear some rumbling behind it.",
         "Kitchen - with a bloody sink and a green door.",
-        "examine the sink, go back to the room, examine the green door"
+        "examine the sink, go back to the room, examine the green door, examine the steel door"
     )
     
     sink = Location(
@@ -82,6 +82,13 @@ def main() -> None:
         "talk to the creature, move away"
     )
 
+    steel_door = Location(
+        "steel_door",
+        "The heavy door wouldn't budge even if you had a hammer.\nYou notice a keypad on the side though.\nIf you knew the right code, you might escape!",
+        "The steel door and a keypad. What is the code?",
+        "enter the code, move away from the steel door"
+    )
+
     # Creating instances of Items
     key = Items("key")
 
@@ -98,6 +105,7 @@ def main() -> None:
     game.add_location("sink", sink)
     game.add_location("sink without scalpel", sink_without_scalpel)
     game.add_location("keyhole", keyhole)
+    game.add_location("steel_door", steel_door)
 
     # Defining current location
     game.current_location = dark_room

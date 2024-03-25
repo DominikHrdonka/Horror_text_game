@@ -216,6 +216,15 @@ class Game:
             
         play_dialogue("start")
 
+    ### Examining the steel door in the kitchen
+    def examine_steel_door(self) -> None:
+        print("----------------------------")
+        print("You approach the steel door.")
+        print("----------------------------")
+        self.change_location("steel_door")
+        print(f"{self.current_location.description}")
+        separators()
+
 
 ########### MAIN LOOP OF THE GAME # #########
     def main_loop(self) -> None:
@@ -287,6 +296,10 @@ class Game:
             elif user_input == "talk to the creature":
                 user_input == None
                 self.talk_to_creature()
+            
+            elif user_input == "examine the steel door":
+                user_input == None
+                self.examine_steel_door()
 
             elif user_input == "quit":
                 user_input == None

@@ -4,11 +4,11 @@ import os
 from dialogues import dialogues
 
  ### Global method to create separators between descr. and inputs ###
-def separators():
+def separators() -> None:
     print("-" * 25)
 
 class Game:
-    def __init__(self):
+    def __init__(self) -> None:
         self.game_over = False
         self.current_location = None
         self.locations = {}
@@ -17,23 +17,23 @@ class Game:
    
 
     ### method to add Location instances to the dictionary
-    def add_location(self, key, location):
+    def add_location(self, key, location) -> None:
         self.locations[key] = location
 
     ### method to change current location - loop until correct input
-    def change_location(self, key):
+    def change_location(self, key) -> None:
         while True:
             if key in self.locations:
                 self.current_location = self.locations[key]
                 break
     
     ### Method to add items to inventory
-    def add_item(self, item):
+    def add_item(self, item) -> None:
         self.inventory.append(item)
 
     
     ### Method to start the game with an intr
-    def start_game(self):
+    def start_game(self) -> None:
 
         print("==================================================")
         print("--------------WELCOME TO THE GAME-----------------")
@@ -48,7 +48,7 @@ class Game:
         self.main_loop()
     
     ### Exploring at the beginning of the game
-    def explore(self):
+    def explore(self) -> None:
         print("-----------------------")
         print("You decided to explore!")
         print("-----------------------")
@@ -57,12 +57,12 @@ class Game:
         separators()
     
     ### Quiting the game
-    def quit(self):
+    def quit(self) -> bool:
         self.game_over = True
         return self.game_over
     
     #### trying to open the locked door
-    def open_the_locked_door(self):
+    def open_the_locked_door(self) -> None:
         print("----------------------------")
         print("You decided to open the door!")
         print("----------------------------")
@@ -71,14 +71,14 @@ class Game:
         separators()
     
     ### unlocking the door with the key
-    def open_door_with_key(self):
+    def open_door_with_key(self) -> None:
         print("-----------------------------------")
         print("You unlocked the door with the key!")
         print("-----------------------------------")
         self.change_location("unlocked door")
 
     ### opening the wardrobe
-    def open_the_wardrobe(self):
+    def open_the_wardrobe(self) -> None:
         print("---------------------------------")
         print("You decided to open the wardrobe!")
         print("---------------------------------")
@@ -92,7 +92,7 @@ class Game:
             separators()
     
     ### examining the doll in the wardrobe
-    def examine_doll(self):
+    def examine_doll(self) -> None:
         print("--------------------------")
         print("You're examining the doll.")
         print("--------------------------")
@@ -100,7 +100,7 @@ class Game:
         separators()
 
     ### going to the window
-    def going_to_window(self):
+    def going_to_window(self) -> None:
         print("--------------------------------")
         print("You decided to go to the window!")
         print("--------------------------------")
@@ -109,14 +109,14 @@ class Game:
         separators()
 
     ### closing the wardrobe
-    def close_wardrobe(self):
+    def close_wardrobe(self) -> None:
         print("------------------------")
         print("You closed the wardrobe.")
         print("------------------------")
         self.change_location("dark room")
 
     ### taking the key
-    def take_key(self):
+    def take_key(self) -> None:
         print("-----------------")
         print("You took the key!")
         print("-----------------")
@@ -124,7 +124,7 @@ class Game:
         self.change_location("wardrobe without key")
     
     ### going to the kitchen
-    def go_kitchen(self):
+    def go_kitchen(self) -> None:
         print("---------------------")
         print("You entered the room!")
         print("---------------------")
@@ -133,7 +133,7 @@ class Game:
         separators()
     
     ### Taking the scalpel
-    def take_scalpel(self):
+    def take_scalpel(self) -> None:
         print("---------------------")
         print("You took the scalpel!")
         print("---------------------")
@@ -143,7 +143,7 @@ class Game:
         separators()
 
     ##Examining the sink
-    def examine_sink(self):
+    def examine_sink(self) -> None:
         print("--------------------------------")
         print("You decided to examine the sink!")
         print("--------------------------------")
@@ -155,7 +155,9 @@ class Game:
             self.change_location("sink without scalpel")
             print(f"{self.current_location.description}")
             separators()
-    def turn_away_sink(self):
+
+    ### Turning away from the sink
+    def turn_away_sink(self) -> None:
         print("------------------------------")
         print("You turned away from the sink.")
         print("------------------------------")
@@ -165,7 +167,7 @@ class Game:
 
 
     ### Examining the green door
-    def examine_green_door(self):
+    def examine_green_door(self) -> None:
         print("----------------------------")
         print("You approach the green door.")
         print("----------------------------")
@@ -174,7 +176,7 @@ class Game:
         separators()
     
     ### getting back to the dark room
-    def go_back_room(self):
+    def go_back_room(self) -> None:
         print("-----------------------------")
         print("You go back to the dark room.")
         print("-----------------------------")
@@ -183,7 +185,7 @@ class Game:
         separators()
     
     ### Moving away from the green door
-    def move_away(self):
+    def move_away(self) -> None:
         print("-----------------------------")
         print("You turn back to the kitchen.")
         print("-----------------------------")
@@ -192,15 +194,12 @@ class Game:
         separators()
 
  ########Talking to the creature: dialogue########
-    
-    
-    
-    def talk_to_creature(self):
+    def talk_to_creature(self) -> None:
         
-        def dialogue_pause():
+        def dialogue_pause() -> None:
             time.sleep(2)
 
-        def play_dialogue(dialogue_key):
+        def play_dialogue(dialogue_key) -> None:
             dialogue = dialogues[dialogue_key]
             for line in dialogue["lines"]:
                 print(line)
@@ -212,14 +211,16 @@ class Game:
             next_dialogue_key = dialogue["options"].get(choice, [None, None])[1]
             if next_dialogue_key:
                 play_dialogue(next_dialogue_key)
+            else:
+                pass
             
         play_dialogue("start")
 
 
 ########### MAIN LOOP OF THE GAME # #########
-    def main_loop(self):
+    def main_loop(self) -> None:
         ###Method to clear the terminal after every user input
-        def clear():
+        def clear() -> None:
             os.system('cls' if os.name == 'nt' else 'clear')
         user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
         clear()

@@ -1,7 +1,7 @@
 from game import Game
 from location import Location
 from items import Items
-def main():
+def main() -> None:
     
     # Creating instances of Game
     game = Game()

@@ -14,6 +14,15 @@ class Game:
         self.locations = {}
         self.inventory = []
           
+    #### Dictionary of all the choices and their methods ####
+        self.choices = {
+            "explore": self.explore,
+            "quit": self.quit,
+            "open the wardrobe": self.open_the_wardrobe,
+            "take the key": self.take_key,
+            "examine the doll": self.examine_doll,
+            "close the wardrobe": self.close_wardrobe
+    }
    
 
     ### method to add Location instances to the dictionary
@@ -216,6 +225,7 @@ class Game:
             
         play_dialogue("start")
 
+    ### Examining the steel door
     def examine_steel_door(self):
         print("-----------------------------")
         print("You approach the steel door.")
@@ -223,6 +233,19 @@ class Game:
         self.change_location("steel_door")
         print(f"{self.current_location.description}")
         separators()
+
+    ### Entering the code
+    def enter_code(self):
+        print("---------------------------------------")
+        print("The screen is blank, the keys worn out.")
+        print("---------------------------------------")
+        code = input("Enter the code: ")
+        if code == "111":
+            self.change_location()
+        else:
+            print("Invalid code")
+
+
 
 ########### MAIN LOOP OF THE GAME # #########
     def main_loop(self) -> None:
@@ -298,6 +321,10 @@ class Game:
             elif user_input == "examine the steel door":
                 user_input == None
                 self.examine_steel_door()
+            
+            elif user_input == "enter the code":
+                user_input == None
+                self.enter_code()
         
 
             elif user_input == "quit":

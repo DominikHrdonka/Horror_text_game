@@ -86,7 +86,7 @@ def main() -> None:
         "steel_door",
         "The heavy door wouldn't budge even if you had a hammer.\nYou notice a keypad on the side though.\nIf you knew the right code, you might escape!",
         "The steel door and a keypad. What is the code?",
-        "enter the code, move away from the steel door"
+        "enter the code, move away"
     )
 
     # Creating instances of Items

@@ -23,7 +23,7 @@ class Game:
                 "examine the doll": self.examine_doll,
                 "close the wardrobe": self.close_wardrobe,
                 "go to the window": self.going_to_window,
-                "open the door": (self.open_the_locked_door, self.open_door_with_key),
+                "open the door": {False: self.open_the_locked_door, True:self.open_door_with_key},
                 "examine the sink": self.examine_sink,
                 "go back to the room": self.go_back_room,
                 "examine the green door": self.examine_green_door,
@@ -267,10 +267,16 @@ class Game:
             os.system('cls' if os.name == 'nt' else 'clear')
         user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
         clear()
-                
-        while not self.game_over:
-            self.choices[user_input]()
 
+        while not self.game_over:
+            if isinstance(self.choices[user_input], dict):
+                if self.choices[user_input][False]:
+                    self.choices[user_input][False]()
+                else:
+                    self.choices[user_input][False][True]()
+
+            else:
+                self.choices[user_input]()
             user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
             clear()
             

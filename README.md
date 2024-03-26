@@ -11,10 +11,10 @@
 #
 #
 # NOTES ON WHAT YET NEEDS TO BE DONE:::::
-#  - refactor the dialogue by using dictionary of dictionaries
-# - FINISH THE DIALOGUE!!!!
 # 
-# 
+# - debug the ending of the first dialogue
+# - add the dialogue branch about getting the code 
+# - finish the dictionary of choices for refactoring
 # 
 # 
 # 

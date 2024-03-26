@@ -15,14 +15,27 @@ class Game:
         self.inventory = []
           
     #### Dictionary of all the choices and their methods ####
-        self.choices = {
-            "explore": self.explore,
-            "quit": self.quit,
-            "open the wardrobe": self.open_the_wardrobe,
-            "take the key": self.take_key,
-            "examine the doll": self.examine_doll,
-            "close the wardrobe": self.close_wardrobe
-    }
+        self.choices = {            
+                "explore": self.explore,
+                "quit": self.quit,
+                "open the wardrobe": self.open_the_wardrobe,
+                "take the key": self.take_key,
+                "examine the doll": self.examine_doll,
+                "close the wardrobe": self.close_wardrobe,
+                "go to the window": self.going_to_window,
+                "open the door": (self.open_the_locked_door, self.open_door_with_key),
+                "examine the sink": self.examine_sink,
+                "go back to the room": self.go_back_room,
+                "examine the green door": self.examine_green_door,
+                "talk to the creature": self.talk_to_creature,
+                "examine the steel door": self.examine_steel_door,
+                "take the scalpel": self.take_scalpel,
+                "turn away": self.turn_away_sink,
+                "move away": self.move_away,
+                "enter the code": self.enter_code,
+            }
+
+
    
 
     ### method to add Location instances to the dictionary
@@ -254,83 +267,9 @@ class Game:
             os.system('cls' if os.name == 'nt' else 'clear')
         user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
         clear()
-
+                
         while not self.game_over:
-            if user_input == "explore":
-                self.explore()
-
-            elif user_input == "open the door":
-                if "key" in self.inventory:
-                    self.open_door_with_key()
-                else:
-                    self.open_the_locked_door()
-                user_input == None
-
-            elif user_input == "go to the next room":
-                user_input == None
-                self.go_kitchen()
-                
-            elif user_input == "open the wardrobe":
-                user_input = None
-                self.open_the_wardrobe()
-            
-            elif user_input == "go to the window":
-                user_input == None
-                self.going_to_window()
-
-            elif user_input == "take the key":
-                user_input == None
-                self.take_key()
-
-            elif user_input == "close the wardrobe":
-                user_input == None
-                self.close_wardrobe()
-            
-            elif user_input == "go back to the room":
-                user_input == None
-                self.go_back_room()
-            
-            elif user_input == "examine the doll":
-                user_input == None
-                self.examine_doll()
-            
-            elif user_input == "examine the sink":
-                user_input == None
-                self.examine_sink()
-
-            elif user_input == "take the scalpel":
-                user_input == None
-                self.take_scalpel()
-            
-            elif user_input == "turn away":
-                user_input == None
-                self.turn_away_sink()
-            
-            elif user_input == "examine the green door":
-                user_input == None
-                self.examine_green_door()
-                
-            elif user_input == "move away":
-                user_input == None
-                self.move_away()
-
-            elif user_input == "talk to the creature":
-                user_input == None
-                self.talk_to_creature()
-
-            elif user_input == "examine the steel door":
-                user_input == None
-                self.examine_steel_door()
-            
-            elif user_input == "enter the code":
-                user_input == None
-                self.enter_code()
-        
-
-            elif user_input == "quit":
-                user_input == None
-                self.quit()
-                break
+            self.choices[user_input]()
 
             user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
             clear()

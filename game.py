@@ -23,7 +23,8 @@ class Game:
                 "examine the doll": self.examine_doll,
                 "close the wardrobe": self.close_wardrobe,
                 "go to the window": self.going_to_window,
-                "open the door": {False: self.open_the_locked_door, True:self.open_door_with_key},
+                "open the door": {"not have": self.open_the_locked_door, "have":self.open_door_with_key},
+                "go to the next room": self.go_kitchen,
                 "examine the sink": self.examine_sink,
                 "go back to the room": self.go_back_room,
                 "examine the green door": self.examine_green_door,
@@ -143,6 +144,7 @@ class Game:
         print("You took the key!")
         print("-----------------")
         self.add_item("key")
+        self.choices["open the door"].pop("not have")
         self.change_location("wardrobe without key")
     
     ### going to the kitchen
@@ -270,10 +272,12 @@ class Game:
 
         while not self.game_over:
             if isinstance(self.choices[user_input], dict):
-                if self.choices[user_input][False]:
-                    self.choices[user_input][False]()
-                else:
-                    self.choices[user_input][False][True]()
+                try: 
+                    self.choices[user_input]["not have"]()
+                except: ##Here we'll need to switch the
+                      ##booleans after picking up
+                      ##the items:
+                    self.choices[user_input]["have"]()
 
             else:
                 self.choices[user_input]()

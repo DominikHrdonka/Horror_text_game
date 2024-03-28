@@ -228,14 +228,16 @@ class Game:
             for line in dialogue["lines"]:
                 print(line)
                 dialogue_pause()
-            if "options" in dialogue:
-                for option_key, (option_text, _) in dialogue["options"].items():
-                    print(f"{option_key}. {option_text}")
-            choice = input("Choose an option: ")
-            next_dialogue_key = dialogue["options"].get(choice, [None, None])[1]
-            if next_dialogue_key:
+            try:    
+                if "options" in dialogue:
+                    for option_key, (option_text, _) in dialogue["options"].items():
+                        print(f"{option_key}. {option_text}")
+                    choice = input("Choose an option: ")
+
+                next_dialogue_key = dialogue["options"].get(choice, [None, None])[1]
                 play_dialogue(next_dialogue_key)
-            else:
+
+            except:
                 pass
             
         play_dialogue("start")

@@ -60,5 +60,17 @@ dialogues = {
                 ">>Forever<<",
                 ">>And now, let me rest. Before she comes back.<<"
             ]
+        },
+        "code_answer": {
+            "lines": [
+                ">>That door has a keypad. Any chance you know the code?<<",
+                ">>What for? We can't run away, can we?<<",
+                ">>Well, why not? We can call help and get out of this madness!<<",
+                ">>She'll find you, no matter where you go.<<",
+                ">>I have to try. I can't just sit around and wait for her!<<"
+            ],
+            "options": {
+                "1": (">>Tell me what you know<<", "code_answer_one"),
+            }
         }
     }

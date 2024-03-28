@@ -13,6 +13,7 @@ class Game:
         self.current_location = None
         self.locations = {}
         self.inventory = []
+        self.knowledge = []
           
     #### Dictionary of all the choices and their methods ####
         self.choices = {            
@@ -51,6 +52,10 @@ class Game:
     ### Method to add items to inventory
     def add_item(self, item) -> None:
         self.inventory.append(item)
+    
+    ### Method to add knowledge to knowledge list
+    def add_knowledge(self, knowledge) -> None:
+        self.knowledge.append(knowledge)
 
     
     ### Method to start the game with an intr
@@ -238,7 +243,10 @@ class Game:
             except:
                 pass
                 
-        play_dialogue("start")
+        if "knowledge_keypad" not in self.knowledge:
+            play_dialogue("start")
+        else:
+            play_dialogue("code_answer")
 
     ### Examining the steel door
     def examine_steel_door(self):
@@ -246,6 +254,7 @@ class Game:
         print("You approach the steel door.")
         print("-----------------------------")
         self.change_location("steel_door")
+        self.add_knowledge("knowledge_keypad")
         print(f"{self.current_location.description}")
         separators()
 

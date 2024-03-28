@@ -88,6 +88,19 @@ def main() -> None:
         "The steel door and a keypad. What is the code?",
         "enter the code, move away"
     )
+    steel_door_opened = Location(
+        "steel_door_opened",
+        "The keypad light turned green.\nYou feel a whif of old air enter from the other side.",
+        "The steel door is opened",
+        "enter the room, move away"
+    )
+
+    library = Location(
+        "library",
+        "",
+        "Library - books, bodies and sheer madness.",
+        ""
+    )
 
     # Creating instances of Items
     key = Items("key")
@@ -106,6 +119,8 @@ def main() -> None:
     game.add_location("sink without scalpel", sink_without_scalpel)
     game.add_location("keyhole", keyhole)
     game.add_location("steel_door", steel_door)
+    game.add_location("library", library)
+    game.add_location("steel_door_opened", steel_door_opened)
 
     # Defining current location
     game.current_location = dark_room

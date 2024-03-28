@@ -1,7 +1,7 @@
 import time
 from location import Location
 import os
-from dialogues import dialogues
+from dialogues import creature
 
  ### Global method to create separators between descr. and inputs ###
 def separators() -> None:
@@ -224,7 +224,7 @@ class Game:
             time.sleep(2)
 
         def play_dialogue(dialogue_key) -> None:
-            dialogue = dialogues[dialogue_key]
+            dialogue = creature[dialogue_key]
             for line in dialogue["lines"]:
                 print(line)
                 dialogue_pause()
@@ -239,7 +239,7 @@ class Game:
 
             except:
                 pass
-            
+                
         play_dialogue("start")
 
     ### Examining the steel door
@@ -258,7 +258,8 @@ class Game:
         print("---------------------------------------")
         code = input("Enter the code: ")
         if code == "111":
-            self.change_location()
+            self.change_location("steel_door_opened")
+            print(f"{self.current_location.description}")
         else:
             print("Invalid code")
 
@@ -271,21 +272,17 @@ class Game:
             os.system('cls' if os.name == 'nt' else 'clear')
         user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
         clear()
-
+        
         while not self.game_over:
             if isinstance(self.choices[user_input], dict):
                 try: 
                     self.choices[user_input]["not have"]()
                 except: ##Here we'll need to switch the
-                      ##booleans after picking up
-                      ##the items:
+                        ##booleans after picking up
+                        ##the items:
                     self.choices[user_input]["have"]()
 
             else:
                 self.choices[user_input]()
-            user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
-            clear()
-            
-
-        
-
+                user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
+                clear()

@@ -14,7 +14,7 @@
 # 
 # 
 # - add the dialogue branch about getting the code 
-#
+# - make it possible to introduce new dialogue with the same person depending on the context (items found, location discovered)
 # 
 # 
 # 

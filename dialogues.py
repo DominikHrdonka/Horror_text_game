@@ -1,4 +1,4 @@
-dialogues = {
+creature = {
         "start": {
             "lines": ["You take a deep breath.",
                       ">> Hello? Can you hear me?<<",

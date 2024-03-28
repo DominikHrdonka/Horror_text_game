@@ -97,9 +97,9 @@ def main() -> None:
 
     library = Location(
         "library",
+        "Is that a library? The huge room spreads in front of you like a giant vault.\nThe dimness is pierced through shimmering light that's coming from above.\nA roof window! Way out of reach though.\nSomething catches your eye. As you lower your gaze, your heart skips a beat.\nBetween the racks of old books you see steel desks. And on them... Sheer madness!\nAn old crone is hunched over one of the bodies all over the place, her back turned to you.\nThere is a horriffic muttering coming from her. She hasn't noticed you yet.",
         "Library - books, bodies and sheer madness.",
-        "Library - books, bodies and sheer madness.",
-        "quit"
+        "hide behind the rack, quit"
     )
 
     # Creating instances of Items

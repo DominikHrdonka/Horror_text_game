@@ -274,15 +274,22 @@ class Game:
         clear()
         
         while not self.game_over:
-            if isinstance(self.choices[user_input], dict):
-                try: 
-                    self.choices[user_input]["not have"]()
-                except: ##Here we'll need to switch the
-                        ##booleans after picking up
-                        ##the items:
-                    self.choices[user_input]["have"]()
+            try:
+                if isinstance(self.choices[user_input], dict):
+                    try: 
+                        self.choices[user_input]["not have"]()
+                    except: ##Here we'll need to switch the
+                            ##booleans after picking up
+                            ##the items:
+                        self.choices[user_input]["have"]()
 
-            else:
-                self.choices[user_input]()
+                else:
+                    self.choices[user_input]()
+                    user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
+                    clear()
+            except:
+                print("---------------")
+                print("Invalid choice.")
+                print("---------------")
                 user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
                 clear()

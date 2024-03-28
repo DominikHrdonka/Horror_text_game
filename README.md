@@ -12,7 +12,7 @@
 #
 # NOTES ON WHAT YET NEEDS TO BE DONE:::::
 # 
-# 
+# - make adjustments to prevent wrong inputs in the dialogues
 # - add the dialogue branch about getting the code 
 # - make it possible to introduce new dialogue with the same person depending on the context (items found, location discovered)
 # 

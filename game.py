@@ -231,17 +231,22 @@ class Game:
             for line in dialogue["lines"]:
                 print(line)
                 dialogue_pause()
-            try:    
-                if "options" in dialogue:
-                    for option_key, (option_text, _) in dialogue["options"].items():
-                        print(f"{option_key}. {option_text}")
-                    choice = input("Choose an option: ")
+            while True:
+                try:    
+                    if "options" in dialogue:
+                        for option_key, (option_text, _) in dialogue["options"].items():
+                            print(f"{option_key}. {option_text}")
+                        choice = input("Choose an option: ")
+                    if choice in dialogue["options"]:
+                        next_dialogue_key = dialogue["options"].get(choice)[1]
+                        play_dialogue(next_dialogue_key)
+                    else:
+                        raise ValueError("Invalid choice")
 
-                next_dialogue_key = dialogue["options"].get(choice, [None, None])[1]
-                play_dialogue(next_dialogue_key)
-
-            except:
-                pass
+                except ValueError as e:
+                    print("--------------")
+                    print(f"{e}")
+                    print("--------------")
                 
         if "knowledge_keypad" not in self.knowledge:
             play_dialogue("start")

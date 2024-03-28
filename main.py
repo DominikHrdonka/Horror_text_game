@@ -104,6 +104,7 @@ def main() -> None:
 
     # Creating instances of Items
     key = Items("key")
+    scalpel = Items("scalpel")
 
 
     # Adding location to the game list of locations

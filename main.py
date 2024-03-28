@@ -97,9 +97,9 @@ def main() -> None:
 
     library = Location(
         "library",
-        "",
         "Library - books, bodies and sheer madness.",
-        ""
+        "Library - books, bodies and sheer madness.",
+        "quit"
     )
 
     # Creating instances of Items

@@ -34,10 +34,8 @@ class Game:
                 "turn away": self.turn_away_sink,
                 "move away": self.move_away,
                 "enter the code": self.enter_code,
+                "enter the room": self.go_library
             }
-
-
-   
 
     ### method to add Location instances to the dictionary
     def add_location(self, key, location) -> None:
@@ -262,6 +260,14 @@ class Game:
             print(f"{self.current_location.description}")
         else:
             print("Invalid code")
+        
+    def go_library(self):
+        print("---------------------------------------")
+        print("The screen is blank, the keys worn out.")
+        print("---------------------------------------")
+        self.change_location("library")
+        print(f"{self.current_location.description}")
+        separators()
 
 
 
@@ -278,11 +284,14 @@ class Game:
                 if isinstance(self.choices[user_input], dict):
                     try: 
                         self.choices[user_input]["not have"]()
+                        user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
+                        clear()
                     except: ##Here we'll need to switch the
                             ##booleans after picking up
                             ##the items:
                         self.choices[user_input]["have"]()
-
+                        user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
+                        clear()
                 else:
                     self.choices[user_input]()
                     user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()

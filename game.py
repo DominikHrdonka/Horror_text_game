@@ -269,6 +269,11 @@ class Game:
         print(f"{self.current_location.description}")
         separators()
 
+    ### Method to get a user input ###
+    def get_input(self, clear):
+        user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
+        clear()
+        return user_input
 
 
 ########### MAIN LOOP OF THE GAME # #########
@@ -276,29 +281,24 @@ class Game:
         ###Method to clear the terminal after every user input
         def clear() -> None:
             os.system('cls' if os.name == 'nt' else 'clear')
-        user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
-        clear()
+        user_input = self.get_input(clear)
         
         while not self.game_over:
             try:
                 if isinstance(self.choices[user_input], dict):
                     try: 
                         self.choices[user_input]["not have"]()
-                        user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
-                        clear()
+                        user_input = self.get_input(clear)
                     except: ##Here we'll need to switch the
                             ##booleans after picking up
                             ##the items:
                         self.choices[user_input]["have"]()
-                        user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
-                        clear()
+                        user_input = self.get_input(clear)
                 else:
                     self.choices[user_input]()
-                    user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
-                    clear()
+                    user_input = self.get_input(clear)
             except:
                 print("---------------")
                 print("Invalid choice.")
                 print("---------------")
-                user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
-                clear()
+                user_input = self.get_input(clear)

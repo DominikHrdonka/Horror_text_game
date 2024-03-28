@@ -6,6 +6,9 @@ from dialogues import creature
  ### Global method to create separators between descr. and inputs ###
 def separators() -> None:
     print("-" * 25)
+### Global method to clear the terminal after every user input
+def clear() -> None:
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 class Game:
     def __init__(self) -> None:
@@ -269,7 +272,11 @@ class Game:
         print("The screen is blank, the keys worn out.")
         print("---------------------------------------")
         code = input("Enter the code: ")
+        clear()
         if code == "111":
+            print("-----------------------------")
+            print("The keypad light turns green!")
+            print("-----------------------------")
             self.change_location("steel_door_opened")
             print(f"{self.current_location.description}")
         else:
@@ -277,7 +284,7 @@ class Game:
         
     def go_library(self):
         print("---------------------------------------")
-        print("The screen is blank, the keys worn out.")
+        print("Carefully, you step into the room.")
         print("---------------------------------------")
         self.change_location("library")
         print(f"{self.current_location.description}")
@@ -291,12 +298,8 @@ class Game:
 
 
 ########### MAIN LOOP OF THE GAME # #########
-    def main_loop(self) -> None:
-        ###Method to clear the terminal after every user input
-        def clear() -> None:
-            os.system('cls' if os.name == 'nt' else 'clear')
+    def main_loop(self) -> None:        
         user_input = self.get_input(clear)
-        
         while not self.game_over:
             try:
                 if isinstance(self.choices[user_input], dict):

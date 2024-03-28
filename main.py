@@ -90,7 +90,7 @@ def main() -> None:
     )
     steel_door_opened = Location(
         "steel_door_opened",
-        "The keypad light turned green.\nYou feel a whif of old air enter from the other side.",
+        "You feel a whif of old air enter from the other side.",
         "The steel door is opened",
         "enter the room, move away"
     )
@@ -101,11 +101,6 @@ def main() -> None:
         "Library - books, bodies and sheer madness.",
         "hide behind the rack, quit"
     )
-
-    # Creating instances of Items
-    key = Items("key")
-    scalpel = Items("scalpel")
-
 
     # Adding location to the game list of locations
     game.add_location("start", start)

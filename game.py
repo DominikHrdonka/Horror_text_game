@@ -45,6 +45,7 @@ class Game:
                 "move to the axe": self.go_stuck_axe,
                 "take the axe": self.take_axe,
                 "move to the desk": self.go_desk,
+                "push the desk": self.push_desk
             }
 
     ### method to add Location instances to the dictionary
@@ -348,11 +349,28 @@ class Game:
             self.inventory.append("axe")
         
     def go_desk(self):
-        print("-----------------------------")
-        print("You approach the bloody desk.")
-        print("-----------------------------")
-        self.change_location("desk_with_body")
-        print(f"{self.current_location.description}")
+        if "desk_pushed" not in self.knowledge:
+            print("-----------------------------")
+            print("You approach the bloody desk.")
+            print("-----------------------------")
+            self.change_location("desk_with_body")
+            print(f"{self.current_location.description}")
+            separators()
+        else:
+            print("-----------------------------")
+            print("The desk has been pushed away.")
+            print("-----------------------------")
+            self.change_location("pushed_desk")
+            print(f"{self.current_location.description_next}")
+            separators()
+
+    def push_desk(self):
+        print("------------------------------------")
+        print("The desk moves usrpisingly smoothly.")
+        print("------------------------------------")
+        print("The wheels squeek and soon the desk hits the rack on the opposite wall.\nFrom the center of the library, there comes a terrible hiss.\nThen heavy steps, and the sound of cloth sweeping on the floor.\nThe crone is on the move! She's gone to inspect the fuss at the opposite side.\n")
+        self.change_location("pushed_desk")
+        self.knowledge.append("desk_pushed")
         separators()
 
 

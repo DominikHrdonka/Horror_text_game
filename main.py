@@ -3,7 +3,7 @@ from location import Location
 from items import Items
 def main() -> None:
     
-    # Creating instances of Game
+    # Creating instance of Game
     game = Game()
 
     # Creating instances of Location
@@ -111,9 +111,9 @@ def main() -> None:
 
     stuck_axe = Location(
         "stuck_axe",
+        "The rusty axe is thrust deep into the remnants of an old rack.\nOn the right, you see your ragged reflexion in a tall mirror.",
         "The rusty axe is thrust deep into the remnants of an old rack.",
-        "The rusty axe is thrust deep into the remnants of an old rack.",
-        "take the axe, hide behind the rack"
+        "take the axe, hide behind the rack, move to the mirror, quit"
     )
 
     desk_with_body = Location (
@@ -121,6 +121,13 @@ def main() -> None:
         "You feel sick. The body is awfully mutilated.\nHow many bodies are there anyway?\nYou notice little wheels at the desk's base. It is mobile.",
         "The mobile desk - could you use it somehow?",
         "push the desk, hide behind the rack, quit"
+    )
+
+    pushed_desk = Location (
+        "pushed_desk",
+        "The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
+        "The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
+        "hide behind the rack, quit"
     )
 
     # Adding location to the game list of locations
@@ -141,6 +148,7 @@ def main() -> None:
     game.add_location("rack_one", rack_one)
     game.add_location("stuck_axe", stuck_axe)
     game.add_location("desk_with_body", desk_with_body)
+    game.add_location("pushed_desk", pushed_desk)
 
     # Defining current location
     game.current_location = dark_room

@@ -16,7 +16,7 @@ class Game:
         self.current_location = None
         self.locations = {}
         self.inventory = []
-        self.knowledge = []
+        self.knowledge = ["crone_close"]
           
     #### Dictionary of all the choices and their methods ####
         self.choices = {            
@@ -41,7 +41,9 @@ class Game:
                 "enter the room": self.go_library,
                 "hide behind the rack": self.hide_behind_rack,
                 "go back to the kitchen": self.go_back_kitchen,
-                "go back to the steel door": self.go_back_steel_door
+                "go back to the steel door": self.go_back_steel_door,
+                "move to the axe": self.go_stuck_axe,
+                "take the axe": self.take_axe
             }
 
     ### method to add Location instances to the dictionary
@@ -322,6 +324,28 @@ class Game:
         self.change_location("kitchen")
         print(f"{self.current_location.description}")
         separators()
+
+    ### Moving to the stuck axe
+    def go_stuck_axe(self):
+        print("------------------------------")
+        print("You sneak up to the stuck axe.")
+        print("------------------------------")
+        self.change_location("stuck_axe")
+        print(f"{self.current_location.description}")
+        separators()
+
+    ### Taking the axe
+    def take_axe(self):
+        if "crone_close" in self.knowledge:
+            print("-----------------------------------")
+            print("Removing the axe will make a noise.\nYou don't dare trying when the crone is so close.\nPerhaps you could lure her away?")
+            print("-----------------------------------")
+        else:
+            print("-----------------------------------")
+            print("Your muscles tense up as you pull.\nFinally, as the wood creaks, you successfully remove the axe.")
+            print("-----------------------------------")
+            self.inventory.append("axe")
+
 
     ### Method to get a user input
     def get_input(self, clear):

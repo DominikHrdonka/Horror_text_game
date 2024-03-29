@@ -109,6 +109,13 @@ def main() -> None:
         "move to the desk, move to the axe, go back to the steel door, quit"
     )
 
+    stuck_axe = Location(
+        "stuck_axe",
+        "The rusty axe is thrust deep into the remnants of an old rack.",
+        "The rusty axe is thrust deep into the remnants of an old rack.",
+        "take the axe, hide behind the rack"
+    )
+
     # Adding location to the game list of locations
     game.add_location("start", start)
     game.add_location("dark room", dark_room)
@@ -125,6 +132,7 @@ def main() -> None:
     game.add_location("library", library)
     game.add_location("steel_door_opened", steel_door_opened)
     game.add_location("rack_one", rack_one)
+    game.add_location("stuck_axe", stuck_axe)
 
     # Defining current location
     game.current_location = dark_room

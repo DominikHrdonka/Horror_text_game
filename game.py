@@ -2,6 +2,7 @@ import time
 from location import Location
 import os
 from dialogues import creature
+from crone import Crone
 
  ### Global method to create separators between descr. and inputs ###
 def separators() -> None:

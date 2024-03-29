@@ -13,9 +13,9 @@
 # NOTES ON WHAT YET NEEDS TO BE DONE:::::
 # 
 # 
-# 
+# - use encapsulation to protect attributes from tampering
 # - add the dialogue branch about getting the code 
-# 
+# - build options and story for the library location
 # 
 # 
 # 

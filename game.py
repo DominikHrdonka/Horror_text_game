@@ -279,14 +279,35 @@ class Game:
             print("-----------------------------")
             self.change_location("steel_door_opened")
             print(f"{self.current_location.description}")
+            separators()
         else:
             print("Invalid code")
-        
+            separators()
+    
+    ### Going to the library 
     def go_library(self):
-        print("---------------------------------------")
+        print("----------------------------------")
         print("Carefully, you step into the room.")
-        print("---------------------------------------")
+        print("----------------------------------")
         self.change_location("library")
+        print(f"{self.current_location.description}")
+        separators()
+
+    ### Hiding behin the first rack
+    def hide_behind_rack(self):
+        print("-------------------------------------")
+        print("You slip behind the rack on the left.")
+        print("-------------------------------------")
+        self.change_location("rack_one")
+        print(f"{self.current_location.description}")
+        separators()
+    
+    ### Going back to the kitchen from the library
+    def go_back_kitchen(self):
+        print("-------------------------------------")
+        print("You slip back through the steel door.")
+        print("-------------------------------------")
+        self.change_location("kitchen")
         print(f"{self.current_location.description}")
         separators()
 

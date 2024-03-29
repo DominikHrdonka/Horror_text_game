@@ -99,7 +99,14 @@ def main() -> None:
         "library",
         "Is that a library? The huge room spreads in front of you like a giant vault.\nThe dimness is pierced through shimmering light that's coming from above.\nA roof window! Way out of reach though.\nSomething catches your eye. As you lower your gaze, your heart skips a beat.\nBetween the racks of old books you see steel desks. And on them... Sheer madness!\nAn old crone is hunched over one of the bodies all over the place, her back turned to you.\nThere is a horriffic muttering coming from her. She hasn't noticed you yet.",
         "Library - books, bodies and sheer madness.",
-        "hide behind the rack, quit"
+        "hide behind the rack, go back to the kitchen, quit"
+    )
+
+    rack_one = Location(
+        "rack_one",
+        "The high shadow conceals your body. You hardly breath.\nAfter a while, you dare steal a careful peek. The crone in ragged dress,\nhands covered in blood, wild hair hanging along her skinny skull.\nThe body beneath her touch twitching. And the giant knife in her hand...\nOn the left, hidden from the sight of the crone, you notice a desk with another body.\nOn the right, a few meters away from the crone, there is an axe stuck in the rack.",
+        "You crouch behind the rack. Breath stuck in your throat.",
+        "move to the desk, move to the axe, go back to the steel door, quit"
     )
 
     # Adding location to the game list of locations
@@ -117,6 +124,7 @@ def main() -> None:
     game.add_location("steel_door", steel_door)
     game.add_location("library", library)
     game.add_location("steel_door_opened", steel_door_opened)
+    game.add_location("rack_one", rack_one)
 
     # Defining current location
     game.current_location = dark_room

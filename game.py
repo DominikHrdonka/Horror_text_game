@@ -38,7 +38,10 @@ class Game:
                 "turn away": self.turn_away_sink,
                 "move away": self.move_away,
                 "enter the code": self.enter_code,
-                "enter the room": self.go_library
+                "enter the room": self.go_library,
+                "hide behind the rack": self.hide_behind_rack,
+                "go back to the kitchen": self.go_back_kitchen,
+                "go back to the steel door": self.go_back_steel_door
             }
 
     ### method to add Location instances to the dictionary
@@ -286,9 +289,9 @@ class Game:
     
     ### Going to the library 
     def go_library(self):
-        print("----------------------------------")
-        print("Carefully, you step into the room.")
-        print("----------------------------------")
+        print("--------------------------------------")
+        print("The vast room reveals in front of you.")
+        print("--------------------------------------")
         self.change_location("library")
         print(f"{self.current_location.description}")
         separators()
@@ -301,6 +304,15 @@ class Game:
         self.change_location("rack_one")
         print(f"{self.current_location.description}")
         separators()
+
+    ### Moving back to the steel door
+    def go_back_steel_door(self):
+        print("---------------------------")
+        print("You are at the entrance again.")
+        print("---------------------------")
+        self.change_location("library")
+        print(f"{self.current_location.description_next}")
+        separators()
     
     ### Going back to the kitchen from the library
     def go_back_kitchen(self):
@@ -311,7 +323,7 @@ class Game:
         print(f"{self.current_location.description}")
         separators()
 
-    ### Method to get a user input ###
+    ### Method to get a user input
     def get_input(self, clear):
         user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
         clear()

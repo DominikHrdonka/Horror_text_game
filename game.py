@@ -4,6 +4,8 @@ import os
 from dialogues import creature
 from crone import Crone
 
+crone = Crone()
+
  ### Global method to create separators between descr. and inputs ###
 def separators() -> None:
     print("-" * 25)
@@ -17,7 +19,7 @@ class Game:
         self.current_location = None
         self.locations = {}
         self.inventory = []
-        self.knowledge = ["crone_close"]
+        self.knowledge = []
           
     #### Dictionary of all the choices and their methods ####
         self.choices = {            
@@ -347,7 +349,7 @@ class Game:
 
     ### Taking the axe
     def take_axe(self) -> None:
-        if "crone_close" in self.knowledge:
+        if crone.get_position() == "center_library":
             print("-----------------------------------")
             print("Removing the axe will make a noise.\nYou don't dare trying when the crone is so close.\nPerhaps you could lure her away?")
             print("-----------------------------------")
@@ -381,7 +383,7 @@ class Game:
         print("The wheels squeek and soon the desk hits the rack on the opposite wall.\nFrom the center of the library, there comes a terrible hiss.\nThen heavy steps, and the sound of cloth sweeping on the floor.\nThe crone is on the move! She's gone to inspect the fuss at the opposite side.\n")
         self.change_location("pushed_desk")
         self.knowledge.append("desk_pushed")
-        self.knowledge.remove("crone_close")
+        crone.set_position("at_the_desk")
         separators()
 
 

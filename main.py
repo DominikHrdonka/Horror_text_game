@@ -106,14 +106,22 @@ def main() -> None:
         "rack_one",
         "The high shadow conceals your body. You hardly breath.\nAfter a while, you dare steal a careful peek. The crone in ragged dress,\nhands covered in blood, wild hair hanging along her skinny skull.\nThe body beneath her touch twitching. And the giant knife in her hand...\nOn the left, hidden from the sight of the crone, you notice a desk with another body.\nOn the right, a few meters away from the crone, there is an axe stuck in the rack.",
         "You crouch behind the rack. Breath stuck in your throat.",
-        "move to the desk, move to the axe, go back to the steel door, quit"
+        "move to the desk, move to the remnants, go back to the steel door, quit"
     )
 
-    stuck_axe = Location(
-        "stuck_axe",
+    old_remnants = Location(
+        "old_remnants",
         "The rusty axe is thrust deep into the remnants of an old rack.\nOn the right, you see your ragged reflexion in a tall mirror.",
-        "The rusty axe is thrust deep into the remnants of an old rack.",
+        "The axe is still stuck deeú in the wood",
         "take the axe, hide behind the rack, move to the mirror, quit"
+    )
+
+    old_remnants_without_axe = Location(
+        "old_remnants_without_axe",
+        "The old remnants with a vicious scar where the axe used to be",
+        "The old remnants with a vicious scar where the axe used to be",
+        "hide behind the rack, move to the mirror, quit"
+
     )
 
     desk_with_body = Location (
@@ -146,9 +154,10 @@ def main() -> None:
     game.add_location("library", library)
     game.add_location("steel_door_opened", steel_door_opened)
     game.add_location("rack_one", rack_one)
-    game.add_location("stuck_axe", stuck_axe)
+    game.add_location("old_remnants", old_remnants)
     game.add_location("desk_with_body", desk_with_body)
     game.add_location("pushed_desk", pushed_desk)
+    game.add_location("old_remnants_without_axe", old_remnants_without_axe)
 
     # Defining current location
     game.current_location = dark_room

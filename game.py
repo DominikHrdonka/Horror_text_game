@@ -42,7 +42,7 @@ class Game:
                 "hide behind the rack": self.hide_behind_rack,
                 "go back to the kitchen": self.go_back_kitchen,
                 "go back to the steel door": self.go_back_steel_door,
-                "move to the axe": self.go_stuck_axe,
+                "move to the remnants": self.go_old_remnants,
                 "take the axe": self.take_axe,
                 "move to the desk": self.go_desk,
                 "push the desk": self.push_desk
@@ -319,7 +319,7 @@ class Game:
         separators()
     
     ### Going back to the kitchen from the library
-    def go_back_kitchen(self):
+    def go_back_kitchen(self) -> None:
         print("-------------------------------------")
         print("You slip back through the steel door.")
         print("-------------------------------------")
@@ -328,16 +328,24 @@ class Game:
         separators()
 
     ### Moving to the stuck axe
-    def go_stuck_axe(self):
-        print("------------------------------")
-        print("You sneak up to the stuck axe.")
-        print("------------------------------")
-        self.change_location("stuck_axe")
-        print(f"{self.current_location.description}")
-        separators()
+    def go_old_remnants(self) -> None:
+        if "axe" not in self.inventory:
+            print("---------------------------------")
+            print("You sneak up to the old remnants.")
+            print("---------------------------------")
+            self.change_location("old_remnants")
+            print(f"{self.current_location.description}")
+            separators()
+        else:
+            print("---------------------------------")
+            print("You sneak up to the old remnants.")
+            print("---------------------------------")
+            self.change_location("old_remnants_without_axe")
+            print(f"{self.current_location.description}")
+            separators()
 
     ### Taking the axe
-    def take_axe(self):
+    def take_axe(self) -> None:
         if "crone_close" in self.knowledge:
             print("-----------------------------------")
             print("Removing the axe will make a noise.\nYou don't dare trying when the crone is so close.\nPerhaps you could lure her away?")
@@ -347,6 +355,7 @@ class Game:
             print("Your muscles tense up as you pull.\nFinally, as the wood creaks, you successfully remove the axe.")
             print("-----------------------------------")
             self.inventory.append("axe")
+            self.change_location("old_remnants_without_axe")
         
     def go_desk(self):
         if "desk_pushed" not in self.knowledge:
@@ -371,6 +380,7 @@ class Game:
         print("The wheels squeek and soon the desk hits the rack on the opposite wall.\nFrom the center of the library, there comes a terrible hiss.\nThen heavy steps, and the sound of cloth sweeping on the floor.\nThe crone is on the move! She's gone to inspect the fuss at the opposite side.\n")
         self.change_location("pushed_desk")
         self.knowledge.append("desk_pushed")
+        self.knowledge.remove("crone_close")
         separators()
 
 

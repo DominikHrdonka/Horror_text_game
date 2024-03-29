@@ -116,6 +116,13 @@ def main() -> None:
         "take the axe, hide behind the rack"
     )
 
+    desk_with_body = Location (
+        "desk_with_body",
+        "You feel sick. The body is awfully mutilated.\nHow many bodies are there anyway?\nYou notice little wheels at the desk's base. It is mobile.",
+        "The mobile desk - could you use it somehow?",
+        "push the desk, hide behind the rack, quit"
+    )
+
     # Adding location to the game list of locations
     game.add_location("start", start)
     game.add_location("dark room", dark_room)
@@ -133,6 +140,7 @@ def main() -> None:
     game.add_location("steel_door_opened", steel_door_opened)
     game.add_location("rack_one", rack_one)
     game.add_location("stuck_axe", stuck_axe)
+    game.add_location("desk_with_body", desk_with_body)
 
     # Defining current location
     game.current_location = dark_room

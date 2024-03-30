@@ -352,6 +352,7 @@ class Game:
                 separators()
         else:
             print("The crone would see you. You can't go there!")
+            separators()
 
     ### Taking the axe
     def take_axe(self) -> None:
@@ -380,6 +381,8 @@ class Game:
             print("-----------------------------")
             self.change_location("pushed_desk")
             print(f"{self.current_location.description_next}")
+            if crone.get_position() == "at_the_desk":
+                print("The crone is examining the desk and body, hissing and twitching with rage.")
             separators()
 
     def push_desk(self):
@@ -398,7 +401,7 @@ class Game:
         print("You approach the mirror.")
         print("------------------------")
         self.change_location("mirror")
-        print(f"{self.current_location.desctription}")
+        print(f"{self.current_location.description}")
         separators()
 
     ### Turning the mirror
@@ -406,12 +409,19 @@ class Game:
         print("--------------------")
         print("You turn the mirror.")
         print("--------------------")
-        print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
-        if crone.get_position() == "center_library":
-            print("The light falls right on the crone. There is a furious roar, inhuman and ears-piercing.\nYou manage to slip behind the rack next to the mirror right in time.\nThe steps are approaching, thi hissing grows.")
-            crone.set_position("approaching_mirror")
+        if crone.get_position() != "approaching_mirror":
+            if crone.get_position() == "center_library":
+                print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
+                print("The light falls right on the crone. There is a furious roar, inhuman and ears-piercing.\nYou manage to slip behind the rack next to the mirror right in time.\nThe steps are approaching, the hissing grows.")
+                separators()
+                crone.set_position("approaching_mirror")
+            else:
+                print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
+                print("Nothing happens. Well, you don't even know what you expected.")
+                separators()
         else:
-            print("Nothing happens. Well, you don't even know what you expected.")
+            print("The mirror is already turned and the crone is coming to you!")
+            separators()
 
     ### Method to get a user input
     def get_input(self, clear):

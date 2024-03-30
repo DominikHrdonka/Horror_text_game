@@ -18,8 +18,8 @@
 # - use encapsulation to protect attributes from tampering
 # - add the dialogue branch about getting the code 
 # - build options and story for the library location
-# - add locations and interaction with "move to the desk" 
-# - come up with logic of the crone's movement on the map
+# - 
+# - build enter the passageway location
 # 
 # 
 # 

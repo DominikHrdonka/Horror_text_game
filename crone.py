@@ -5,7 +5,7 @@ class Crone:
         self._choices = {
             "1": "center_library",
             "2": "at_the_desk",
-            "3": "approchaing_mirror"
+            "3": "approaching_mirror"
         }
 
     def get_position(self):

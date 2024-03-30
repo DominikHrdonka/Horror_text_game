@@ -124,6 +124,13 @@ def main() -> None:
 
     )
 
+    mirror = Location(
+        "mirror",
+        "The mirror with several cracks distorts your shape\nas if you're a dim comic caricature. Ane perhaps you truly are.\nThis all seems like a nightmare anyway.\nThe mirror could be turned if needed. And there's a narrow passage\nbetween the racks and the right wall. In the dakr, you could sneak through without being seen.",
+        "The cracked mirror and the passageway along the right wall.",
+        "turn the mirror, enter the passageway, move to the remnants, quit"
+    )
+
     desk_with_body = Location (
         "desk_with_body",
         "You feel sick. The body is awfully mutilated.\nHow many bodies are there anyway?\nYou notice little wheels at the desk's base. It is mobile.",
@@ -158,6 +165,7 @@ def main() -> None:
     game.add_location("desk_with_body", desk_with_body)
     game.add_location("pushed_desk", pushed_desk)
     game.add_location("old_remnants_without_axe", old_remnants_without_axe)
+    game.add_location("mirror", mirror)
 
     # Defining current location
     game.current_location = dark_room

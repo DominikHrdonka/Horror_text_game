@@ -4,7 +4,8 @@ class Crone:
         self._health = ("##########")
         self._choices = {
             "1": "center_library",
-            "2": "at_the_desk"
+            "2": "at_the_desk",
+            "3": "approchaing_mirror"
         }
 
     def get_position(self):
@@ -14,4 +15,3 @@ class Crone:
         self._position = new_position
         return self._position
     
-crone = Crone()

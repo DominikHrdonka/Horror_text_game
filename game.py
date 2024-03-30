@@ -9,6 +9,7 @@ crone = Crone()
  ### Global method to create separators between descr. and inputs ###
 def separators() -> None:
     print("-" * 25)
+
 ### Global method to clear the terminal after every user input
 def clear() -> None:
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -48,7 +49,9 @@ class Game:
                 "move to the remnants": self.go_old_remnants,
                 "take the axe": self.take_axe,
                 "move to the desk": self.go_desk,
-                "push the desk": self.push_desk
+                "push the desk": self.push_desk,
+                "move to the mirror": self.go_mirror,
+                "turn the mirror": self.turn_mirror
             }
 
     ### method to add Location instances to the dictionary
@@ -332,20 +335,23 @@ class Game:
 
     ### Moving to the stuck axe
     def go_old_remnants(self) -> None:
-        if "axe" not in self.inventory:
-            print("---------------------------------")
-            print("You sneak up to the old remnants.")
-            print("---------------------------------")
-            self.change_location("old_remnants")
-            print(f"{self.current_location.description}")
-            separators()
+        if crone.get_position() != "approaching_mirror":    
+            if "axe" not in self.inventory:
+                print("---------------------------------")
+                print("You sneak up to the old remnants.")
+                print("---------------------------------")
+                self.change_location("old_remnants")
+                print(f"{self.current_location.description}")
+                separators()
+            else:
+                print("---------------------------------")
+                print("You sneak up to the old remnants.")
+                print("---------------------------------")
+                self.change_location("old_remnants_without_axe")
+                print(f"{self.current_location.description}")
+                separators()
         else:
-            print("---------------------------------")
-            print("You sneak up to the old remnants.")
-            print("---------------------------------")
-            self.change_location("old_remnants_without_axe")
-            print(f"{self.current_location.description}")
-            separators()
+            print("The crone would see you. You can't go there!")
 
     ### Taking the axe
     def take_axe(self) -> None:
@@ -386,6 +392,26 @@ class Game:
         crone.set_position("at_the_desk")
         separators()
 
+    ### Moving to the mirror
+    def go_mirror(self):
+        print("------------------------")
+        print("You approach the mirror.")
+        print("------------------------")
+        self.change_location("mirror")
+        print(f"{self.current_location.desctription}")
+        separators()
+
+    ### Turning the mirror
+    def turn_mirror(self):
+        print("--------------------")
+        print("You turn the mirror.")
+        print("--------------------")
+        print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
+        if crone.get_position() == "center_library":
+            print("The light falls right on the crone. There is a furious roar, inhuman and ears-piercing.\nYou manage to slip behind the rack next to the mirror right in time.\nThe steps are approaching, thi hissing grows.")
+            crone.set_position("approaching_mirror")
+        else:
+            print("Nothing happens. Well, you don't even know what you expected.")
 
     ### Method to get a user input
     def get_input(self, clear):

@@ -3,6 +3,7 @@ from location import Location
 import os
 from dialogues import creature
 from crone import Crone
+from items import *
 
 crone = Crone()
 
@@ -27,7 +28,7 @@ class Game:
                 "explore": self.explore,
                 "quit": self.quit,
                 "open the wardrobe": self.open_the_wardrobe,
-                "take the key": self.take_key,
+                "take the pliers": self.take_pliers,
                 "examine the doll": self.examine_doll,
                 "close the wardrobe": self.close_wardrobe,
                 "go to the window": self.going_to_window,
@@ -124,12 +125,12 @@ class Game:
         print("---------------------------------")
         print("You decided to open the wardrobe!")
         print("---------------------------------")
-        if "key" not in self.inventory:
+        if pliers not in self.inventory:
             self.change_location("wardrobe")
             print(f"{self.current_location.description}")
             separators()
         else:
-            self.change_location("wardrobe without key")
+            self.change_location("wardrobe without pliers")
             print(f"{self.current_location.description}")
             separators()
     
@@ -157,14 +158,14 @@ class Game:
         print("------------------------")
         self.change_location("dark room")
 
-    ### taking the key
-    def take_key(self) -> None:
+    ### taking the pliers
+    def take_pliers(self) -> None:
         print("-----------------")
-        print("You took the key!")
+        print("You took the pliers!")
         print("-----------------")
-        self.add_item("key")
+        self.add_item(pliers)
         self.choices["open the door"].pop("not have")
-        self.change_location("wardrobe without key")
+        self.change_location("wardrobe without pliers")
     
     ### going to the kitchen
     def go_kitchen(self) -> None:

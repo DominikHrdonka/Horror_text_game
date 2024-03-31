@@ -24,12 +24,12 @@ def main() -> None:
 
     wardrobe = Location(
         "wardrobe",
-        "The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... a key!",
+        "The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... old pliers!",
         "The wardrobe - a sad reminder of life long gone.",
-        "take the key, examine the doll, close the wardrobe"
+        "take the pliers, examine the doll, close the wardrobe"
         )
-    wardrobe_without_key = Location(
-        "wardrobe without key",
+    wardrobe_without_pliers = Location(
+        "wardrobe without pliers",
         "The wardrobe - a sad reminder of life long gone.",
         "The wardrobe - a sad reminder of life long gone.",
         "examine the doll, close the wardrobe"
@@ -152,7 +152,7 @@ def main() -> None:
     game.add_location("window", window)
     game.add_location("door", door)
     game.add_location("unlocked door", unlocked_door)
-    game.add_location("wardrobe without key", wardrobe_without_key)
+    game.add_location("wardrobe without pliers", wardrobe_without_pliers)
     game.add_location("kitchen", kitchen)
     game.add_location("sink", sink)
     game.add_location("sink without scalpel", sink_without_scalpel)

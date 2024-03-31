@@ -49,8 +49,15 @@ def main() -> None:
     )
     window = Location(
         "window",
-        "The glass is covered in cobwebs.\nYou try to see through but realize the window is coverd with planks from outside.\nYou can't see anything.",
+        "The glass is covered in cobwebs.\nYou try to see through but realize the window is coverd with planks from outside.\nYou can't see anything except that there,\non the windowsill, there is a metal clip.",
         "The window - if only you could see outside...",
+        "take the clip, open the door, open the wardrobe"
+    )
+
+    window_without_clip = Location(
+        "window without clip",
+        "The window - if only you could see outside...",
+        None,
         "open the door, open the wardrobe"
     )
 
@@ -153,6 +160,7 @@ def main() -> None:
     game.add_location("door", door)
     game.add_location("unlocked door", unlocked_door)
     game.add_location("wardrobe without pliers", wardrobe_without_pliers)
+    game.add_location("window without clip", window_without_clip)
     game.add_location("kitchen", kitchen)
     game.add_location("sink", sink)
     game.add_location("sink without scalpel", sink_without_scalpel)

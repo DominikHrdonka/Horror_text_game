@@ -32,7 +32,8 @@ class Game:
                 "examine the doll": self.examine_doll,
                 "close the wardrobe": self.close_wardrobe,
                 "go to the window": self.going_to_window,
-                "open the door": {"not have": self.open_the_locked_door, "have":self.open_door_with_key},
+                "take the clip": self.take_clip,
+                "open the door": {"not have": self.open_the_locked_door, "have":self.open_door_with_picklock},
                 "go to the next room": self.go_kitchen,
                 "examine the sink": self.examine_sink,
                 "go back to the room": self.go_back_room,
@@ -114,10 +115,10 @@ class Game:
         separators()
     
     ### unlocking the door with the key
-    def open_door_with_key(self) -> None:
-        print("-----------------------------------")
-        print("You unlocked the door with the key!")
-        print("-----------------------------------")
+    def open_door_with_picklock(self) -> None:
+        print("----------------------------------------")
+        print("You unlocked the door with the picklock!")
+        print("----------------------------------------")
         self.change_location("unlocked door")
 
     ### opening the wardrobe
@@ -145,11 +146,16 @@ class Game:
     ### going to the window
     def going_to_window(self) -> None:
         print("--------------------------------")
-        print("You decided to go to the window!")
+        print("You approach the window!")
         print("--------------------------------")
-        self.change_location("window")
-        print(f"{self.current_location.description}")
-        separators()
+        if clip not in self.inventory:
+            self.change_location("window")
+            print(f"{self.current_location.description}")
+            separators()
+        else:
+            self.change_location("window without clip")
+            print(f"{self.current_location.description}")
+            separators()
 
     ### closing the wardrobe
     def close_wardrobe(self) -> None:
@@ -166,6 +172,14 @@ class Game:
         self.add_item(pliers)
         self.choices["open the door"].pop("not have")
         self.change_location("wardrobe without pliers")
+    
+    ###Taking the clip
+    def take_clip(self):
+        print("-----------------")
+        print("You took the clip!")
+        print("-----------------")
+        self.add_item(clip)
+        self.change_location("window without clip")
     
     ### going to the kitchen
     def go_kitchen(self) -> None:

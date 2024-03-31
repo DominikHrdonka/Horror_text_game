@@ -1,5 +1,5 @@
 import time
-from location import Location
+from location import *
 import os
 from dialogues import creature
 from crone import Crone
@@ -124,17 +124,17 @@ class Game:
             print("-----------------------")
             print("The inventory is empty.")
             print("-----------------------")
-    
+            
     ### Method to update inventory choices to craft new items
     def update_invetory_choices(self):
         if pliers in self.inventory and clip in self.inventory:
                 print(f"You can craft {picklock.name}!!!")
                 self.inventory_choices["2"] = "craft a picklock"
                 separators()
-
-    
+            
     ### Method to show available inventory choices
     def get_inventory_choices(self):
+        self.update_invetory_choices()
         inventory_choices = ""
         for value in self.inventory_choices.values():
             inventory_choices += f"{value}, "

@@ -22,6 +22,9 @@ class Game:
         self.locations = {}
         self.inventory = []
         self.knowledge = []
+        self.inventory_choices = {
+            "1": "exit"
+        }
           
     #### Dictionary of all the choices and their methods ####
         self.choices = {            
@@ -109,19 +112,33 @@ class Game:
     ### Opening the inventory
     def open_inventory(self) -> None:
         if self.inventory:
+            self.change_location("inventory")
             print("-----------------------")
             print("Your invenory contains:")
             print("-----------------------")
             for item in self.inventory:
                 print(f"{item.name}")
             separators()
-            if pliers in self.inventory and clip in self.inventory:
-                print(f"You can craft {picklock.name}!!!")
-                separators()
+            self.update_invetory_choices()
         else:
             print("-----------------------")
             print("The inventory is empty.")
             print("-----------------------")
+    
+    ### Method to update inventory choices to craft new items
+    def update_invetory_choices(self):
+        if pliers in self.inventory and clip in self.inventory:
+                print(f"You can craft {picklock.name}!!!")
+                self.inventory_choices["2"] = "craft a picklock"
+                separators()
+
+    
+    ### Method to show available inventory choices
+    def get_inventory_choices(self):
+        inventory_choices = ""
+        for value in self.inventory_choices.values():
+            inventory_choices += f"{value}, "
+        return inventory_choices.rstrip(", ")
     
     #### trying to open the locked door
     def open_the_locked_door(self) -> None:

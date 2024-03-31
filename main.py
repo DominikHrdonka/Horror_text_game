@@ -1,6 +1,7 @@
 from game import Game
 from location import Location
 from items import Items
+
 def main() -> None:
     
     # Creating instance of Game
@@ -12,9 +13,16 @@ def main() -> None:
         "start",
         "",
         "",
-        "explore, quit"
+        "explore, quit, open inventory"
     )
     
+    inventory = Location(
+        "inventory",
+        None,
+        None,
+        game.get_inventory_choices(),
+    )
+
     dark_room = Location(
         "dark room",
         "As your eyes get used to the dark,\nyou start to distinguish a dark frame set on the opposite wall.\nA door! Next to it there's a black shadow of a wardrobe lurking,\nsitting quietly. The walls are empty, except for black mold. The air heavy with dust.\nOne window set in a wall like a dead painting.",
@@ -26,7 +34,7 @@ def main() -> None:
         "wardrobe",
         "The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... old pliers!",
         "The wardrobe - a sad reminder of life long gone.",
-        "take the pliers, examine the doll, close the wardrobe"
+        "take the pliers, examine the doll, close the wardrobe, open inventory"
         )
     wardrobe_without_pliers = Location(
         "wardrobe without pliers",
@@ -38,27 +46,27 @@ def main() -> None:
         "door",
         "Old wooden door. You wonder what's on the other side.",
         "The door - the only way out of here?",
-        "open the door, go to the window, open the wardrobe"
+        "open the door, go to the window, open the wardrobe, open inventory"
 
     )
     unlocked_door = Location(
         "unlocked door",
         "The door - the only way out of here?",
         "The door - the only way out of here?",
-        "go to the next room, go to the window, open the wardrobe"
+        "go to the next room, go to the window, open the wardrobe, open inventory"
     )
     window = Location(
         "window",
         "The glass is covered in cobwebs.\nYou try to see through but realize the window is coverd with planks from outside.\nYou can't see anything except that there,\non the windowsill, there is a metal clip.",
         "The window - if only you could see outside...",
-        "take the clip, open the door, open the wardrobe"
+        "take the clip, open the door, open the wardrobe, open inventory"
     )
 
     window_without_clip = Location(
         "window without clip",
         "The window - if only you could see outside...",
         None,
-        "open the door, open the wardrobe"
+        "open the door, open the wardrobe, open inventory"
     )
 
     kitchen = Location(
@@ -154,6 +162,7 @@ def main() -> None:
 
     # Adding location to the game list of locations
     game.add_location("start", start)
+    game.add_location("inventory", inventory)
     game.add_location("dark room", dark_room)
     game.add_location("wardrobe", wardrobe)
     game.add_location("window", window)

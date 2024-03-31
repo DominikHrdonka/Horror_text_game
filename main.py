@@ -19,7 +19,7 @@ def main() -> None:
         "dark room",
         "As your eyes get used to the dark,\nyou start to distinguish a dark frame set on the opposite wall.\nA door! Next to it there's a black shadow of a wardrobe lurking,\nsitting quietly. The walls are empty, except for black mold. The air heavy with dust.\nOne window set in a wall like a dead painting.",
         "The same old dark room. Mold on the walls, wet stink. Is that fear?",
-        "go to the window, open the door, open the wardrobe"
+        "go to the window, open the door, open the wardrobe, open inventory"
         )
 
     wardrobe = Location(
@@ -32,7 +32,7 @@ def main() -> None:
         "wardrobe without pliers",
         "The wardrobe - a sad reminder of life long gone.",
         "The wardrobe - a sad reminder of life long gone.",
-        "examine the doll, close the wardrobe"
+        "examine the doll, close the wardrobe, open inventory"
     )
     door = Location(
         "door",

@@ -27,6 +27,7 @@ class Game:
         self.choices = {            
                 "explore": self.explore,
                 "quit": self.quit,
+                "open inventory": self.open_inventory,
                 "open the wardrobe": self.open_the_wardrobe,
                 "take the pliers": self.take_pliers,
                 "examine the doll": self.examine_doll,
@@ -104,6 +105,23 @@ class Game:
     def quit(self) -> bool:
         self.game_over = True
         return self.game_over
+    
+    ### Opening the inventory
+    def open_inventory(self) -> None:
+        if self.inventory:
+            print("-----------------------")
+            print("Your invenory contains:")
+            print("-----------------------")
+            for item in self.inventory:
+                print(f"{item.name}")
+            separators()
+            if pliers in self.inventory and clip in self.inventory:
+                print(f"You can craft {picklock.name}!!!")
+                separators()
+        else:
+            print("-----------------------")
+            print("The inventory is empty.")
+            print("-----------------------")
     
     #### trying to open the locked door
     def open_the_locked_door(self) -> None:

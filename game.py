@@ -298,7 +298,7 @@ class Game:
 
  ########Talking to the creature: dialogue########
     def talk_to_creature(self) -> None:
-        
+
         def dialogue_pause() -> None:
             time.sleep(2)
 
@@ -323,11 +323,16 @@ class Game:
                     print("--------------")
                     print(f"{e}")
                     print("--------------")
-                
-        if "knowledge_keypad" not in self.knowledge:
+        if "revisiting creature" not in self.knowledge:
+            self.add_knowledge("revisiting creature")
             play_dialogue("start")
         else:
-            play_dialogue("code_answer")
+            if "knowledge_keypad" not in self.knowledge:
+                print(">>Leave me alone!<<")
+                separators()
+            else:
+                play_dialogue("code_answer")
+            
 
     ### Examining the steel door
     def examine_steel_door(self):
@@ -346,7 +351,7 @@ class Game:
         print("---------------------------------------")
         code = input("Enter the code: ")
         clear()
-        if code == "111":
+        if code == "571":
             print("-----------------------------")
             print("The keypad light turns green!")
             print("-----------------------------")

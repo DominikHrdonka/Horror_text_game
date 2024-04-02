@@ -10,11 +10,11 @@
 #
 # NOTES TO GAMEPLAY
 # ------------------
-# - the door code is temporarily set to 111. That will change with finishing the appropriate dialogue branch
+# - 
 #
 # NOTES ON WHAT YET NEEDS TO BE DONE:::::
 # ---------------------------------------
-# 
+# - finish the dialogue logic (bringing up new topics according to the knowledge)
 # - use encapsulation to protect attributes from tampering
 # - add the dialogue branch about getting the code 
 # - build options and story for the library location
@@ -23,7 +23,7 @@
 # - 
 # -
 # - INVENTORY - finish the logic to update inventory choices dynamically
-#             - add option to open inventory to evry location
+#             - add option to open inventory to every location
 # 
 #
 #

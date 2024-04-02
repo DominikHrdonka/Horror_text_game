@@ -20,10 +20,10 @@
 # - build options and story for the library location
 # - 
 # - build enter the passageway location
-# 
-# 
-# 
-# 
+# - 
+# -
+# - INVENTORY - finish the logic to update inventory choices dynamically
+#             - add option to open inventory to evry location
 # 
 #
 #

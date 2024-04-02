@@ -30,7 +30,6 @@ class Game:
         self.choices = {            
                 "explore": self.explore,
                 "quit": self.quit,
-                "open inventory": self.open_inventory,
                 "open the wardrobe": self.open_the_wardrobe,
                 "take the pliers": self.take_pliers,
                 "examine the doll": self.examine_doll,
@@ -205,8 +204,13 @@ class Game:
         print("You took the pliers!")
         print("-----------------")
         self.add_item(pliers)
-        self.choices["open the door"].pop("not have")
         self.change_location("wardrobe without pliers")
+        if clip in self.inventory:
+            print(f"You combined the {clip.name} and {pliers.name} and crafted a {picklock.name}!")
+            self.inventory.remove(clip)
+            self.inventory.append(picklock)
+            separators()
+            self.choices["open the door"].pop("not have")
     
     ###Taking the clip
     def take_clip(self):
@@ -215,6 +219,12 @@ class Game:
         print("-----------------")
         self.add_item(clip)
         self.change_location("window without clip")
+        if pliers in self.inventory:
+            print(f"You combined the {clip.name} and {pliers.name} and crafted a {picklock.name}!")
+            self.inventory.remove(clip)
+            self.inventory.append(picklock)
+            separators()
+            self.choices["open the door"].pop("not have")
     
     ### going to the kitchen
     def go_kitchen(self) -> None:

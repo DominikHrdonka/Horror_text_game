@@ -6,7 +6,7 @@ class Crone:
             "1": "center_library",
             "2": "at_the_desk",
             "3": "approaching_mirror",
-            "4": "approcahing_mirror"
+            "4": "approaching_service_room"
         }
 
     def get_position(self):

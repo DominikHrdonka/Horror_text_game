@@ -162,3 +162,10 @@ service_room = Location(
     "The old service room – not much left but something could be useful.",
     "enter the passageway, examine the fuse box, use the computer, examine the garbage, go to the library"
 )
+
+fuse_box = Location(
+    "fuse_box",
+    "The old fuse box is covered with cobwebs. There's a silent buzz coming out from it.\nCould it be still functional?",
+    "The old fuse box – still working",
+    "switch the button, look away"
+)

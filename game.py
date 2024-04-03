@@ -63,6 +63,7 @@ class Game:
                 "examine the garbage": self.examine_garbage,
                 "examine the fuse box": self.examine_fuse_box,
                 "look away": self.look_away,
+                "switch the button": self.switch_button
                 
             }
 
@@ -85,6 +86,13 @@ class Game:
     def add_knowledge(self, knowledge) -> None:
         self.knowledge.append(knowledge)
 
+    ### Method to add label to actions
+    def label(self, give_label):
+        separator_count = "-" * len(give_label)
+        print(separator_count)
+        print(f"{give_label}")
+        print(separator_count)
+
     
     ### Method to start the game with an intr
     def start_game(self) -> None:
@@ -103,9 +111,7 @@ class Game:
     
     ### Exploring at the beginning of the game
     def explore(self) -> None:
-        print("-----------------------")
-        print("You decided to explore!")
-        print("-----------------------")
+        self.label("You decided to explore!")
         self.change_location("dark room")
         print(f"{self.current_location.description}")
         separators()

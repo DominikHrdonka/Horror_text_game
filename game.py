@@ -58,7 +58,10 @@ class Game:
                 "move to the mirror": self.go_mirror,
                 "turn the mirror": self.turn_mirror,
                 "enter the passageway": self.go_passageway,
-                "climb through the hole": self.climb_through_hole
+                "climb through the hole": self.climb_through_hole,
+                "use the computer": self.use_computer,
+                "examine the garbager": self.examine_garbage
+                
             }
 
     ### method to add Location instances to the dictionary
@@ -518,11 +521,26 @@ class Game:
             print(f"{self.current_location.description_next}")
             separators()
 
+    ### Using the computer
+    def use_computer(self)-> None:
+        print("---------------------------")
+        print("You press the power button.\nNothing happens. the machine is long dead.")
+        print("---------------------------")
+
     ### Method to get a user input
     def get_input(self, clear):
         user_input = input(f"What do you want to do? ({self.current_location.choices}) > ").lower()
         clear()
         return user_input
+
+    ### Examining the garbage
+    def examine_garbage(self)-> None:
+        print("-------------------------")
+        print("You approach the garbage.\nOld carton boxes, some wires, papershreds... Oh, look, a rusty knife!")
+        print("-------------------------")
+        print("You took the rusty knife!")
+        separators()
+        self.add_item("rusty_knife")
 
 
 ########### MAIN LOOP OF THE GAME # #########

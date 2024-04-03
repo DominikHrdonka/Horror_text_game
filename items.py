@@ -20,6 +20,6 @@ clip = Items("clip")
 picklock = Items("picklock")
 
 ### Weapons instances
-scalpel = Weapons("scalpel", 2)
+scalpel = Weapons("scalpel", 4)
 axe = Weapons("axe", 7)
-steel_bar = Weapons("steel_bar", 5)
+rusty_knife = Weapons("rusty_knife", 3)

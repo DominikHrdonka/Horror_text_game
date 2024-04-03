@@ -125,17 +125,13 @@ class Game:
     def open_inventory(self) -> None:
         if self.inventory:
             self.change_location("inventory")
-            print("-----------------------")
-            print("Your invenory contains:")
-            print("-----------------------")
+            self.label("Your inventory contains:")
             for item in self.inventory:
                 print(f"{item.name}")
             separators()
             self.update_invetory_choices()
         else:
-            print("-----------------------")
-            print("The inventory is empty.")
-            print("-----------------------")
+            self.label("The inventory is empty.")
             
     ### Method to update inventory choices to craft new items
     def update_invetory_choices(self):
@@ -154,25 +150,19 @@ class Game:
     
     #### trying to open the locked door
     def open_the_locked_door(self) -> None:
-        print("----------------------------")
-        print("You decided to open the door!")
-        print("----------------------------")
+        self.label("You decided to open the door!")
         print("You press the knob but nothing happens.\nThe door is locked! ")
         self.change_location("door")
         separators()
     
     ### unlocking the door with the key
     def open_door_with_picklock(self) -> None:
-        print("----------------------------------------")
-        print("You unlocked the door with the picklock!")
-        print("----------------------------------------")
+        self.label("You unlocked the door with the picklock!")
         self.change_location("unlocked door")
 
     ### opening the wardrobe
     def open_the_wardrobe(self) -> None:
-        print("---------------------------------")
-        print("You decided to open the wardrobe!")
-        print("---------------------------------")
+        self.label("You opened the wardrobe!")
         if pliers not in self.inventory:
             self.change_location("wardrobe")
             print(f"{self.current_location.description}")
@@ -184,17 +174,13 @@ class Game:
     
     ### examining the doll in the wardrobe
     def examine_doll(self) -> None:
-        print("--------------------------")
-        print("You're examining the doll.")
-        print("--------------------------")
+        self.label("You pick up the doll.")
         print("The doll's empty eyes make you shudder.\nYou carefully take it it in your hands. A memory pops out.\nA dark memory screaming at you from within.\nA flash of a vision – you're in your room. She came for a visit.\nShe stinks from alcohol and for some reason you are scared.\nShe grins at you, her teeth rotten and disgusting...\nYou put the doll back in the wardrobe.")
         separators()
 
     ### going to the window
     def going_to_window(self) -> None:
-        print("--------------------------------")
-        print("You approach the window!")
-        print("--------------------------------")
+        self.label("You approach the window.")
         if clip not in self.inventory:
             self.change_location("window")
             print(f"{self.current_location.description}")
@@ -206,16 +192,12 @@ class Game:
 
     ### closing the wardrobe
     def close_wardrobe(self) -> None:
-        print("------------------------")
-        print("You closed the wardrobe.")
-        print("------------------------")
+        self.label("You closed the wardrobe.")
         self.change_location("dark room")
 
     ### taking the pliers
     def take_pliers(self) -> None:
-        print("-----------------")
-        print("You took the pliers!")
-        print("-----------------")
+        self.label("You took the pliers!")
         self.add_item(pliers)
         self.change_location("wardrobe without pliers")
         if clip in self.inventory:
@@ -227,9 +209,7 @@ class Game:
     
     ###Taking the clip
     def take_clip(self):
-        print("-----------------")
-        print("You took the clip!")
-        print("-----------------")
+        self.label("You took the clip!")
         self.add_item(clip)
         self.change_location("window without clip")
         if pliers in self.inventory:
@@ -241,18 +221,14 @@ class Game:
     
     ### going to the kitchen
     def go_kitchen(self) -> None:
-        print("---------------------")
-        print("You entered the room!")
-        print("---------------------")
+        self.label("You enter the room!")
         self.change_location("kitchen")
         print(f"{self.current_location.description}")
         separators()
     
     ### Taking the scalpel
     def take_scalpel(self) -> None:
-        print("---------------------")
-        print("You took the scalpel!")
-        print("---------------------")
+        self.label("You took the scalpel!")
         self.add_item("scalpel")
         self.change_location("sink without scalpel")
         print(f"{self.current_location.description}")
@@ -260,9 +236,7 @@ class Game:
 
     ##Examining the sink
     def examine_sink(self) -> None:
-        print("--------------------------------")
-        print("You decided to examine the sink!")
-        print("--------------------------------")
+        self.label("You approach the sink.")
         if "scalpel" not in self.inventory:    
             self.change_location("sink")
             print(f"{self.current_location.description}")
@@ -274,9 +248,7 @@ class Game:
 
     ### Turning away from the sink
     def turn_away_sink(self) -> None:
-        print("------------------------------")
-        print("You turned away from the sink.")
-        print("------------------------------")
+        self.label("You turn away from the sink.")
         self.change_location("kitchen")
         print(f"{self.current_location.description_next}")
         separators()
@@ -284,27 +256,21 @@ class Game:
 
     ### Examining the green door
     def examine_green_door(self) -> None:
-        print("----------------------------")
-        print("You approach the green door.")
-        print("----------------------------")
+        self.label("You approach the green door.")
         self.change_location("keyhole")
         print(f"{self.current_location.description}")
         separators()
     
     ### getting back to the dark room
     def go_back_room(self) -> None:
-        print("-----------------------------")
-        print("You go back to the dark room.")
-        print("-----------------------------")
+        self.label("You go back to the dark room.")
         self.change_location("dark room")
         print(f"{self.current_location.description_next}")
         separators()
     
     ### Moving away from the doors in the kitchen
     def move_away(self) -> None:
-        print("-----------------------------")
-        print("You turn back to the kitchen.")
-        print("-----------------------------")
+        self.label("You turn back to the kitchen.")
         self.change_location("kitchen")
         print(f"{self.current_location.description_next}")
         separators()
@@ -349,9 +315,7 @@ class Game:
 
     ### Examining the steel door
     def examine_steel_door(self):
-        print("-----------------------------")
-        print("You approach the steel door.")
-        print("-----------------------------")
+        self.label("You approach the steel door.")
         self.change_location("steel_door")
         self.add_knowledge("knowledge_keypad")
         print(f"{self.current_location.description}")
@@ -359,15 +323,11 @@ class Game:
 
     ### Entering the code
     def enter_code(self):
-        print("---------------------------------------")
-        print("The screen is blank, the keys worn out.")
-        print("---------------------------------------")
+        self.label("The screen is blank, the keys worn out.")
         code = input("Enter the code: ")
         clear()
         if code == "571":
-            print("-----------------------------")
-            print("The keypad light turns green!")
-            print("-----------------------------")
+            self.label("The keypad light turns green!")
             self.change_location("steel_door_opened")
             print(f"{self.current_location.description}")
             separators()
@@ -377,36 +337,28 @@ class Game:
     
     ### Going to the library 
     def go_library(self):
-        print("--------------------------------------")
-        print("The vast room reveals in front of you.")
-        print("--------------------------------------")
+        self.label("The vast room reveals in front of you.")
         self.change_location("library")
         print(f"{self.current_location.description}")
         separators()
 
     ### Hiding behin the first rack
     def hide_behind_rack(self):
-        print("-------------------------------------")
-        print("You slip behind the rack on the left.")
-        print("-------------------------------------")
+        self.label("You slip behind the rack on the left.")
         self.change_location("rack_one")
         print(f"{self.current_location.description}")
         separators()
 
     ### Moving back to the steel door
     def go_back_steel_door(self):
-        print("---------------------------")
-        print("You are at the entrance again.")
-        print("---------------------------")
+        self.label("You are at the entrance again.")
         self.change_location("library")
         print(f"{self.current_location.description_next}")
         separators()
     
     ### Going back to the kitchen from the library
     def go_back_kitchen(self) -> None:
-        print("-------------------------------------")
-        print("You slip back through the steel door.")
-        print("-------------------------------------")
+        self.label("You slip back through the steel door.")
         self.change_location("kitchen")
         print(f"{self.current_location.description}")
         separators()
@@ -415,22 +367,17 @@ class Game:
     def go_old_remnants(self) -> None:
         if crone.get_position() != "approaching_mirror":    
             if "axe" not in self.inventory:
-                print("---------------------------------")
-                print("You sneak up to the old remnants.")
-                print("---------------------------------")
+                self.label("You sneak up to the old remnants.")
                 self.change_location("old_remnants")
                 print(f"{self.current_location.description}")
                 separators()
             else:
-                print("---------------------------------")
-                print("You sneak up to the old remnants.")
-                print("---------------------------------")
+                self.label("You sneak up to the old remnants.")
                 self.change_location("old_remnants_without_axe")
                 print(f"{self.current_location.description}")
                 separators()
         else:
-            print("The crone would see you. You can't go there!")
-            separators()
+            self.label("The crone would see you. You can't go there!")
 
     ### Taking the axe
     def take_axe(self) -> None:
@@ -447,16 +394,12 @@ class Game:
         
     def go_desk(self):
         if "desk_pushed" not in self.knowledge:
-            print("-----------------------------")
-            print("You approach the bloody desk.")
-            print("-----------------------------")
+            self.label("You approach the bloody desk.")
             self.change_location("desk_with_body")
             print(f"{self.current_location.description}")
             separators()
         else:
-            print("-----------------------------")
-            print("The desk has been pushed away.")
-            print("-----------------------------")
+            self.label("The desk has been pushed away.")
             self.change_location("pushed_desk")
             print(f"{self.current_location.description_next}")
             if crone.get_position() == "at_the_desk":
@@ -464,9 +407,7 @@ class Game:
             separators()
 
     def push_desk(self):
-        print("------------------------------------")
-        print("The desk moves usrpisingly smoothly.")
-        print("------------------------------------")
+        self.label("The desk moves usrpisingly smoothly.")
         print("The wheels squeek and soon the desk hits the rack on the opposite wall.\nFrom the center of the library, there comes a terrible hiss.\nThen heavy steps, and the sound of cloth sweeping on the floor.\nThe crone is on the move! She's gone to inspect the fuss at the opposite side.\n")
         self.change_location("pushed_desk")
         self.knowledge.append("desk_pushed")
@@ -475,18 +416,14 @@ class Game:
 
     ### Moving to the mirror
     def go_mirror(self):
-        print("------------------------")
-        print("You approach the mirror.")
-        print("------------------------")
+        self.label("You approach the mirror.")
         self.change_location("mirror")
         print(f"{self.current_location.description}")
         separators()
 
     ### Turning the mirror
     def turn_mirror(self):
-        print("--------------------")
-        print("You turn the mirror.")
-        print("--------------------")
+        self.label("You turn the mirror.")
         if crone.get_position() != "approaching_mirror":
             if crone.get_position() == "center_library":
                 print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
@@ -503,9 +440,7 @@ class Game:
 
     ### Going to the passageway
     def go_passageway(self)-> None:
-        print("-------------------------")
-        print("You enter the passageway.")
-        print("-------------------------")
+        self.label("You enter the passageway.")
         self.change_location("passageway")
         if "revisiting_passgw" not in self.knowledge:
             print(f"{self.current_location.description}")
@@ -517,9 +452,7 @@ class Game:
 
     ### Entering the service room
     def climb_through_hole(self)-> None:
-        print("-------------------------")
-        print("You climb through the hole.")
-        print("-------------------------")
+        self.label("You climb through the hole.")
         self.change_location("service_room")
         if "revisitting_servicer" not in self.knowledge:
             print(f"{self.current_location.description}")
@@ -552,9 +485,7 @@ class Game:
 
     ###Examining the fuse box
     def examine_fuse_box(self)-> None:
-        print("--------------------------")
-        print("You approach the fuse box.")
-        print("--------------------------")
+        self.label("You approach the fuse box.")
         self.change_location("fuse_box")
         if "revisiting_fuse" not in self.knowledge:
             print(f"{self.current_location.description}")
@@ -566,17 +497,13 @@ class Game:
     
     ###Looking away from the fuse box
     def look_away(self)-> None:
-        print("--------------")
-        print("You look away.")
-        print("--------------")
+        self.label("You look away.")
         self.change_location("service_room")
         print(f"{self.current_location.description_next}")
 
     ###Switching the button on the fuse box
     def switch_button(self)-> None:
-        print("----------------------")
-        print("You switch the button.")
-        print("----------------------")
+        self.label("You switch the button.")
         print("There is a spark.\nFrom below the door you see light entering the service room.\nAnd with the light, there comes a shriek. The crone's coming here!")
         crone.set_position("approaching_service_room") 
         
@@ -601,7 +528,5 @@ class Game:
                     self.choices[user_input]()
                     user_input = self.get_input(clear)
             except:
-                print("---------------")
-                print("Invalid choice.")
-                print("---------------")
+                self.label("Invalid choice.")
                 user_input = self.get_input(clear)

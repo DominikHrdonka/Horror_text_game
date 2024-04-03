@@ -148,3 +148,10 @@ pushed_desk = Location (
     "The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
     "hide behind the rack, quit"
 )
+
+passageway = Location(
+    "passageway",
+    "You squeeze yourself inbetween the racks and the ragged wall.\nIf you're careful enough, you can get to the at the end of the library undetected.\nIn the narrow passageway, everything stinks of mold and.\nAt the end, you can see a dim hole in the wall. Where is it going?",
+    "The narrow passageway – an opportunity to get to the other side of the library.",
+    "move to the mirror, climb through the hole"
+)

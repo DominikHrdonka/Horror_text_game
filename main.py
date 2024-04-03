@@ -30,6 +30,7 @@ def main() -> None:
     game.add_location("pushed_desk", pushed_desk)
     game.add_location("old_remnants_without_axe", old_remnants_without_axe)
     game.add_location("mirror", mirror)
+    game.add_location("passageway", passageway)
 
     # Defining current location
     game.current_location = dark_room

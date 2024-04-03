@@ -22,3 +22,4 @@ picklock = Items("picklock")
 ### Weapons instances
 scalpel = Weapons("scalpel", 2)
 axe = Weapons("axe", 7)
+steel_bar = Weapons("steel_bar", 5)

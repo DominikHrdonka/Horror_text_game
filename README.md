@@ -14,12 +14,12 @@
 #
 # NOTES ON WHAT YET NEEDS TO BE DONE:::::
 # ---------------------------------------
-# - finish the dialogue logic (bringing up new topics according to the knowledge)
+# 
 # - use encapsulation to protect attributes from tampering
-# - add the dialogue branch about getting the code 
+# 
 # - build options and story for the library location
 # - 
-# - build enter the passageway location
+# - 
 # - 
 # -
 # - INVENTORY - finish the logic to update inventory choices dynamically

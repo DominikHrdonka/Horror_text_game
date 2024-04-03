@@ -57,7 +57,8 @@ class Game:
                 "push the desk": self.push_desk,
                 "move to the mirror": self.go_mirror,
                 "turn the mirror": self.turn_mirror,
-                "enter the passageway": self.go_passageway
+                "enter the passageway": self.go_passageway,
+                "climb through the hole": self.climb_through_hole
             }
 
     ### method to add Location instances to the dictionary
@@ -488,16 +489,31 @@ class Game:
         else:
             print("The mirror is already turned and the crone is coming to you!")
             separators()
-        
+
+    ### Going to the passageway
     def go_passageway(self)-> None:
         print("-------------------------")
         print("You enter the passageway.")
         print("-------------------------")
         self.change_location("passageway")
-        self.add_knowledge("revisiting_passgw")
         if "revisiting_passgw" not in self.knowledge:
             print(f"{self.current_location.description}")
+            self.add_knowledge("revisiting_passgw")
             separators()
+        else:
+            print(f"{self.current_location.description_next}")
+            separators()
+
+    ### Entering the service room
+    def climb_through_hole(self)-> None:
+        print("-------------------------")
+        print("You climb through the hole.")
+        print("-------------------------")
+        self.change_location("service_room")
+        if "revisitting_servicer" not in self.knowledge:
+            print(f"{self.current_location.description}")
+            separators()
+            self.add_knowledge("revisitting_servicer")
         else:
             print(f"{self.current_location.description_next}")
             separators()

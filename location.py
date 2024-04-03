@@ -155,3 +155,10 @@ passageway = Location(
     "The narrow passageway – an opportunity to get to the other side of the library.",
     "move to the mirror, climb through the hole"
 )
+
+service_room = Location(
+    "service_room",
+    "You find yourself in an old service room. There is a rusty fuse box on the wall.\nSome garbage in the corner. A dusted computer. Door, most likely leading to the library.",
+    "The old service room – not much left but something could be useful.",
+    "enter the passageway, examine the fuse box, examine the computer, examine the garbage, open the door"
+)

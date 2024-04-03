@@ -160,5 +160,5 @@ service_room = Location(
     "service_room",
     "You find yourself in an old service room. There is a rusty fuse box on the wall.\nSome garbage in the corner. A dusted computer. Door, most likely leading to the library.",
     "The old service room – not much left but something could be useful.",
-    "enter the passageway, examine the fuse box, examine the computer, examine the garbage, open the door"
+    "enter the passageway, examine the fuse box, use the computer, examine the garbage, go to the library"
 )

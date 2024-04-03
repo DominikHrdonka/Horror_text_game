@@ -32,6 +32,7 @@ def main() -> None:
     game.add_location("mirror", mirror)
     game.add_location("passageway", passageway)
     game.add_location("service_room", service_room)
+    game.add_location("fuse_box", fuse_box)
 
     # Defining current location
     game.current_location = dark_room

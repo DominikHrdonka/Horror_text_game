@@ -60,7 +60,9 @@ class Game:
                 "enter the passageway": self.go_passageway,
                 "climb through the hole": self.climb_through_hole,
                 "use the computer": self.use_computer,
-                "examine the garbager": self.examine_garbage
+                "examine the garbage": self.examine_garbage,
+                "examine the fuse box": self.examine_fuse_box,
+                "look away": self.look_away,
                 
             }
 
@@ -541,6 +543,38 @@ class Game:
         print("You took the rusty knife!")
         separators()
         self.add_item("rusty_knife")
+
+    ###Examining the fuse box
+    def examine_fuse_box(self)-> None:
+        print("--------------------------")
+        print("You approach the fuse box.")
+        print("--------------------------")
+        self.change_location("fuse_box")
+        if "revisiting_fuse" not in self.knowledge:
+            print(f"{self.current_location.description}")
+            separators()
+            self.add_knowledge("revisiting_fuse")
+        else:
+            print(f"{self.current_location.description_next}")
+            separators()
+    
+    ###Looking away from the fuse box
+    def look_away(self)-> None:
+        print("--------------")
+        print("You look away.")
+        print("--------------")
+        self.change_location("service_room")
+        print(f"{self.current_location.description_next}")
+
+    ###Switching the button on the fuse box
+    def switch_button(self)-> None:
+        print("----------------------")
+        print("You switch the button.")
+        print("----------------------")
+        print("There is a spark.\nFrom below the door you see light entering the service room.\nAnd with the light, there comes a shriek. The crone's coming here!")
+        crone.set_position("approaching_service_room") 
+        
+
 
 
 ########### MAIN LOOP OF THE GAME # #########

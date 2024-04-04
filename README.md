@@ -18,7 +18,7 @@
 # - use encapsulation to protect attributes from tampering
 # 
 # - build options and story for the library location
-# - 
+# - user input must comply with the given choices (so far I will leave it for purpose of testing)
 # - 
 # - 
 # -

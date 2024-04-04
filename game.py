@@ -508,8 +508,6 @@ class Game:
         crone.set_position("approaching_service_room") 
         
 
-
-
 ########### MAIN LOOP OF THE GAME # #########
     def main_loop(self) -> None:        
         user_input = self.get_input(clear)
@@ -519,9 +517,7 @@ class Game:
                     try: 
                         self.choices[user_input]["not have"]()
                         user_input = self.get_input(clear)
-                    except: ##Here we'll need to switch the
-                            ##booleans after picking up
-                            ##the items:
+                    except:
                         self.choices[user_input]["have"]()
                         user_input = self.get_input(clear)
                 else:

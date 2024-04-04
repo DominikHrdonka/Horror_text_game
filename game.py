@@ -19,7 +19,7 @@ class Game:
     def __init__(self) -> None:
         self.game_over = False
         self.current_location = None
-        self.locations = {}
+        self.__locations = {}
         self.inventory = []
         self.knowledge = []
         self.inventory_choices = {
@@ -69,13 +69,13 @@ class Game:
 
     ### method to add Location instances to the dictionary
     def add_location(self, key, location) -> None:
-        self.locations[key] = location
+        self.__locations[key] = location
 
     ### method to change current location - loop until correct input
     def change_location(self, key) -> None:
         while True:
-            if key in self.locations:
-                self.current_location = self.locations[key]
+            if key in self.__locations:
+                self.current_location = self.__locations[key]
                 break
     
     ### Method to add items to inventory

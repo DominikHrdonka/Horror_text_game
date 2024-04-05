@@ -19,7 +19,7 @@
 # 
 # - build options and story for the library location
 # - user input must comply with the given choices (so far I will leave it for purpose of testing)
-# - deal with quiting the game or ending the program - after doing that user input prompt still appears
+# -
 # - 
 # -
 # - INVENTORY - finish the logic to update inventory choices dynamically

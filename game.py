@@ -517,12 +517,22 @@ class Game:
                     try: 
                         self.choices[user_input]["not have"]()
                         user_input = self.get_input(clear)
+
+                    except KeyboardInterrupt:
+                        return True
+                    
                     except:
                         self.choices[user_input]["have"]()
                         user_input = self.get_input(clear)
+                elif user_input == "quit":
+                    return True
                 else:
                     self.choices[user_input]()
                     user_input = self.get_input(clear)
+            
+            except KeyboardInterrupt:
+                return True
+            
             except:
                 self.label("Invalid choice.")
                 user_input = self.get_input(clear)

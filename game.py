@@ -21,7 +21,7 @@ class Game:
         self.__current_location = None
         self.__locations = {}
         self.__inventory = []
-        self.knowledge = []
+        self.__knowledge = []
         self.inventory_choices = {
             "1": "exit"
         }
@@ -88,7 +88,7 @@ class Game:
     
     ### Method to add knowledge to knowledge list
     def add_knowledge(self, knowledge) -> None:
-        self.knowledge.append(knowledge)
+        self.__knowledge.append(knowledge)
 
     ### Method to add label to actions
     def label(self, give_label):
@@ -306,11 +306,11 @@ class Game:
                     print("--------------")
                     print(f"{e}")
                     print("--------------")
-        if "revisiting creature" not in self.knowledge:
+        if "revisiting creature" not in self.__knowledge:
             self.add_knowledge("revisiting creature")
             play_dialogue("start")
         else:
-            if "knowledge_keypad" not in self.knowledge:
+            if "knowledge_keypad" not in self.__knowledge:
                 print(">>Leave me alone!<<")
                 separators()
             else:
@@ -397,7 +397,7 @@ class Game:
             self.change_location("old_remnants_without_axe")
         
     def go_desk(self):
-        if "desk_pushed" not in self.knowledge:
+        if "desk_pushed" not in self.__knowledge:
             self.label("You approach the bloody desk.")
             self.change_location("desk_with_body")
             print(f"{self.__current_location.description}")
@@ -414,7 +414,7 @@ class Game:
         self.label("The desk moves usrpisingly smoothly.")
         print("The wheels squeek and soon the desk hits the rack on the opposite wall.\nFrom the center of the library, there comes a terrible hiss.\nThen heavy steps, and the sound of cloth sweeping on the floor.\nThe crone is on the move! She's gone to inspect the fuss at the opposite side.\n")
         self.change_location("pushed_desk")
-        self.knowledge.append("desk_pushed")
+        self.add_knowledge("desk_pushed")
         crone.set_position("at_the_desk")
         separators()
 
@@ -446,7 +446,7 @@ class Game:
     def go_passageway(self)-> None:
         self.label("You enter the passageway.")
         self.change_location("passageway")
-        if "revisiting_passgw" not in self.knowledge:
+        if "revisiting_passgw" not in self.__knowledge:
             print(f"{self.__current_location.description}")
             self.add_knowledge("revisiting_passgw")
             separators()
@@ -458,7 +458,7 @@ class Game:
     def climb_through_hole(self)-> None:
         self.label("You climb through the hole.")
         self.change_location("service_room")
-        if "revisitting_servicer" not in self.knowledge:
+        if "revisitting_servicer" not in self.__knowledge:
             print(f"{self.__current_location.description}")
             separators()
             self.add_knowledge("revisitting_servicer")
@@ -491,7 +491,7 @@ class Game:
     def examine_fuse_box(self)-> None:
         self.label("You approach the fuse box.")
         self.change_location("fuse_box")
-        if "revisiting_fuse" not in self.knowledge:
+        if "revisiting_fuse" not in self.__knowledge:
             print(f"{self.__current_location.description}")
             separators()
             self.add_knowledge("revisiting_fuse")

@@ -20,7 +20,7 @@ class Game:
         self.__game_over = False
         self.__current_location = None
         self.__locations = {}
-        self.inventory = []
+        self.__inventory = []
         self.knowledge = []
         self.inventory_choices = {
             "1": "exit"
@@ -80,7 +80,11 @@ class Game:
     
     ### Method to add items to inventory
     def add_item(self, item) -> None:
-        self.inventory.append(item)
+        self.__inventory.append(item)
+    
+    ### Removing items from inventory
+    def remove_item(self, item):
+        self.__inventory.remove(item)
     
     ### Method to add knowledge to knowledge list
     def add_knowledge(self, knowledge) -> None:
@@ -123,10 +127,10 @@ class Game:
     
     ### Opening the inventory
     def open_inventory(self) -> None:
-        if self.inventory:
+        if self.__inventory:
             self.change_location("inventory")
             self.label("Your inventory contains:")
-            for item in self.inventory:
+            for item in self.__inventory:
                 print(f"{item.name}")
             separators()
             self.update_invetory_choices()
@@ -135,7 +139,7 @@ class Game:
             
     ### Method to update inventory choices to craft new items
     def update_invetory_choices(self):
-        if pliers in self.inventory and clip in self.inventory:
+        if pliers in self.__inventory and clip in self.__inventory:
                 print(f"You can craft {picklock.name}!!!")
                 self.inventory_choices["2"] = "craft a picklock"
                 separators()
@@ -163,7 +167,7 @@ class Game:
     ### opening the wardrobe
     def open_the_wardrobe(self) -> None:
         self.label("You opened the wardrobe!")
-        if pliers not in self.inventory:
+        if pliers not in self.__inventory:
             self.change_location("wardrobe")
             print(f"{self.__current_location.description}")
             separators()
@@ -181,7 +185,7 @@ class Game:
     ### going to the window
     def going_to_window(self) -> None:
         self.label("You approach the window.")
-        if clip not in self.inventory:
+        if clip not in self.__inventory:
             self.change_location("window")
             print(f"{self.__current_location.description}")
             separators()
@@ -200,10 +204,10 @@ class Game:
         self.label("You took the pliers!")
         self.add_item(pliers)
         self.change_location("wardrobe without pliers")
-        if clip in self.inventory:
+        if clip in self.__inventory:
             print(f"You combined the {clip.name} and {pliers.name} and crafted a {picklock.name}!")
-            self.inventory.remove(clip)
-            self.inventory.append(picklock)
+            self.remove_item(clip)
+            self.add_item(picklock)
             separators()
             self.choices["open the door"].pop("not have")
     
@@ -212,10 +216,10 @@ class Game:
         self.label("You took the clip!")
         self.add_item(clip)
         self.change_location("window without clip")
-        if pliers in self.inventory:
+        if pliers in self.__inventory:
             print(f"You combined the {clip.name} and {pliers.name} and crafted a {picklock.name}!")
-            self.inventory.remove(clip)
-            self.inventory.append(picklock)
+            self.remove_item(clip)
+            self.add_item(picklock)
             separators()
             self.choices["open the door"].pop("not have")
     
@@ -237,7 +241,7 @@ class Game:
     ##Examining the sink
     def examine_sink(self) -> None:
         self.label("You approach the sink.")
-        if "scalpel" not in self.inventory:    
+        if "scalpel" not in self.__inventory:    
             self.change_location("sink")
             print(f"{self.__current_location.description}")
             separators()
@@ -366,7 +370,7 @@ class Game:
     ### Moving to the stuck axe
     def go_old_remnants(self) -> None:
         if crone.get_position() != "approaching_mirror":    
-            if "axe" not in self.inventory:
+            if "axe" not in self.__inventory:
                 self.label("You sneak up to the old remnants.")
                 self.change_location("old_remnants")
                 print(f"{self.__current_location.description}")
@@ -389,7 +393,7 @@ class Game:
             print("-----------------------------------")
             print("Your muscles tense up as you pull.\nFinally, as the wood creaks, you successfully remove the axe.")
             print("-----------------------------------")
-            self.inventory.append("axe")
+            self.add_item(axe)
             self.change_location("old_remnants_without_axe")
         
     def go_desk(self):

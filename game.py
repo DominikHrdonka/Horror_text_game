@@ -75,6 +75,10 @@ class Game:
     ### getting the current location
     def get_current_location(self):
         return self.__current_location.description
+    
+    ### getting curr. loc. when revisiting
+    def get_current_location_revisit(self):
+        return self.__current_location.description_next
 
     ### method to change current location - loop until correct input
     def change_location(self, key) -> None:
@@ -259,7 +263,7 @@ class Game:
     def turn_away_sink(self) -> None:
         self.label("You turn away from the sink.")
         self.change_location("kitchen")
-        print(f"{self.__current_location.description_next}")
+        print(f"{self.get_current_location_revisit()}")
         separators()
 
 
@@ -274,14 +278,14 @@ class Game:
     def go_back_room(self) -> None:
         self.label("You go back to the dark room.")
         self.change_location("dark room")
-        print(f"{self.__current_location.description_next}")
+        print(f"{self.get_current_location_revisit()}")
         separators()
     
     ### Moving away from the doors in the kitchen
     def move_away(self) -> None:
         self.label("You turn back to the kitchen.")
         self.change_location("kitchen")
-        print(f"{self.__current_location.description_next}")
+        print(f"{self.get_current_location_revisit()}")
         separators()
 
  ########Talking to the creature: dialogue########
@@ -362,7 +366,7 @@ class Game:
     def go_back_steel_door(self):
         self.label("You are at the entrance again.")
         self.change_location("library")
-        print(f"{self.__current_location.description_next}")
+        print(f"{self.get_current_location_revisit()}")
         separators()
     
     ### Going back to the kitchen from the library
@@ -410,7 +414,7 @@ class Game:
         else:
             self.label("The desk has been pushed away.")
             self.change_location("pushed_desk")
-            print(f"{self.__current_location.description_next}")
+            print(f"{self.get_current_location_revisit()}")
             if crone.get_position() == "at_the_desk":
                 print("The crone is examining the desk and body, hissing and twitching with rage.")
             separators()
@@ -456,7 +460,7 @@ class Game:
             self.add_knowledge("revisiting_passgw")
             separators()
         else:
-            print(f"{self.__current_location.description_next}")
+            print(f"{self.get_current_location_revisit()}")
             separators()
 
     ### Entering the service room
@@ -468,7 +472,7 @@ class Game:
             separators()
             self.add_knowledge("revisitting_servicer")
         else:
-            print(f"{self.__current_location.description_next}")
+            print(f"{self.get_current_location_revisit()}")
             separators()
 
     ### Using the computer
@@ -501,14 +505,14 @@ class Game:
             separators()
             self.add_knowledge("revisiting_fuse")
         else:
-            print(f"{self.__current_location.description_next}")
+            print(f"{self.get_current_location_revisit()}")
             separators()
     
     ###Looking away from the fuse box
     def look_away(self)-> None:
         self.label("You look away.")
         self.change_location("service_room")
-        print(f"{self.__current_location.description_next}")
+        print(f"{self.get_current_location_revisit()}")
 
     ###Switching the button on the fuse box
     def switch_button(self)-> None:

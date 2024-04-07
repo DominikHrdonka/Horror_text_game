@@ -160,7 +160,7 @@ service_room = Location(
     "service_room",
     "You find yourself in an old service room. There is a rusty fuse box on the wall.\nSome garbage in the corner. A dusted computer. Door, most likely leading to the library.",
     "The old service room – not much left but something could be useful.",
-    "enter the passageway, examine the fuse box, use the computer, examine the garbage, go to the library"
+    "enter the passageway, examine the fuse box, use the computer, examine the garbage, enter the library"
 )
 
 fuse_box = Location(
@@ -168,4 +168,11 @@ fuse_box = Location(
     "The old fuse box is covered with cobwebs. There's a silent buzz coming out from it.\nCould it be still functional?",
     "The old fuse box – still working",
     "switch the button, look away"
+)
+
+library_back = Location(
+    "library_back",
+    "You are in the front of the library. The two-wing door stand just right before you.\nThat's the only way out. The crone is far enough.\nDon't hesitate!",
+    "Front of the library – so close to the main entrance!",
+    "open the big door, enter the service room"
 )

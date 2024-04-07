@@ -64,7 +64,8 @@ class Game:
                 "examine the fuse box": self.examine_fuse_box,
                 "look away": self.look_away,
                 "switch the button": self.switch_button,
-                "go to the library": self.enter_library
+                "enter the library": self.enter_library,
+                "enter the service room": self.enter_service_room,
                 
             }
 
@@ -525,6 +526,18 @@ class Game:
     def enter_library(self):
         if crone.get_position() == "approaching_service_room":
             self.label("You can't go there now, you'd bump right into the crone!")
+        else:
+            self.label("You enter the library")
+            self.change_location("library_back")
+            print(self.get_current_location())
+            separators()
+
+    ### Entering service room from library
+    def enter_service_room(self):
+        self.label("You enter the service room")
+        self.change_location("service_room")
+        print(self.get_current_location_revisit())
+        separators()
         
 
 ########### MAIN LOOP OF THE GAME # #########

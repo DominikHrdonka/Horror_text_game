@@ -1,13 +1,9 @@
-from game import Game
+from game import *
 from location import *
 from items import *
 
 def main() -> None:
     
-    # Creating instance of Game
-    game = Game()
-
-
     # Adding location to the game list of locations
     game.add_location("start", start)
     game.add_location("dark room", dark_room)

@@ -2,10 +2,9 @@ import time
 from location import *
 import os
 from dialogues import creature
-from crone import Crone
+from crone import *
 from items import *
 
-crone = Crone()
 
  ### Global method to create separators between descr. and inputs ###
 def separators() -> None:
@@ -64,7 +63,8 @@ class Game:
                 "examine the garbage": self.examine_garbage,
                 "examine the fuse box": self.examine_fuse_box,
                 "look away": self.look_away,
-                "switch the button": self.switch_button
+                "switch the button": self.switch_button,
+                "go to the library": self.enter_library
                 
             }
 
@@ -513,12 +513,19 @@ class Game:
         self.label("You look away.")
         self.change_location("service_room")
         print(f"{self.get_current_location_revisit()}")
+        separators()
 
     ###Switching the button on the fuse box
     def switch_button(self)-> None:
         self.label("You switch the button.")
         print("There is a spark.\nFrom below the door you see light entering the service room.\nAnd with the light, there comes a shriek. The crone's coming here!")
-        crone.set_position("approaching_service_room") 
+        crone.set_position("approaching_service_room")
+        separators()
+    
+    def enter_library(self):
+        if crone.get_position("approaching_service_room"):
+            print("You can't go there now, you'd bump right into the crone!")
+            separators()
         
 
 ########### MAIN LOOP OF THE GAME # #########
@@ -551,3 +558,6 @@ class Game:
             except:
                 self.label("Invalid choice.")
                 user_input = self.get_input(clear)
+
+# Creating instance of Game
+game = Game()

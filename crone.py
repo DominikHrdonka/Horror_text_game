@@ -16,3 +16,4 @@ class Crone:
         self._position = new_position
         return self._position
     
+crone = Crone()

@@ -523,9 +523,8 @@ class Game:
         separators()
     
     def enter_library(self):
-        if crone.get_position("approaching_service_room"):
-            print("You can't go there now, you'd bump right into the crone!")
-            separators()
+        if crone.get_position() == "approaching_service_room":
+            self.label("You can't go there now, you'd bump right into the crone!")
         
 
 ########### MAIN LOOP OF THE GAME # #########

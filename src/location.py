@@ -55,8 +55,8 @@ class Start(Location):
     ### Exploring at the beginning of the game
     def explore(self) -> None:
         self.label("You decided to explore!")
-        Location.change_location(dark_room)
-        print(f"{self.get_current_location()}")
+        Location.change_location(self, dark_room)
+        print(f"{self.get_current_location_description()}")
         separators()
 
 

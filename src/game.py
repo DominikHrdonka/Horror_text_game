@@ -17,6 +17,10 @@ class Game:
             "1": "exit"
         }
 
+        self.actions={
+            "Explore": start.explore(),
+        }
+
     
     
 
@@ -351,6 +355,8 @@ class Game:
 
     ### Method to get a user input
     def get_input(self, clear):
+        for key, value in enumerate(Location.get_current_location_choices(self)):
+            print(f"{key} {value} ")
         user_input = input(f"What do you want to do? ({Location.get_current_location_choices(self)}) > ").lower()
         clear()
         return user_input
@@ -419,30 +425,14 @@ class Game:
         user_input = self.get_input(clear)
         while not self.__game_over:
             try:
-                if isinstance(self.choices[user_input], dict):
-                    try: 
-                        self.choices[user_input]["not have"]()
-                        user_input = self.get_input(clear)
-
-                    except KeyboardInterrupt:
-                        return True
-                    
-                    except:
-                        self.choices[user_input]["have"]()
-                        user_input = self.get_input(clear)
-
-                elif user_input == "quit":
-                    return True
+                print(Location.get_current_location_choices(self)[user_input])
                 
-                else:
-                    self.choices[user_input]()
-                    user_input = self.get_input(clear)
-            
+                                
             except KeyboardInterrupt:
                 return True
             
             except:
-                self.label("Invalid choice.")
+                print("Invalid choice.")
                 user_input = self.get_input(clear)
 
 # Creating instance of Game

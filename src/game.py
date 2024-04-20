@@ -1,92 +1,23 @@
-import time
 from location import *
-import os
+
 from dialogues import creature
 from crone import *
 from items import *
 
 
- ### Global method to create separators between descr. and inputs ###
-def separators() -> None:
-    print("-" * 25)
-
-### Global method to clear the terminal after every user input
-def clear() -> None:
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 class Game:
     def __init__(self) -> None:
         self.__game_over = False
-        self.__current_location = None
-        self.__locations = {}
+    
         self.__inventory = []
         self.__knowledge = []
 
         self.inventory_choices = {
             "1": "exit"
         }
-          
-    #### Dictionary of all the choices and their methods ####
-        self.choices = {            
-                "explore": self.explore,
-                "quit": self.quit,
-                "open the wardrobe": self.open_the_wardrobe,
-                "take the pliers": self.take_pliers,
-                "examine the doll": self.examine_doll,
-                "close the wardrobe": self.close_wardrobe,
-                "go to the window": self.going_to_window,
-                "take the clip": self.take_clip,
-                "open the door": {"not have": self.open_the_locked_door, "have":self.open_door_with_picklock},
-                "go to the next room": self.go_kitchen,
-                "examine the sink": self.examine_sink,
-                "go back to the room": self.go_back_room,
-                "examine the green door": self.examine_green_door,
-                "talk to the creature": self.talk_to_creature,
-                "examine the steel door": self.examine_steel_door,
-                "take the scalpel": self.take_scalpel,
-                "turn away": self.turn_away_sink,
-                "move away": self.move_away,
-                "enter the code": self.enter_code,
-                "enter the room": self.go_library,
-                "hide behind the rack": self.hide_behind_rack,
-                "go back to the kitchen": self.go_back_kitchen,
-                "go back to the steel door": self.go_back_steel_door,
-                "move to the remnants": self.go_old_remnants,
-                "take the axe": self.take_axe,
-                "move to the desk": self.go_desk,
-                "push the desk": self.push_desk,
-                "move to the mirror": self.go_mirror,
-                "turn the mirror": self.turn_mirror,
-                "enter the passageway": self.go_passageway,
-                "climb through the hole": self.climb_through_hole,
-                "use the computer": self.use_computer,
-                "examine the garbage": self.examine_garbage,
-                "examine the fuse box": self.examine_fuse_box,
-                "look away": self.look_away,
-                "switch the button": self.switch_button,
-                "enter the library": self.enter_library,
-                "enter the service room": self.enter_service_room,
-                
-            }
 
-    ### method to add Location instances to the dictionary
-    def add_location(self, key, location) -> None:
-        self.__locations[key] = location
-
-    ### getting the current location
-    def get_current_location(self):
-        return self.__current_location.description
     
-    ### getting curr. loc. when revisiting
-    def get_current_location_revisit(self):
-        return self.__current_location.description_revisit
-
-    ### method to change current location - loop until correct input
-    def change_location(self, key) -> None:
-        while True:
-            if key in self.__locations:
-                self.__current_location = self.__locations[key]
-                break
     
     ### Method to add items to inventory
     def add_item(self, item) -> None:
@@ -100,12 +31,7 @@ class Game:
     def add_knowledge(self, knowledge) -> None:
         self.__knowledge.append(knowledge)
 
-    ### Method to add label to actions
-    def label(self, give_label):
-        separator_count = "-" * len(give_label)
-        print(separator_count)
-        print(f"{give_label}")
-        print(separator_count)
+
 
     
     ### Method to start the game with an intr
@@ -120,20 +46,10 @@ class Game:
         print("You get up slowly from the floor. The wood creaks beneath your feet.")
         print("You need to find your way out of here.")
         separators()
-        self.change_location("Start")
+        start.change_location()
         self.main_loop()
     
-    ### Exploring at the beginning of the game
-    def explore(self) -> None:
-        self.label("You decided to explore!")
-        self.change_location("dark room")
-        print(f"{self.get_current_location()}")
-        separators()
-    
-    ### Quiting the game
-    def quit(self) -> bool:
-        self.__game_over = True
-        return self.__game_over
+
     
     ### Opening the inventory
     def open_inventory(self) -> None:
@@ -162,17 +78,6 @@ class Game:
             inventory_choices += f"{value}, "
         return inventory_choices.rstrip(", ")
     
-    #### trying to open the locked door
-    def open_the_locked_door(self) -> None:
-        self.label("You decided to open the door!")
-        print("You press the knob but nothing happens.\nThe door is locked! ")
-        self.change_location("door")
-        separators()
-    
-    ### unlocking the door with the key
-    def open_door_with_picklock(self) -> None:
-        self.label("You unlocked the door with the picklock!")
-        self.change_location("unlocked door")
 
     ### opening the wardrobe
     def open_the_wardrobe(self) -> None:
@@ -192,17 +97,7 @@ class Game:
         print("The doll's empty eyes make you shudder.\nYou carefully take it it in your hands. A memory pops out.\nA dark memory screaming at you from within.\nA flash of a vision – you're in your room. She came for a visit.\nShe stinks from alcohol and for some reason you are scared.\nShe grins at you, her teeth rotten and disgusting...\nYou put the doll back in the wardrobe.")
         separators()
 
-    ### going to the window
-    def going_to_window(self) -> None:
-        self.label("You approach the window.")
-        if clip not in self.__inventory:
-            self.change_location("window")
-            print(f"{self.get_current_location()}")
-            separators()
-        else:
-            self.change_location("window without clip")
-            print(f"{self.get_current_location()}")
-            separators()
+    
 
     ### closing the wardrobe
     def close_wardrobe(self) -> None:

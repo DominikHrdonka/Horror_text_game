@@ -1,20 +1,110 @@
+import time
+import os
+from items import Inventory, Items
+
+### Global method to create separators between descr. and inputs ###
+def separators() -> None:
+    print("-" * 25)
+
+### Global method to clear the terminal after every user input
+def clear() -> None:
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
 class Location:
     def __init__(self, name, choices, description=None, description_revisit=None):
         self.name = name
         self.description = description
         self.description_revisit = description_revisit
         self.choices = choices
+        self.__current_location = None
+    
+    ### Method to add label to actions
+    def label(self, give_label):
+        separator_count = "-" * len(give_label)
+        print(separator_count)
+        print(f"{give_label}")
+        print(separator_count)
+
+    ### getting the current location
+    def get_current_location(self):
+        return self.__current_location.description
+    
+    ### getting curr. loc. when revisiting
+    def get_current_location_revisit(self):
+        return self.__current_location.description_revisit
+
+    ### method to change current location - loop until correct input
+    def change_location(self) -> None:
+        while True:
+            self.__current_location = self
+            break
 
 class Start(Location):
-    def __init__(self, name="Start", choices={"1.": "explore","2.": "quit"}, description=None, description_revisit=None):
+    def __init__(self, name="Start", choices={"1.": "explore"}, description=None, description_revisit=None):
         super().__init__(name, choices, description, description_revisit)
     
+    ### Exploring at the beginning of the game
+    def explore(self) -> None:
+        self.label("You decided to explore!")
+        self.change_location(dark_room)
+        print(f"{self.get_current_location()}")
+        separators()
+
+start = Start()
+
+
+class DarkRoom(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
     
-dark_room = Location(
-    "dark room",
-    "As your eyes get used to the dark,\nyou start to distinguish a dark frame set on the opposite wall.\nA door! Next to it there's a black shadow of a wardrobe lurking,\nsitting quietly. The walls are empty, except for black mold. The air heavy with dust.\nOne window set in a wall like a dead painting.",
-    "The same old dark room. Mold on the walls, wet stink. Is that fear?",
-    "go to the window, open the door, open the wardrobe"
+    #### trying to open the locked door
+    def open_the_locked_door(self) -> None:
+        self.label("You decided to open the door!")
+        print("You press the knob but nothing happens.\nThe door is locked! ")
+        self.change_location("door")
+        separators()
+    
+    ### unlocking the door with the key
+    def open_door_with_picklock(self) -> None:
+        self.label("You unlocked the door with the picklock!")
+        self.change_location("unlocked door")
+
+    ### opening the wardrobe
+    def open_the_wardrobe(self) -> None:
+        self.label("You opened the wardrobe!")
+        if pliers not in self.__inventory:
+            self.change_location("wardrobe")
+            print(f"{self.get_current_location()}")
+            separators()
+        else:
+            self.change_location("wardrobe without pliers")
+            print(f"{self.get_current_location()}")
+            separators()
+    
+    ### going to the window
+    def going_to_window(self) -> None:
+        self.label("You approach the window.")
+        if clip not in self.__inventory:
+            self.change_location("window")
+            print(f"{self.get_current_location()}")
+            separators()
+        else:
+            self.change_location("window without clip")
+            print(f"{self.get_current_location()}")
+            separators()
+
+
+
+dark_room = DarkRoom(
+    name="Dark room",
+    description="As your eyes get used to the dark,\nyou start to distinguish a dark frame set on the opposite wall.\nA door! Next to it there's a black shadow of a wardrobe lurking,\nsitting quietly. The walls are empty, except for black mold. The air heavy with dust.\nOne window set in a wall like a dead painting.",
+    description_revisit="The same old dark room. Mold on the walls, wet stink. Is that fear?",
+    choices={
+        "1": "Go to the window",
+        "2": "Open the door",
+        "3": "Open the wardrobe"
+    }
     )
 
 wardrobe = Location(

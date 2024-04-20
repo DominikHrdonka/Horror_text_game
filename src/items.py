@@ -1,3 +1,8 @@
+class Inventory:
+    def __init__(self, inventory):
+        self.__inventory = inventory
+
+
 class Items:
     def __init__(self, name) -> None:
         self.name = name

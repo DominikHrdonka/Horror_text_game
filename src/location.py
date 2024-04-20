@@ -1,6 +1,6 @@
 import time
 import os
-from items import *
+from inventory import *
 
 ### Global method to create separators between descr. and inputs ###
 def separators() -> None:
@@ -83,7 +83,7 @@ class DarkRoom(Location):
     def going_to_window(self) -> None:
         self.label("You approach the window.")
         if clip not in inventory.__inventory:
-            window.change_location()
+            dark_room_window.change_location()
             print(f"{self.get_current_location()}")
             separators()
         else:
@@ -98,7 +98,7 @@ class DarkRoom(Location):
         inventory.add_item(picklock)
         separators()
 
-class Wardrobe(Location):
+class DarkRoomWardrobe(Location):
     def __init__(self, name, choices, description=None, description_revisit=None):
         super().__init__(name, choices, description, description_revisit)
     
@@ -172,7 +172,7 @@ dark_room_door_unlocked = DarkRoom(
 
 )
 
-wardrobe = Wardrobe(
+wardrobe = DarkRoomWardrobe(
     name="wardrobe",
     description="The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... old pliers!",
     description_revisit="The wardrobe - a sad reminder of life long gone.",
@@ -182,7 +182,7 @@ wardrobe = Wardrobe(
         "3.": "Close the wardrobe"
     }
     )
-wardrobe_without_pliers = Wardrobe(
+wardrobe_without_pliers = DarkRoomWardrobe(
     name="wardrobe without pliers",
     description="The wardrobe - a sad reminder of life long gone.",
     choices={
@@ -202,7 +202,7 @@ dark_room_window = DarkRoomWindow(
     }
 )
 
-window_without_clip = DarkRoom(
+window_without_clip = DarkRoomWindow(
     name="window without clip",
     description="The window - if only you could see outside...",
     choices={
@@ -210,6 +210,8 @@ window_without_clip = DarkRoom(
         "2.": "Open the wardrobe"
     }
 )
+
+
 
 kitchen = Location(
     "kitchen",

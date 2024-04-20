@@ -1,5 +1,5 @@
 class Inventory:
-    def __init__(self, inventory):
+    def __init__(self):
         self.__inventory = inventory
 
 
@@ -12,12 +12,12 @@ class Items:
             return picklock("picklock")
 
 
-
 class Weapons(Items):
     def __init__(self, name, power):
         super().__init__(name)
         self.power = power
-            
+
+inventory = Inventory()          
 ### Items instances
 key = Items("key")
 pliers = Items("pliers")

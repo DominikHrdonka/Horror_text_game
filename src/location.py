@@ -1,6 +1,6 @@
 import time
 import os
-from items import Inventory, Items
+from items import *
 
 ### Global method to create separators between descr. and inputs ###
 def separators() -> None:
@@ -47,11 +47,9 @@ class Start(Location):
     ### Exploring at the beginning of the game
     def explore(self) -> None:
         self.label("You decided to explore!")
-        self.change_location(dark_room)
+        dark_room.change_location()
         print(f"{self.get_current_location()}")
         separators()
-
-start = Start()
 
 
 class DarkRoom(Location):
@@ -59,22 +57,21 @@ class DarkRoom(Location):
         super().__init__(name, choices, description, description_revisit)
     
     #### trying to open the locked door
-    def open_the_locked_door(self) -> None:
-        self.label("You decided to open the door!")
-        print("You press the knob but nothing happens.\nThe door is locked! ")
-        self.change_location("door")
-        separators()
-    
-    ### unlocking the door with the key
-    def open_door_with_picklock(self) -> None:
-        self.label("You unlocked the door with the picklock!")
-        self.change_location("unlocked door")
+    def open_dark_room_door(self) -> None:
+        if picklock not in inventory.__inventory:
+            self.label("You decided to open the door!")
+            print("You press the knob but nothing happens.\nThe door is locked! ")
+            dark_room_door.change_location()
+            separators()
+        else:
+            self.label("You unlocked the door with the picklock!")
+            dark_room_door_unlocked.change_location()
 
     ### opening the wardrobe
-    def open_the_wardrobe(self) -> None:
+    def open_wardrobe(self) -> None:
         self.label("You opened the wardrobe!")
-        if pliers not in self.__inventory:
-            self.change_location("wardrobe")
+        if pliers not in inventory.__inventory:
+            wardrobe.change_location()
             print(f"{self.get_current_location()}")
             separators()
         else:
@@ -95,6 +92,10 @@ class DarkRoom(Location):
             separators()
 
 
+"""
+INSTANCES OF LOCATION CLASSES
+"""
+start = Start()
 
 dark_room = DarkRoom(
     name="Dark room",
@@ -102,16 +103,43 @@ dark_room = DarkRoom(
     description_revisit="The same old dark room. Mold on the walls, wet stink. Is that fear?",
     choices={
         "1": "Go to the window",
-        "2": "Open the door",
+        "2": "Go to the door",
         "3": "Open the wardrobe"
     }
     )
 
-wardrobe = Location(
-    "wardrobe",
-    "The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... old pliers!",
-    "The wardrobe - a sad reminder of life long gone.",
-    "take the pliers, examine the doll, close the wardrobe"
+dark_room_door = DarkRoom(
+    name="Door",
+    description="Old wooden door. You wonder what's on the other side.",
+    description_revisit="The door - the only way out of here?",
+    choices={
+        "1.": "Open the door",
+        "2.": "Go to the window",
+        "3.": "Open the wardrobe"
+    }
+)
+
+dark_room_door_unlocked = DarkRoom(
+    name="Unlocked door",
+    description="The door - the only way out of here?",
+    choices={
+        "1.": "Go to the next room",
+        "2.": "Go to the window",
+        "3.": "Open the wardrobe"
+    }
+
+
+)
+
+wardrobe = DarkRoom(
+    name="wardrobe",
+    description="The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... old pliers!",
+    description_revisit="The wardrobe - a sad reminder of life long gone.",
+    choices={
+        "1.": "Take the pliers",
+        "2.": "Examine the doll",
+        "3.": "Close the wardrobe"
+    }
     )
 wardrobe_without_pliers = Location(
     "wardrobe without pliers",
@@ -119,13 +147,7 @@ wardrobe_without_pliers = Location(
     "The wardrobe - a sad reminder of life long gone.",
     "examine the doll, close the wardrobe"
 )
-door = Location(
-    "door",
-    "Old wooden door. You wonder what's on the other side.",
-    "The door - the only way out of here?",
-    "open the door, go to the window, open the wardrobe"
 
-)
 unlocked_door = Location(
     "unlocked door",
     "The door - the only way out of here?",

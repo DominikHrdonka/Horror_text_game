@@ -79,7 +79,7 @@ class Game:
     
     ### getting curr. loc. when revisiting
     def get_current_location_revisit(self):
-        return self.__current_location.description_next
+        return self.__current_location.description_revisit
 
     ### method to change current location - loop until correct input
     def change_location(self, key) -> None:
@@ -120,7 +120,7 @@ class Game:
         print("You get up slowly from the floor. The wood creaks beneath your feet.")
         print("You need to find your way out of here.")
         separators()
-        self.change_location("start")
+        self.change_location("Start")
         self.main_loop()
     
     ### Exploring at the beginning of the game

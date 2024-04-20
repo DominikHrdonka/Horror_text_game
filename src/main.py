@@ -5,7 +5,7 @@ from items import *
 def main() -> None:
     
     # Adding location to the game list of locations
-    game.add_location("start", start)
+    game.add_location("Start", Start)
     game.add_location("dark room", dark_room)
     game.add_location("wardrobe", wardrobe)
     game.add_location("window", window)

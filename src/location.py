@@ -5,13 +5,10 @@ class Location:
         self.description_revisit = description_revisit
         self.choices = choices
 
-start = Location(
-    name = "start",
-    choices = {
-        "1.": "explore",
-        "2.": "quit"
-    }
-)
+class Start(Location):
+    def __init__(self, name="Start", choices={"1.": "explore","2.": "quit"}, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
+    
     
 dark_room = Location(
     "dark room",

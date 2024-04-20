@@ -1,6 +1,14 @@
 class Inventory:
     def __init__(self):
         self.__inventory = inventory
+    
+    ### Method to add items to inventory
+    def add_item(self, item) -> None:
+        self.__inventory.append(item)
+    
+    ### Removing items from inventory
+    def remove_item(self, item):
+        self.__inventory.remove(item)
 
 
 class Items:

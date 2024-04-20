@@ -1,15 +1,16 @@
 class Location:
-    def __init__(self, name, description, description_next, choices):
+    def __init__(self, name, choices, description=None, description_revisit=None):
         self.name = name
         self.description = description
-        self.description_next = description_next
+        self.description_revisit = description_revisit
         self.choices = choices
 
 start = Location(
-    "start",
-    "",
-    "",
-    "explore, quit"
+    name = "start",
+    choices = {
+        "1.": "explore",
+        "2.": "quit"
+    }
 )
     
 dark_room = Location(

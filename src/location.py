@@ -12,12 +12,16 @@ def clear() -> None:
 
 
 class Location:
+    __current_location = None
+
     def __init__(self, name, choices, description=None, description_revisit=None):
         self.name = name
         self.description = description
         self.description_revisit = description_revisit
         self.choices = choices
-        self.__current_location = None
+        if Location.__current_location is None:
+            Location.__current_location = self
+    
     
     ### Method to add label to actions
     def label(self, give_label):
@@ -25,9 +29,13 @@ class Location:
         print(separator_count)
         print(f"{give_label}")
         print(separator_count)
+    
+    ### getting the current location
+    def get_current_location_choices(self):
+        return self.__current_location.choices
 
     ### getting the current location
-    def get_current_location(self):
+    def get_current_location_description(self):
         return self.__current_location.description
     
     ### getting curr. loc. when revisiting
@@ -35,9 +43,9 @@ class Location:
         return self.__current_location.description_revisit
 
     ### method to change current location - loop until correct input
-    def change_location(self) -> None:
+    def change_location(self, location) -> None:
         while True:
-            self.__current_location = self
+            self.__current_location = location
             break
 
 class Start(Location):
@@ -47,7 +55,7 @@ class Start(Location):
     ### Exploring at the beginning of the game
     def explore(self) -> None:
         self.label("You decided to explore!")
-        dark_room.change_location()
+        Location.change_location(dark_room)
         print(f"{self.get_current_location()}")
         separators()
 
@@ -132,6 +140,8 @@ class DarkRoomWindow(DarkRoom):
         window_without_clip.change_location()
         if pliers in inventory.__inventory:
             dark_room.craft_picklock()
+
+
 
 """
 INSTANCES OF LOCATION CLASSES

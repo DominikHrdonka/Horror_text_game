@@ -1,5 +1,5 @@
 class Inventory:
-    def __init__(self):
+    def __init__(self, inventory = None):
         self.__inventory = inventory
     
     ### Method to add items to inventory
@@ -25,7 +25,8 @@ class Weapons(Items):
         super().__init__(name)
         self.power = power
 
-inventory = Inventory()          
+inventory = Inventory()
+
 ### Items instances
 key = Items("key")
 pliers = Items("pliers")

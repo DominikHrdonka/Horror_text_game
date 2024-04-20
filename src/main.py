@@ -1,14 +1,12 @@
 from game import *
 from location import *
-from items import *
+from inventory import *
 
 def main() -> None:
     
 
-    # Defining current location
-    game.current_location = dark_room
-
     # Starting the game
+    
     game.start_game()
 
 

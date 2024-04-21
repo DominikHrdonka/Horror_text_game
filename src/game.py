@@ -355,9 +355,10 @@ class Game:
 
     ### Method to get a user input
     def get_input(self, clear):
-        for key, value in enumerate(Location.get_current_location_choices(self)):
-            print(f"{key} {value} ")
-        user_input = input(f"What do you want to do? ({Location.get_current_location_choices(self)}) > ").lower()
+        list_choices = ""
+        for key, value in (Location.get_current_location_choices(self).items()):
+            list_choices += (f"{key} {value}, ").rstrip(", ")
+        user_input = input(f"What do you want to do? ({list_choices}) > ").lower()
         clear()
         return user_input
     

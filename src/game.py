@@ -18,14 +18,10 @@ class Game:
         }
 
         self.actions={
-            "Explore": start.explore(),
+            "1": start.explore,
         }
 
     
-    
-
-    
-
     
     ### Method to add knowledge to knowledge list
     def add_knowledge(self, knowledge) -> None:
@@ -423,14 +419,11 @@ class Game:
 
 ########### MAIN LOOP OF THE GAME # #########
     def main_loop(self) -> None:        
-        user_input = self.get_input(clear)
+
         while not self.__game_over:
+            user_input = self.get_input(clear)
             try:
-                print(Location.get_current_location_choices(self)[user_input])
-                
-                                
-            except KeyboardInterrupt:
-                return True
+                self.actions[user_input]()
             
             except:
                 print("Invalid choice.")

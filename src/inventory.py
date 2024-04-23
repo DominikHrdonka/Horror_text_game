@@ -1,14 +1,20 @@
 class Inventory:
-    def __init__(self, inventory = None):
-        self.__inventory = inventory
+    __inventory = []
     
     ### Method to add items to inventory
-    def add_item(self, item) -> None:
-        self.__inventory.append(item)
+    @classmethod
+    def add_item(cls, item) -> None:
+        cls.__inventory.append(item)
     
     ### Removing items from inventory
-    def remove_item(self, item):
-        self.__inventory.remove(item)
+    @classmethod
+    def remove_item(cls, item):
+        cls.__inventory.remove(item)
+
+    ### Show what is is inventory
+    @classmethod
+    def get_inventory(cls):
+        return cls.__inventory
 
 
 class Items:
@@ -25,7 +31,6 @@ class Weapons(Items):
         super().__init__(name)
         self.power = power
 
-inventory = Inventory()
 
 ### Items instances
 key = Items("key")

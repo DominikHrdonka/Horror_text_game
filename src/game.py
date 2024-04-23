@@ -18,7 +18,10 @@ class Game:
         }
 
         self.actions={
-            "1": start.explore,
+            "Explore": start.explore,
+            "Go to the window": dark_room.go_window,
+            "Go to the door": dark_room.open_dark_room_door,
+            "Open the wardrobe": dark_room.open_wardrobe 
         }
 
     
@@ -42,7 +45,7 @@ class Game:
         print("You get up slowly from the floor. The wood creaks beneath your feet.")
         print("You need to find your way out of here.")
         separators()
-        Location.change_location(self, start)
+        Location.change_location(start)
         self.main_loop()
     
 
@@ -352,9 +355,9 @@ class Game:
     ### Method to get a user input
     def get_input(self, clear):
         list_choices = ""
-        for key, value in (Location.get_current_location_choices(self).items()):
-            list_choices += (f"{key} {value}, ").rstrip(", ")
-        user_input = input(f"What do you want to do? ({list_choices}) > ").lower()
+        for key, value in (Location.get_current_location_choices().items()):
+            list_choices += (f"{key} {value}, ")
+        user_input = input(f"What do you want to do? ({list_choices.rstrip(", ")}) > ").lower()
         clear()
         return user_input
     
@@ -418,16 +421,14 @@ class Game:
         
 
 ########### MAIN LOOP OF THE GAME # #########
-    def main_loop(self) -> None:        
-
+    def main_loop(self) -> None:
         while not self.__game_over:
             user_input = self.get_input(clear)
-            try:
-                self.actions[user_input]()
             
+            try:
+                self.actions[Location.get_current_location_choices()[user_input]]()
             except:
                 print("Invalid choice.")
-                user_input = self.get_input(clear)
 
 # Creating instance of Game
 game = Game()

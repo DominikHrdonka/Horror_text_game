@@ -19,8 +19,8 @@ class Location:
         self.description = description
         self.description_revisit = description_revisit
         self.choices = choices
-        if Location.__current_location is None:
-            Location.__current_location = self
+        
+
     
     
     ### Method to add label to actions
@@ -31,32 +31,35 @@ class Location:
         print(separator_count)
     
     ### getting the current location
-    def get_current_location_choices(self):
-        return self.__current_location.choices
+    @classmethod
+    def get_current_location_choices(cls):
+        return cls.__current_location.choices
 
-    ### getting the current location
-    def get_current_location_description(self):
-        return self.__current_location.description
+    ### getting current location
+    @classmethod
+    def get_current_location_description(cls):
+        return cls.__current_location.description
     
     ### getting curr. loc. when revisiting
-    def get_current_location_revisit(self):
-        return self.__current_location.description_revisit
+    @classmethod
+    def get_current_location_revisit(cls):
+        return cls.__current_location.description_revisit
 
     ### method to change current location - loop until correct input
-    def change_location(self, location) -> None:
-        while True:
-            self.__current_location = location
-            break
+    @classmethod
+    def change_location(cls, location) -> None:
+        cls.__current_location = location
+        
 
 class Start(Location):
-    def __init__(self, name="Start", choices={"1.": "explore"}, description=None, description_revisit=None):
+    def __init__(self, name, choices, description=None, description_revisit=None):
         super().__init__(name, choices, description, description_revisit)
     
     ### Exploring at the beginning of the game
     def explore(self) -> None:
         self.label("You decided to explore!")
-        Location.change_location(self, dark_room)
-        print(f"{self.get_current_location_description()}")
+        Location.change_location(dark_room)
+        print(f"{Location.get_current_location_description()}")
         separators()
 
 
@@ -88,15 +91,15 @@ class DarkRoom(Location):
             separators()
     
     ### going to the window
-    def going_to_window(self) -> None:
+    def go_window(self) -> None:
         self.label("You approach the window.")
-        if clip not in inventory.__inventory:
-            dark_room_window.change_location()
-            print(f"{self.get_current_location()}")
+        if clip not in Inventory.get_inventory():
+            Location.change_location(dark_room_window)
+            print(f"{Location.get_current_location_description()}")
             separators()
         else:
-            window_without_clip.change_location()
-            print(f"{self.get_current_location()}")
+            Location.change_location(dark_room_window_without_clip)
+            print(f"{Location.get_current_location_description()}")
             separators()
     
     ### Crafting a picklock
@@ -146,7 +149,7 @@ class DarkRoomWindow(DarkRoom):
 """
 INSTANCES OF LOCATION CLASSES
 """
-start = Start()
+start = Start(name="Start", choices={"1": "Explore"})
 
 dark_room = DarkRoom(
     name="Dark room",
@@ -212,8 +215,8 @@ dark_room_window = DarkRoomWindow(
     }
 )
 
-window_without_clip = DarkRoomWindow(
-    name="window without clip",
+dark_room_window_without_clip = DarkRoomWindow(
+    name="Window without clip",
     description="The window - if only you could see outside...",
     choices={
         "1.": "Go to the door",

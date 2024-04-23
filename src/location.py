@@ -69,14 +69,14 @@ class DarkRoom(Location):
     
     #### trying to open the locked door
     def open_dark_room_door(self) -> None:
-        if picklock not in inventory.__inventory:
-            self.label("You decided to open the door!")
-            print("You press the knob but nothing happens.\nThe door is locked! ")
-            dark_room_door.change_location()
+        if picklock not in Inventory.get_inventory():
+            self.label("You press the door handle!")
+            print("But nothing happens.\nThe door is locked! ")
+            Location.change_location(dark_room)
             separators()
         else:
             self.label("You unlocked the door with the picklock!")
-            dark_room_door_unlocked.change_location()
+            Location.change_location(dark_room_door_unlocked)
 
     ### opening the wardrobe
     def open_wardrobe(self) -> None:
@@ -105,8 +105,8 @@ class DarkRoom(Location):
     ### Crafting a picklock
     def craft_picklock(self):
         print(f"You combined the {clip.name} and {pliers.name} and crafted a {picklock.name}!")
-        inventory.remove_item(clip)
-        inventory.add_item(picklock)
+        Inventory.remove_item(clip)
+        Inventory.add_item(picklock)
         separators()
 
 class DarkRoomWardrobe(Location):
@@ -139,9 +139,9 @@ class DarkRoomWindow(DarkRoom):
     ###Taking the clip
     def take_clip(self):
         self.label("You took the clip!")
-        inventory.add_item(clip)
-        window_without_clip.change_location()
-        if pliers in inventory.__inventory:
+        Inventory.add_item(clip)
+        Location.change_location(dark_room_window_without_clip)
+        if pliers in Inventory.get_inventory():
             dark_room.craft_picklock()
 
 
@@ -157,7 +157,7 @@ dark_room = DarkRoom(
     description_revisit="The same old dark room. Mold on the walls, wet stink. Is that fear?",
     choices={
         "1": "Go to the window",
-        "2": "Go to the door",
+        "2": "Open the door",
         "3": "Open the wardrobe"
     }
     )
@@ -167,9 +167,9 @@ dark_room_door = DarkRoom(
     description="Old wooden door. You wonder what's on the other side.",
     description_revisit="The door - the only way out of here?",
     choices={
-        "1.": "Open the door",
-        "2.": "Go to the window",
-        "3.": "Open the wardrobe"
+        "1": "Open the door",
+        "2": "Go to the window",
+        "3": "Open the wardrobe"
     }
 )
 
@@ -177,9 +177,9 @@ dark_room_door_unlocked = DarkRoom(
     name="Unlocked door",
     description="The door - the only way out of here?",
     choices={
-        "1.": "Go to the next room",
-        "2.": "Go to the window",
-        "3.": "Open the wardrobe"
+        "1": "Go to the next room",
+        "2": "Go to the window",
+        "3": "Open the wardrobe"
     }
 
 
@@ -190,17 +190,17 @@ wardrobe = DarkRoomWardrobe(
     description="The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... old pliers!",
     description_revisit="The wardrobe - a sad reminder of life long gone.",
     choices={
-        "1.": "Take the pliers",
-        "2.": "Examine the doll",
-        "3.": "Close the wardrobe"
+        "1": "Take the pliers",
+        "2": "Examine the doll",
+        "3": "Close the wardrobe"
     }
     )
 wardrobe_without_pliers = DarkRoomWardrobe(
     name="wardrobe without pliers",
     description="The wardrobe - a sad reminder of life long gone.",
     choices={
-        "1.": "Examine the doll",
-        "2.": "Close the wardrobe"
+        "1": "Examine the doll",
+        "2": "Close the wardrobe"
     }
 )
 
@@ -209,9 +209,9 @@ dark_room_window = DarkRoomWindow(
     description="The glass is covered in cobwebs.\nYou try to see through but realize the window is coverd with planks from outside.\nYou can't see anything except that there,\non the windowsill, there is a metal clip.",
     description_revisit="The window - if only could you see outside...",
     choices={
-        "1.": "Take the clip",
-        "2.": "Go to the door",
-        "3.": "Open the wardrobe"
+        "1": "Take the clip",
+        "2": "Open the door",
+        "3": "Open the wardrobe"
     }
 )
 
@@ -219,8 +219,8 @@ dark_room_window_without_clip = DarkRoomWindow(
     name="Window without clip",
     description="The window - if only you could see outside...",
     choices={
-        "1.": "Go to the door",
-        "2.": "Open the wardrobe"
+        "1": "Open the door",
+        "2": "Open the wardrobe"
     }
 )
 

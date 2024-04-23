@@ -20,8 +20,9 @@ class Game:
         self.actions={
             "Explore": start.explore,
             "Go to the window": dark_room.go_window,
-            "Go to the door": dark_room.open_dark_room_door,
-            "Open the wardrobe": dark_room.open_wardrobe 
+            "Open the door": dark_room.open_dark_room_door,
+            "Open the wardrobe": dark_room.open_wardrobe,
+            "Take the clip": dark_room_window.take_clip
         }
 
     

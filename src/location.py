@@ -107,6 +107,13 @@ class DarkRoom(Location):
         Inventory.remove_item(clip)
         Inventory.add_item(picklock)
         separators()
+    
+    ### going to the kitchen
+    def go_kitchen(self) -> None:
+        self.label("You enter the room!")
+        Location.change_location(kitchen)
+        print(f"{Location.get_current_location_description()}")
+        separators()
 
 class DarkRoomWardrobe(Location):
     def __init__(self, name, choices, description=None, description_revisit=None):
@@ -145,7 +152,36 @@ class DarkRoomWindow(DarkRoom):
         if pliers in Inventory.get_inventory():
             dark_room.craft_picklock()
 
+class Kitchen(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
 
+    ##Examining the sink
+    def examine_sink(self) -> None:
+        self.label("You approach the sink.")
+        if "scalpel" not in Inventory.get_inventory():    
+            Location.change_location(sink)
+            print(f"{Location.get_current_location_description()}")
+            separators()
+        else:
+            Location.change_location(sink_without_scalpel)
+            print(f"{Location.get_current_location_description()}")
+            separators()
+    
+    ### Taking the scalpel
+    def take_scalpel(self) -> None:
+        self.label("You took the scalpel!")
+        Inventory.add_item(scalpel)
+        Location.change_location(sink_without_scalpel)
+        print(f"{Location.get_current_location_description()}")
+        separators()
+    
+    ### Turning away from the sink
+    def turn_away(self) -> None:
+        self.label("You turn away from the sink.")
+        Location.change_location(kitchen)
+        print(f"{Location.get_current_location_revisit()}")
+        separators()
 
 """
 INSTANCES OF LOCATION CLASSES
@@ -163,16 +199,7 @@ dark_room = DarkRoom(
     }
     )
 
-dark_room_door = DarkRoom(
-    name="Door",
-    description="Old wooden door. You wonder what's on the other side.",
-    description_revisit="The door - the only way out of here?",
-    choices={
-        "1": "Open the door",
-        "2": "Go to the window",
-        "3": "Open the wardrobe"
-    }
-)
+
 
 dark_room_door_unlocked = DarkRoom(
     name="Unlocked door",
@@ -227,25 +254,34 @@ dark_room_window_without_clip = DarkRoomWindow(
 
 
 
-kitchen = Location(
-    "kitchen",
-    "You are in a kitchen. The smell is even worse here.\nAnd you can see why. There is something in the sink.\nAll covered in blood that's also dripping on the floor.\nThe tiles of the kitchen are old and worn just as a green door on the left.\nYou can hear some rumbling behind it.",
-    "Kitchen - with a bloody sink and a green door.",
-    "examine the sink, go back to the room, examine the green door, examine the steel door"
+kitchen = Kitchen(
+    name="Kitchen",
+    description="You are in a kitchen. The smell is even worse here.\nAnd you can see why. There is something in the sink.\nAll covered in blood that's also dripping on the floor.\nThe tiles of the kitchen are old and worn just as a green door on the left.\nYou can hear some rumbling behind it.",
+    description_revisit="Kitchen - with a bloody sink and a green door.",
+    choices={
+        "1": "Examine the sink",
+        "2": "Go back to the room",
+        "3": "Examine the green door",
+        "4": "Examine the steel door"
+    }
 )
 
 sink = Location(
-    "sink",
-    "The fur is painted by blackish red blood.\nYou lean over the dead animal, trying to make out what it is.\n Probably a rackoon, by the sad sight of it. And rather massacred one.\nWho did this? And why?\nYou notice a rusty scalpel in the sink.",
-    "The bloody sink - it makes no sense.",
-    "take the scalpel, turn away"
+    name="Sink",
+    description="The fur is painted by blackish red blood.\nYou lean over the dead animal, trying to make out what it is.\n Probably a rackoon, by the sad sight of it. And rather massacred one.\nWho did this? And why?\nYou notice a rusty scalpel in the sink.",
+    description_revisit="The bloody sink - it makes no sense.",
+    choices={
+        "1": "Take the scalpel",
+        "2": "Turn away"
+    }
 
 )
-sink_without_scalpel = Location(
-    "sink without scalpel",
-    "The bloody sink - it makes no sense",
-    None,
-    "turn away"
+sink_without_scalpel = Kitchen(
+    name="sink without scalpel",
+    description="The bloody sink - it makes no sense",
+    choices={
+        "1": "Turn away"
+    }
 )
 
 keyhole = Location(

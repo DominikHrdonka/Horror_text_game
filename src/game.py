@@ -26,7 +26,11 @@ class Game:
             "Take the pliers": wardrobe.take_pliers,
             "Examine the doll": wardrobe.examine_doll,
             "Close the wardrobe": wardrobe.close_wardrobe,
-            "Go to the next room": 
+            "Go to the next room": dark_room.go_kitchen,
+            "Examine the sink": kitchen.examine_sink,
+            "Take the scalpel": kitchen.take_scalpel,
+            "Turn away": kitchen.turn_away
+            
         }
 
     
@@ -83,45 +87,6 @@ class Game:
         return inventory_choices.rstrip(", ")
     
 
-
-    
-    ### going to the kitchen
-    def go_kitchen(self) -> None:
-        self.label("You enter the room!")
-        self.change_location("kitchen")
-        print(f"{self.get_current_location()}")
-        separators()
-        pass
-    
-    ### Taking the scalpel
-    def take_scalpel(self) -> None:
-        self.label("You took the scalpel!")
-        self.add_item("scalpel")
-        self.change_location("sink without scalpel")
-        print(f"{self.get_current_location()}")
-        separators()
-        pass
-
-    ##Examining the sink
-    def examine_sink(self) -> None:
-        self.label("You approach the sink.")
-        if "scalpel" not in self.__inventory:    
-            self.change_location("sink")
-            print(f"{self.get_current_location()}")
-            separators()
-        else:
-            self.change_location("sink without scalpel")
-            print(f"{self.get_current_location()}")
-            separators()
-        pass
-
-    ### Turning away from the sink
-    def turn_away_sink(self) -> None:
-        self.label("You turn away from the sink.")
-        self.change_location("kitchen")
-        print(f"{self.get_current_location_revisit()}")
-        separators()
-        pass
 
 
     ### Examining the green door

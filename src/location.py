@@ -81,13 +81,13 @@ class DarkRoom(Location):
     ### opening the wardrobe
     def open_wardrobe(self) -> None:
         self.label("You opened the wardrobe!")
-        if pliers not in inventory.__inventory:
-            wardrobe.change_location()
-            print(f"{self.get_current_location()}")
+        if pliers not in Inventory.get_inventory():
+            Location.change_location(wardrobe)
+            print(f"{Location.get_current_location_description()}")
             separators()
         else:
-            wardrobe_without_pliers.change_location()
-            print(f"{self.get_current_location()}")
+            Location.change_location(wardrobe_without_pliers)
+            print(f"{Location.get_current_location_description()}")
             separators()
     
     ### going to the window
@@ -102,7 +102,6 @@ class DarkRoom(Location):
             print(f"{Location.get_current_location_description()}")
             separators()
     
-    ### Crafting a picklock
     def craft_picklock(self):
         print(f"You combined the {clip.name} and {pliers.name} and crafted a {picklock.name}!")
         Inventory.remove_item(clip)
@@ -122,14 +121,16 @@ class DarkRoomWardrobe(Location):
     ### closing the wardrobe
     def close_wardrobe(self) -> None:
         self.label("You closed the wardrobe.")
-        dark_room.change_location()
+        Location.change_location(dark_room)
+        print(f"{Location.get_current_location_revisit()}")
+        separators()
     
     ### taking the pliers
     def take_pliers(self) -> None:
         self.label("You took the pliers!")
-        inventory.add_item(pliers)
-        wardrobe_without_pliers.change_location()
-        if clip in inventory.__inventory:
+        Inventory.add_item(pliers)
+        Location.change_location(wardrobe_without_pliers)
+        if clip in Inventory.get_inventory():
             dark_room.craft_picklock()
 
 class DarkRoomWindow(DarkRoom):

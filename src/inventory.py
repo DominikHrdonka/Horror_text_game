@@ -17,13 +17,9 @@ class Inventory:
         return cls.__inventory
 
 
-class Items:
+class Items(Inventory):
     def __init__(self, name) -> None:
         self.name = name
-
-    def __add__(self, other):
-        if self.name == "pliers" and other.name == "clip":
-            return picklock("picklock")
 
 
 class Weapons(Items):

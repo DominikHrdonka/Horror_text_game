@@ -22,7 +22,11 @@ class Game:
             "Go to the window": dark_room.go_window,
             "Open the door": dark_room.open_dark_room_door,
             "Open the wardrobe": dark_room.open_wardrobe,
-            "Take the clip": dark_room_window.take_clip
+            "Take the clip": dark_room_window.take_clip,
+            "Take the pliers": wardrobe.take_pliers,
+            "Examine the doll": wardrobe.examine_doll,
+            "Close the wardrobe": wardrobe.close_wardrobe,
+            "Go to the next room": 
         }
 
     

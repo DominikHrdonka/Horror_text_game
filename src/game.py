@@ -32,7 +32,8 @@ class Game:
             "Turn away": kitchen.turn_away,
             "Go back to the room": kitchen.go_back_room,
             "Examine the steel door": kitchen.examine_steel_door,
-            "Examine the green door": kitchen.examine_green_door
+            "Examine the green door": kitchen.examine_green_door,
+            "Talk to the creature": kitchen.talk_to_creature
             
         }
 

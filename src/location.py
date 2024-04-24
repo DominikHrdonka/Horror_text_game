@@ -1,6 +1,7 @@
 import time
 import os
 from inventory import *
+from dialogues import creature
 
 ### Global method to create separators between descr. and inputs ###
 def separators() -> None:
@@ -13,6 +14,7 @@ def clear() -> None:
 
 class Location:
     __current_location = None
+    __knowledge = []
 
     def __init__(self, name, choices, description=None, description_revisit=None):
         self.name = name
@@ -49,6 +51,16 @@ class Location:
     @classmethod
     def change_location(cls, location) -> None:
         cls.__current_location = location
+
+    ### adding knowledge
+    @classmethod
+    def add_knowledge(cls, knowledge):
+        cls.__knowledge.append(knowledge)
+
+    ### getting list of knowledge
+    @classmethod
+    def get_knowledge(cls):
+        return cls.__knowledge
         
 
 class Start(Location):
@@ -153,9 +165,8 @@ class DarkRoomWindow(DarkRoom):
             dark_room.craft_picklock()
 
 class Kitchen(Location):
-    def __init__(self, name, choices, description=None, description_revisit=None, discovered = None):
+    def __init__(self, name, choices, description=None, description_revisit=None):
         super().__init__(name, choices, description, description_revisit)
-        self.discovered = discovered
 
     ##Examining the sink
     def examine_sink(self) -> None:
@@ -195,7 +206,7 @@ class Kitchen(Location):
     def examine_steel_door(self):
         self.label("You approach the steel door.")
         Location.change_location(steel_door)
-        self.discovered = True
+        Location.add_knowledge("keypad discovered")
         print(f"{Location.get_current_location_description()}")
         separators()
     
@@ -247,16 +258,15 @@ class Kitchen(Location):
                     print("--------------")
                     print(f"{e}")
                     print("--------------")
-        if "revisiting creature" not in self.__knowledge:
-            self.add_knowledge("revisiting creature")
+        if "revisiting creature" not in Location.get_knowledge:
+            Location.add_knowledge("revisiting creature")
             play_dialogue("start")
         else:
-            if kitchen.discovered is True:
+            if "keypad discovered" not in Location.get_knowledge:
                 print(">>Leave me alone!<<")
                 separators()
             else:
                 play_dialogue("code_answer")
-        pass
 
 """
 INSTANCES OF LOCATION CLASSES

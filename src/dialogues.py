@@ -84,7 +84,7 @@ creature = {
         },
         "code_answe_two":{
             "lines": [
-                ">>Threats mean nothing in here. *sobing* You will learn soon...<<"
+                ">>Threats mean nothing in here. You will learn soon...<<"
             ],
             "option": {
                 "1": (">>Tell me what you know<<", "code_answer_one"),

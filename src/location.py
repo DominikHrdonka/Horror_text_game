@@ -153,8 +153,9 @@ class DarkRoomWindow(DarkRoom):
             dark_room.craft_picklock()
 
 class Kitchen(Location):
-    def __init__(self, name, choices, description=None, description_revisit=None):
+    def __init__(self, name, choices, description=None, description_revisit=None, discovered = None):
         super().__init__(name, choices, description, description_revisit)
+        self.discovered = discovered
 
     ##Examining the sink
     def examine_sink(self) -> None:
@@ -182,6 +183,80 @@ class Kitchen(Location):
         Location.change_location(kitchen)
         print(f"{Location.get_current_location_revisit()}")
         separators()
+    
+     ### getting back to the dark room
+    def go_back_room(self) -> None:
+        self.label("You go back to the dark room.")
+        Location.change_location(dark_room_door_unlocked)
+        print(f"{Location.get_current_location_description()}")
+        separators()
+    
+    ### Examining the steel door
+    def examine_steel_door(self):
+        self.label("You approach the steel door.")
+        Location.change_location(steel_door)
+        self.discovered = True
+        print(f"{Location.get_current_location_description()}")
+        separators()
+    
+     ### Entering the code
+    def enter_code(self):
+        self.label("The screen is blank, the keys worn out.")
+        code = input("Enter the code: ")
+        clear()
+        if code == "571":
+            self.label("The keypad light turns green!")
+            Location.change_location(steel_door_opened)
+            print(f"{Location.get_current_location_description()}")
+            separators()
+        else:
+            print("Invalid code")
+            separators()
+    
+    ### Examining the green door
+    def examine_green_door(self) -> None:
+        self.label("You approach the green door.")
+        Location.change_location(keyhole)
+        print(f"{Location.get_current_location_description()}")
+        separators()
+    
+    ########Talking to the creature: dialogue########
+    def talk_to_creature(self) -> None:
+
+        def dialogue_pause() -> None:
+            time.sleep(2)
+
+        def play_dialogue(dialogue_key) -> None:
+            dialogue = creature[dialogue_key]
+            for line in dialogue["lines"]:
+                print(line)
+                dialogue_pause()
+            while True:
+                try:    
+                    if "options" in dialogue:
+                        for option_key, (option_text, _) in dialogue["options"].items():
+                            print(f"{option_key}. {option_text}")
+                        choice = input("Choose an option: ")
+                    if choice in dialogue["options"]:
+                        next_dialogue_key = dialogue["options"].get(choice)[1]
+                        play_dialogue(next_dialogue_key)
+                    else:
+                        raise ValueError("Invalid choice")
+
+                except ValueError as e:
+                    print("--------------")
+                    print(f"{e}")
+                    print("--------------")
+        if "revisiting creature" not in self.__knowledge:
+            self.add_knowledge("revisiting creature")
+            play_dialogue("start")
+        else:
+            if kitchen.discovered is True:
+                print(">>Leave me alone!<<")
+                separators()
+            else:
+                play_dialogue("code_answer")
+        pass
 
 """
 INSTANCES OF LOCATION CLASSES
@@ -284,24 +359,33 @@ sink_without_scalpel = Kitchen(
     }
 )
 
-keyhole = Location(
-    "keyhole",
-    "The rumbling is definitely coming from the other side!\nYou can feel your heart pounding loudly in your chest. Too loudly.\nYou crouch down and slowly move your eye to the keyhole.\nThe keyhole is small but you can see the creature on the other side.\nIts chest is heaving up and down. Whatever it is, it is in pain.",
-    "The keyhole – window to another world.",
-    "talk to the creature, move away"
+keyhole = Kitchen(
+    name="keyhole",
+    description="The rumbling is definitely coming from the other side!\nYou can feel your heart pounding loudly in your chest. Too loudly.\nYou crouch down and slowly move your eye to the keyhole.\nThe keyhole is small but you can see the creature on the other side.\nIts chest is heaving up and down. Whatever it is, it is in pain.",
+    description_revisit="The keyhole – window to another world.",
+    choices={
+        "1": "Talk to the creature",
+        "2": "Turn away"
+    }
 )
 
-steel_door = Location(
-    "steel_door",
-    "The heavy door wouldn't budge even if you had a hammer.\nYou notice a keypad on the side though.\nIf you knew the right code, you might escape!",
-    "The steel door and a keypad. What is the code?",
-    "enter the code, move away"
+steel_door = Kitchen(
+    name="steel_door",
+    description="The heavy door wouldn't budge even if you had a hammer.\nYou notice a keypad on the side though.\nIf you knew the right code, you might escape!",
+    description_revisit="The steel door and a keypad. What is the code?",
+    choices={
+        "1": "Enter the code",
+        "2": "Turn away"
+    }
 )
-steel_door_opened = Location(
-    "steel_door_opened",
-    "You feel a whif of old air enter from the other side.",
-    "The steel door is opened",
-    "enter the room, move away"
+steel_door_opened = Kitchen(
+    name="steel_door_opened",
+    description="You feel a whif of old air enter from the other side.",
+    description_revisit="The steel door is opened",
+    choices={
+        "1": "Enter the room",
+        "2" : "Turn away"
+    }
 )
 
 library = Location(

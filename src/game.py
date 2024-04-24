@@ -29,7 +29,10 @@ class Game:
             "Go to the next room": dark_room.go_kitchen,
             "Examine the sink": kitchen.examine_sink,
             "Take the scalpel": kitchen.take_scalpel,
-            "Turn away": kitchen.turn_away
+            "Turn away": kitchen.turn_away,
+            "Go back to the room": kitchen.go_back_room,
+            "Examine the steel door": kitchen.examine_steel_door,
+            "Examine the green door": kitchen.examine_green_door
             
         }
 
@@ -85,25 +88,8 @@ class Game:
         for value in self.inventory_choices.values():
             inventory_choices += f"{value}, "
         return inventory_choices.rstrip(", ")
+
     
-
-
-
-    ### Examining the green door
-    def examine_green_door(self) -> None:
-        self.label("You approach the green door.")
-        self.change_location("keyhole")
-        print(f"{self.get_current_location()}")
-        separators()
-        pass
-    
-    ### getting back to the dark room
-    def go_back_room(self) -> None:
-        self.label("You go back to the dark room.")
-        self.change_location("dark room")
-        print(f"{self.get_current_location_revisit()}")
-        separators()
-        pass
     
     ### Moving away from the doors in the kitchen
     def move_away(self) -> None:
@@ -113,68 +99,7 @@ class Game:
         separators()
         pass
 
- ########Talking to the creature: dialogue########
-    def talk_to_creature(self) -> None:
-
-        def dialogue_pause() -> None:
-            time.sleep(2)
-
-        def play_dialogue(dialogue_key) -> None:
-            dialogue = creature[dialogue_key]
-            for line in dialogue["lines"]:
-                print(line)
-                dialogue_pause()
-            while True:
-                try:    
-                    if "options" in dialogue:
-                        for option_key, (option_text, _) in dialogue["options"].items():
-                            print(f"{option_key}. {option_text}")
-                        choice = input("Choose an option: ")
-                    if choice in dialogue["options"]:
-                        next_dialogue_key = dialogue["options"].get(choice)[1]
-                        play_dialogue(next_dialogue_key)
-                    else:
-                        raise ValueError("Invalid choice")
-
-                except ValueError as e:
-                    print("--------------")
-                    print(f"{e}")
-                    print("--------------")
-        if "revisiting creature" not in self.__knowledge:
-            self.add_knowledge("revisiting creature")
-            play_dialogue("start")
-        else:
-            if "knowledge_keypad" not in self.__knowledge:
-                print(">>Leave me alone!<<")
-                separators()
-            else:
-                play_dialogue("code_answer")
-        pass
             
-
-    ### Examining the steel door
-    def examine_steel_door(self):
-        self.label("You approach the steel door.")
-        self.change_location("steel_door")
-        self.add_knowledge("knowledge_keypad")
-        print(f"{self.get_current_location()}")
-        separators()
-        pass
-
-    ### Entering the code
-    def enter_code(self):
-        self.label("The screen is blank, the keys worn out.")
-        code = input("Enter the code: ")
-        clear()
-        if code == "571":
-            self.label("The keypad light turns green!")
-            self.change_location("steel_door_opened")
-            print(f"{self.get_current_location()}")
-            separators()
-        else:
-            print("Invalid code")
-            separators()
-        pass
     
     ### Going to the library 
     def go_library(self):

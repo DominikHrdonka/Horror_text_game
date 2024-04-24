@@ -159,7 +159,7 @@ class Kitchen(Location):
     ##Examining the sink
     def examine_sink(self) -> None:
         self.label("You approach the sink.")
-        if "scalpel" not in Inventory.get_inventory():    
+        if scalpel not in Inventory.get_inventory():    
             Location.change_location(sink)
             print(f"{Location.get_current_location_description()}")
             separators()

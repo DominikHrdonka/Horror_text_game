@@ -1,82 +1,287 @@
+import time
+import os
+from inventory import *
+
+### Global method to create separators between descr. and inputs ###
+def separators() -> None:
+    print("-" * 25)
+
+### Global method to clear the terminal after every user input
+def clear() -> None:
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
 class Location:
-    def __init__(self, name, description, description_next, choices):
+    __current_location = None
+
+    def __init__(self, name, choices, description=None, description_revisit=None):
         self.name = name
         self.description = description
-        self.description_next = description_next
+        self.description_revisit = description_revisit
         self.choices = choices
+        
 
-start = Location(
-    "start",
-    "",
-    "",
-    "explore, quit"
-)
     
-dark_room = Location(
-    "dark room",
-    "As your eyes get used to the dark,\nyou start to distinguish a dark frame set on the opposite wall.\nA door! Next to it there's a black shadow of a wardrobe lurking,\nsitting quietly. The walls are empty, except for black mold. The air heavy with dust.\nOne window set in a wall like a dead painting.",
-    "The same old dark room. Mold on the walls, wet stink. Is that fear?",
-    "go to the window, open the door, open the wardrobe"
+    
+    ### Method to add label to actions
+    def label(self, give_label):
+        separator_count = "-" * len(give_label)
+        print(separator_count)
+        print(f"{give_label}")
+        print(separator_count)
+    
+    ### getting the current location
+    @classmethod
+    def get_current_location_choices(cls):
+        return cls.__current_location.choices
+
+    ### getting current location
+    @classmethod
+    def get_current_location_description(cls):
+        return cls.__current_location.description
+    
+    ### getting curr. loc. when revisiting
+    @classmethod
+    def get_current_location_revisit(cls):
+        return cls.__current_location.description_revisit
+
+    ### method to change current location - loop until correct input
+    @classmethod
+    def change_location(cls, location) -> None:
+        cls.__current_location = location
+        
+
+class Start(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
+    
+    ### Exploring at the beginning of the game
+    def explore(self) -> None:
+        self.label("You decided to explore!")
+        Location.change_location(dark_room)
+        print(f"{Location.get_current_location_description()}")
+        separators()
+
+
+class DarkRoom(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
+    
+    #### trying to open the locked door
+    def open_dark_room_door(self) -> None:
+        if picklock not in Inventory.get_inventory():
+            self.label("You press the door handle!")
+            print("But nothing happens.\nThe door is locked! ")
+            Location.change_location(dark_room)
+            separators()
+        else:
+            self.label("You unlocked the door with the picklock!")
+            Location.change_location(dark_room_door_unlocked)
+
+    ### opening the wardrobe
+    def open_wardrobe(self) -> None:
+        self.label("You opened the wardrobe!")
+        if pliers not in Inventory.get_inventory():
+            Location.change_location(wardrobe)
+            print(f"{Location.get_current_location_description()}")
+            separators()
+        else:
+            Location.change_location(wardrobe_without_pliers)
+            print(f"{Location.get_current_location_description()}")
+            separators()
+    
+    ### going to the window
+    def go_window(self) -> None:
+        self.label("You approach the window.")
+        if clip not in Inventory.get_inventory():
+            Location.change_location(dark_room_window)
+            print(f"{Location.get_current_location_description()}")
+            separators()
+        else:
+            Location.change_location(dark_room_window_without_clip)
+            print(f"{Location.get_current_location_description()}")
+            separators()
+    
+    def craft_picklock(self):
+        print(f"You combined the {clip.name} and {pliers.name} and crafted a {picklock.name}!")
+        Inventory.remove_item(clip)
+        Inventory.add_item(picklock)
+        separators()
+    
+    ### going to the kitchen
+    def go_kitchen(self) -> None:
+        self.label("You enter the room!")
+        Location.change_location(kitchen)
+        print(f"{Location.get_current_location_description()}")
+        separators()
+
+class DarkRoomWardrobe(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
+    
+    ### examining the doll in the wardrobe
+    def examine_doll(self) -> None:
+        self.label("You pick up the doll.")
+        print("The doll's empty eyes make you shudder.\nYou carefully take it it in your hands. A memory pops out.\nA dark memory screaming at you from within.\nA flash of a vision – you're in your room. She came for a visit.\nShe stinks from alcohol and for some reason you are scared.\nShe grins at you, her teeth rotten and disgusting...\nYou put the doll back in the wardrobe.")
+        separators()
+
+    ### closing the wardrobe
+    def close_wardrobe(self) -> None:
+        self.label("You closed the wardrobe.")
+        Location.change_location(dark_room)
+        print(f"{Location.get_current_location_revisit()}")
+        separators()
+    
+    ### taking the pliers
+    def take_pliers(self) -> None:
+        self.label("You took the pliers!")
+        Inventory.add_item(pliers)
+        Location.change_location(wardrobe_without_pliers)
+        if clip in Inventory.get_inventory():
+            dark_room.craft_picklock()
+
+class DarkRoomWindow(DarkRoom):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
+    
+    ###Taking the clip
+    def take_clip(self):
+        self.label("You took the clip!")
+        Inventory.add_item(clip)
+        Location.change_location(dark_room_window_without_clip)
+        if pliers in Inventory.get_inventory():
+            dark_room.craft_picklock()
+
+class Kitchen(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
+
+    ##Examining the sink
+    def examine_sink(self) -> None:
+        self.label("You approach the sink.")
+        if "scalpel" not in Inventory.get_inventory():    
+            Location.change_location(sink)
+            print(f"{Location.get_current_location_description()}")
+            separators()
+        else:
+            Location.change_location(sink_without_scalpel)
+            print(f"{Location.get_current_location_description()}")
+            separators()
+    
+    ### Taking the scalpel
+    def take_scalpel(self) -> None:
+        self.label("You took the scalpel!")
+        Inventory.add_item(scalpel)
+        Location.change_location(sink_without_scalpel)
+        print(f"{Location.get_current_location_description()}")
+        separators()
+    
+    ### Turning away from the sink
+    def turn_away(self) -> None:
+        self.label("You turn away from the sink.")
+        Location.change_location(kitchen)
+        print(f"{Location.get_current_location_revisit()}")
+        separators()
+
+"""
+INSTANCES OF LOCATION CLASSES
+"""
+start = Start(name="Start", choices={"1": "Explore"})
+
+dark_room = DarkRoom(
+    name="Dark room",
+    description="As your eyes get used to the dark,\nyou start to distinguish a dark frame set on the opposite wall.\nA door! Next to it there's a black shadow of a wardrobe lurking,\nsitting quietly. The walls are empty, except for black mold. The air heavy with dust.\nOne window set in a wall like a dead painting.",
+    description_revisit="The same old dark room. Mold on the walls, wet stink. Is that fear?",
+    choices={
+        "1": "Go to the window",
+        "2": "Open the door",
+        "3": "Open the wardrobe"
+    }
     )
 
-wardrobe = Location(
-    "wardrobe",
-    "The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... old pliers!",
-    "The wardrobe - a sad reminder of life long gone.",
-    "take the pliers, examine the doll, close the wardrobe"
+
+
+dark_room_door_unlocked = DarkRoom(
+    name="Unlocked door",
+    description="The door - the only way out of here?",
+    choices={
+        "1": "Go to the next room",
+        "2": "Go to the window",
+        "3": "Open the wardrobe"
+    }
+
+
+)
+
+wardrobe = DarkRoomWardrobe(
+    name="wardrobe",
+    description="The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... old pliers!",
+    description_revisit="The wardrobe - a sad reminder of life long gone.",
+    choices={
+        "1": "Take the pliers",
+        "2": "Examine the doll",
+        "3": "Close the wardrobe"
+    }
     )
-wardrobe_without_pliers = Location(
-    "wardrobe without pliers",
-    "The wardrobe - a sad reminder of life long gone.",
-    "The wardrobe - a sad reminder of life long gone.",
-    "examine the doll, close the wardrobe"
-)
-door = Location(
-    "door",
-    "Old wooden door. You wonder what's on the other side.",
-    "The door - the only way out of here?",
-    "open the door, go to the window, open the wardrobe"
-
-)
-unlocked_door = Location(
-    "unlocked door",
-    "The door - the only way out of here?",
-    "The door - the only way out of here?",
-    "go to the next room, go to the window, open the wardrobe"
-)
-window = Location(
-    "window",
-    "The glass is covered in cobwebs.\nYou try to see through but realize the window is coverd with planks from outside.\nYou can't see anything except that there,\non the windowsill, there is a metal clip.",
-    "The window - if only you could see outside...",
-    "take the clip, open the door, open the wardrobe"
+wardrobe_without_pliers = DarkRoomWardrobe(
+    name="wardrobe without pliers",
+    description="The wardrobe - a sad reminder of life long gone.",
+    choices={
+        "1": "Examine the doll",
+        "2": "Close the wardrobe"
+    }
 )
 
-window_without_clip = Location(
-    "window without clip",
-    "The window - if only you could see outside...",
-    None,
-    "open the door, open the wardrobe"
+dark_room_window = DarkRoomWindow(
+    name="Window",
+    description="The glass is covered in cobwebs.\nYou try to see through but realize the window is coverd with planks from outside.\nYou can't see anything except that there,\non the windowsill, there is a metal clip.",
+    description_revisit="The window - if only could you see outside...",
+    choices={
+        "1": "Take the clip",
+        "2": "Open the door",
+        "3": "Open the wardrobe"
+    }
 )
 
-kitchen = Location(
-    "kitchen",
-    "You are in a kitchen. The smell is even worse here.\nAnd you can see why. There is something in the sink.\nAll covered in blood that's also dripping on the floor.\nThe tiles of the kitchen are old and worn just as a green door on the left.\nYou can hear some rumbling behind it.",
-    "Kitchen - with a bloody sink and a green door.",
-    "examine the sink, go back to the room, examine the green door, examine the steel door"
+dark_room_window_without_clip = DarkRoomWindow(
+    name="Window without clip",
+    description="The window - if only you could see outside...",
+    choices={
+        "1": "Open the door",
+        "2": "Open the wardrobe"
+    }
+)
+
+
+
+kitchen = Kitchen(
+    name="Kitchen",
+    description="You are in a kitchen. The smell is even worse here.\nAnd you can see why. There is something in the sink.\nAll covered in blood that's also dripping on the floor.\nThe tiles of the kitchen are old and worn just as a green door on the left.\nYou can hear some rumbling behind it.",
+    description_revisit="Kitchen - with a bloody sink and a green door.",
+    choices={
+        "1": "Examine the sink",
+        "2": "Go back to the room",
+        "3": "Examine the green door",
+        "4": "Examine the steel door"
+    }
 )
 
 sink = Location(
-    "sink",
-    "The fur is painted by blackish red blood.\nYou lean over the dead animal, trying to make out what it is.\n Probably a rackoon, by the sad sight of it. And rather massacred one.\nWho did this? And why?\nYou notice a rusty scalpel in the sink.",
-    "The bloody sink - it makes no sense.",
-    "take the scalpel, turn away"
+    name="Sink",
+    description="The fur is painted by blackish red blood.\nYou lean over the dead animal, trying to make out what it is.\n Probably a rackoon, by the sad sight of it. And rather massacred one.\nWho did this? And why?\nYou notice a rusty scalpel in the sink.",
+    description_revisit="The bloody sink - it makes no sense.",
+    choices={
+        "1": "Take the scalpel",
+        "2": "Turn away"
+    }
 
 )
-sink_without_scalpel = Location(
-    "sink without scalpel",
-    "The bloody sink - it makes no sense",
-    None,
-    "turn away"
+sink_without_scalpel = Kitchen(
+    name="sink without scalpel",
+    description="The bloody sink - it makes no sense",
+    choices={
+        "1": "Turn away"
+    }
 )
 
 keyhole = Location(

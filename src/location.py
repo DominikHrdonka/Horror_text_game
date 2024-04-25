@@ -34,53 +34,54 @@ class Location:
         self.description_revisit = description_revisit
         self.choices = choices
     
-    ### Method to add label to actions
+    ### add label to actions
     def label(self, give_label):
         separator_count = "-" * len(give_label)
         print(separator_count)
         print(f"{give_label}")
         print(separator_count)
     
-    ### getting the current location
+    ### get current location choices for getting input
     @classmethod
     def get_current_location_choices(cls):
         return cls.__current_location.choices
     
+    ### get current location variable for invenotry interactions
     @classmethod
     def get_current_location_varibale(cls):
         return cls.__current_location
 
-    ### getting current location
+    ### get current location description
     @classmethod
     def get_current_location_description(cls):
         return cls.__current_location.description
     
-    ### getting curr. loc. when revisiting
+    ### get current location revisit description
     @classmethod
     def get_current_location_revisit(cls):
         return cls.__current_location.description_revisit
 
-    ### method to change current location - loop until correct input
+    ###change current location
     @classmethod
     def change_location(cls, location) -> None:
         cls.__current_location = location
 
-    ### getting last location for browsing inventory
+    ### get last location for inventory interactions
     @classmethod
     def get_last_location(cls):
         return cls.__last_location
     
-    ### setting last location for browsing inventory
+    ### set last location for inventory interactions
     @classmethod
     def set_last_location(cls, location):
         cls.__last_location = location
 
-    ### adding knowledge
+    ### add knowledge to the list
     @classmethod
     def add_knowledge(cls, knowledge):
         cls.__knowledge.append(knowledge)
 
-    ### getting list of knowledge
+    ### get list of knowledge
     @classmethod
     def get_knowledge(cls):
         return cls.__knowledge
@@ -212,8 +213,6 @@ class DarkRoomWardrobe(Location):
         self.label("You took the pliers!")
         Inventory.add_item(pliers)
         Location.change_location(wardrobe_without_pliers)
-        if clip in Inventory.get_inventory():
-            dark_room.craft_picklock()
 
 class DarkRoomWindow(DarkRoom):
     def __init__(self, name, choices, description=None, description_revisit=None):
@@ -224,8 +223,7 @@ class DarkRoomWindow(DarkRoom):
         self.label("You took the clip!")
         Inventory.add_item(clip)
         Location.change_location(dark_room_window_without_clip)
-        if pliers in Inventory.get_inventory():
-            dark_room.craft_picklock()
+        
 
 class Kitchen(Location):
     def __init__(self, name, choices, description=None, description_revisit=None):
@@ -364,7 +362,7 @@ dark_room = DarkRoom(
         "1": "Go to the window",
         "2": "Open the door",
         "3": "Open the wardrobe",
-        "4": "Open inventory"
+        "i": "Open inventory"
     }
     )
 
@@ -376,7 +374,8 @@ dark_room_door_unlocked = DarkRoom(
     choices={
         "1": "Go to the next room",
         "2": "Go to the window",
-        "3": "Open the wardrobe"
+        "3": "Open the wardrobe",
+        "i": "Open inventory"
     }
 
 
@@ -389,7 +388,8 @@ wardrobe = DarkRoomWardrobe(
     choices={
         "1": "Take the pliers",
         "2": "Examine the doll",
-        "3": "Close the wardrobe"
+        "3": "Close the wardrobe",
+        "i": "Open inventory"
     }
     )
 wardrobe_without_pliers = DarkRoomWardrobe(
@@ -397,7 +397,8 @@ wardrobe_without_pliers = DarkRoomWardrobe(
     description="The wardrobe - a sad reminder of life long gone.",
     choices={
         "1": "Examine the doll",
-        "2": "Close the wardrobe"
+        "2": "Close the wardrobe",
+        "i": "Open inventory"
     }
 )
 
@@ -408,7 +409,8 @@ dark_room_window = DarkRoomWindow(
     choices={
         "1": "Take the clip",
         "2": "Open the door",
-        "3": "Open the wardrobe"
+        "3": "Open the wardrobe",
+        "i": "Open inventory"
     }
 )
 
@@ -417,7 +419,8 @@ dark_room_window_without_clip = DarkRoomWindow(
     description="The window - if only you could see outside...",
     choices={
         "1": "Open the door",
-        "2": "Open the wardrobe"
+        "2": "Open the wardrobe",
+        "i": "Open inventory"
     }
 )
 
@@ -431,7 +434,8 @@ kitchen = Kitchen(
         "1": "Examine the sink",
         "2": "Go back to the room",
         "3": "Examine the green door",
-        "4": "Examine the steel door"
+        "4": "Examine the steel door",
+        "i": "Open inventory"
     }
 )
 
@@ -441,7 +445,8 @@ sink = Location(
     description_revisit="The bloody sink - it makes no sense.",
     choices={
         "1": "Take the scalpel",
-        "2": "Turn away"
+        "2": "Turn away",
+        "i": "Open inventory"
     }
 
 )
@@ -449,7 +454,8 @@ sink_without_scalpel = Kitchen(
     name="sink without scalpel",
     description="The bloody sink - it makes no sense",
     choices={
-        "1": "Turn away"
+        "1": "Turn away",
+        "i": "Open inventory"
     }
 )
 
@@ -459,7 +465,8 @@ keyhole = Kitchen(
     description_revisit="The keyhole – window to another world.",
     choices={
         "1": "Talk to the creature",
-        "2": "Turn away"
+        "2": "Turn away",
+        "i": "Open inventory"
     }
 )
 
@@ -469,7 +476,8 @@ steel_door = Kitchen(
     description_revisit="The steel door and a keypad. What is the code?",
     choices={
         "1": "Enter the code",
-        "2": "Turn away"
+        "2": "Turn away",
+        "i": "Open inventory"
     }
 )
 steel_door_opened = Kitchen(
@@ -478,7 +486,8 @@ steel_door_opened = Kitchen(
     description_revisit="The steel door is opened",
     choices={
         "1": "Enter the room",
-        "2" : "Turn away"
+        "2": "Turn away",
+        "i": "Open inventory"
     }
 )
 
@@ -488,7 +497,8 @@ enter_library = Library(
     description_revisit="Library - books, bodies and sheer madness. Could you get through the big door?",
     choices={
         "1": "Hide behind the rack",
-        "2": "Go back to the kitchen"
+        "2": "Go back to the kitchen",
+        "i": "Open inventory"
     }
 )
 

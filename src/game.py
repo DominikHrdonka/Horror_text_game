@@ -26,6 +26,7 @@ class Game:
             "Open the wardrobe": dark_room.open_wardrobe,
             "Take the clip": dark_room_window.take_clip,
             "Take the pliers": wardrobe.take_pliers,
+            "Craft a picklock": dark_room.craft_picklock,
             "Examine the doll": wardrobe.examine_doll,
             "Close the wardrobe": wardrobe.close_wardrobe,
             "Go to the next room": dark_room.go_kitchen,
@@ -233,7 +234,7 @@ class Game:
         return user_input
     
 
-    ### Examining the garbage
+    ### Examine the garbage
     def examine_garbage(self)-> None:
         print("-------------------------")
         print("You approach the garbage.\nOld carton boxes, some wires, papershreds... Oh, look, a rusty knife!")

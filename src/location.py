@@ -13,6 +13,17 @@ def clear() -> None:
 
 
 class Location:
+    """
+    parent class of all Location subclasses.
+    
+    class variables: 
+    - current location: to keep track of current location
+    - last location: to keep track of last current location when interacting
+    with invenotry
+    - knowledge: simple list of information, that allows further interactions.
+    e.g. when discovering some locations or items.
+
+    """
     __current_location = None
     __last_location = None
     __knowledge = []
@@ -22,9 +33,6 @@ class Location:
         self.description = description
         self.description_revisit = description_revisit
         self.choices = choices
-        
-
-    
     
     ### Method to add label to actions
     def label(self, give_label):
@@ -81,7 +89,7 @@ class BrowsingInventory(Location):
     def __init__(self, name, choices, description=None, description_revisit=None):
         super().__init__(name, choices, description, description_revisit)
     
-     ### Opening the inventory
+    ### Opening the inventory
     def open_inventory(self) -> None:
         Location.set_last_location(Location.get_current_location_varibale())
         Location.change_location(inventory)
@@ -94,9 +102,13 @@ class BrowsingInventory(Location):
             self.update_invetory_choices()
         else:
             self.label("The inventory is empty.")
-    
+
+    ### Closing the inventory
     def close_inventory(self):
         Location.change_location(Location.get_last_location())
+        print(f"{Location.get_current_location_revisit()}")
+        separators()
+
             
     ### Method to update inventory choices to craft new items
     def update_invetory_choices(self):

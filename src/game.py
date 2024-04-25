@@ -18,6 +18,8 @@ class Game:
         }
 
         self.actions={
+            "Open inventory": inventory.open_inventory,
+            "Close inventory": inventory.close_inventory,
             "Explore": start.explore,
             "Go to the window": dark_room.go_window,
             "Open the door": dark_room.open_dark_room_door,
@@ -32,8 +34,10 @@ class Game:
             "Turn away": kitchen.turn_away,
             "Go back to the room": kitchen.go_back_room,
             "Examine the steel door": kitchen.examine_steel_door,
+            "Enter the code": kitchen.enter_code,
             "Examine the green door": kitchen.examine_green_door,
-            "Talk to the creature": kitchen.talk_to_creature
+            "Talk to the creature": kitchen.talk_to_creature,
+            "Enter the room": kitchen.go_library
             
         }
 
@@ -60,35 +64,6 @@ class Game:
         separators()
         Location.change_location(start)
         self.main_loop()
-    
-
-    
-    ### Opening the inventory
-    def open_inventory(self) -> None:
-        if self.__inventory:
-            self.change_location("inventory")
-            self.label("Your inventory contains:")
-            for item in self.__inventory:
-                print(f"{item.name}")
-            separators()
-            self.update_invetory_choices()
-        else:
-            self.label("The inventory is empty.")
-            
-    ### Method to update inventory choices to craft new items
-    def update_invetory_choices(self):
-        if pliers in self.__inventory and clip in self.__inventory:
-                print(f"You can craft {picklock.name}!!!")
-                self.inventory_choices["2"] = "craft a picklock"
-                separators()
-            
-    ### Method to show available inventory choices
-    def get_inventory_choices(self):
-        self.update_invetory_choices()
-        inventory_choices = ""
-        for value in self.inventory_choices.values():
-            inventory_choices += f"{value}, "
-        return inventory_choices.rstrip(", ")
 
     
     

@@ -14,6 +14,7 @@ def clear() -> None:
 
 class Location:
     __current_location = None
+    __last_location = None
     __knowledge = []
 
     def __init__(self, name, choices, description=None, description_revisit=None):
@@ -36,6 +37,10 @@ class Location:
     @classmethod
     def get_current_location_choices(cls):
         return cls.__current_location.choices
+    
+    @classmethod
+    def get_current_location_varibale(cls):
+        return cls.__current_location
 
     ### getting current location
     @classmethod
@@ -52,6 +57,16 @@ class Location:
     def change_location(cls, location) -> None:
         cls.__current_location = location
 
+    ### getting last location for browsing inventory
+    @classmethod
+    def get_last_location(cls):
+        return cls.__last_location
+    
+    ### setting last location for browsing inventory
+    @classmethod
+    def set_last_location(cls, location):
+        cls.__last_location = location
+
     ### adding knowledge
     @classmethod
     def add_knowledge(cls, knowledge):
@@ -61,6 +76,42 @@ class Location:
     @classmethod
     def get_knowledge(cls):
         return cls.__knowledge
+
+class BrowsingInventory(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
+    
+     ### Opening the inventory
+    def open_inventory(self) -> None:
+        Location.set_last_location(Location.get_current_location_varibale())
+        Location.change_location(inventory)
+        if Inventory.get_inventory():
+            Location.change_location(inventory)
+            self.label("Your inventory contains:")
+            for item in Inventory.get_inventory():
+                print(f"{item.name}")
+            separators()
+            self.update_invetory_choices()
+        else:
+            self.label("The inventory is empty.")
+    
+    def close_inventory(self):
+        Location.change_location(Location.get_last_location())
+            
+    ### Method to update inventory choices to craft new items
+    def update_invetory_choices(self):
+        if pliers in Inventory.get_inventory() and clip in Inventory.get_inventory():
+                print(f"You can craft {picklock.name}!!!")
+                self.choices["2"] = "Craft a picklock"
+                separators()
+            
+    ### Method to show available inventory choices
+    def get_inventory_choices(self):
+        self.update_invetory_choices()
+        inventory_choices = ""
+        for value in self.inventory_choices.values():
+            inventory_choices += f"{value}, "
+        return inventory_choices.rstrip(", ")
         
 
 class Start(Location):
@@ -258,19 +309,39 @@ class Kitchen(Location):
                     print("--------------")
                     print(f"{e}")
                     print("--------------")
-        if "revisiting creature" not in Location.get_knowledge:
+        if "revisiting creature" not in Location.get_knowledge():
             Location.add_knowledge("revisiting creature")
             play_dialogue("start")
         else:
-            if "keypad discovered" not in Location.get_knowledge:
+            if "keypad discovered" not in Location.get_knowledge():
                 print(">>Leave me alone!<<")
                 separators()
             else:
                 play_dialogue("code_answer")
 
+    ### Going to the library 
+    def go_library(self):
+        self.label("The vast room reveals in front of you.")
+        Location.change_location(enter_library)
+        print(f"{Location.get_current_location_description()}")
+        separators()
+
+class Library(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
+    
+
 """
 INSTANCES OF LOCATION CLASSES
 """
+
+inventory = BrowsingInventory(
+    name="Inventory",
+    choices={
+        "1": "Close inventory"
+    }
+)
+
 start = Start(name="Start", choices={"1": "Explore"})
 
 dark_room = DarkRoom(
@@ -280,7 +351,8 @@ dark_room = DarkRoom(
     choices={
         "1": "Go to the window",
         "2": "Open the door",
-        "3": "Open the wardrobe"
+        "3": "Open the wardrobe",
+        "4": "Open inventory"
     }
     )
 
@@ -398,11 +470,14 @@ steel_door_opened = Kitchen(
     }
 )
 
-library = Location(
-    "library",
-    "Is that a library? The huge room spreads in front of you like a giant vault.\nThe dimness is pierced through shimmering light that's coming from above.\nA roof window! Way out of reach though.\nSomething catches your eye. As you lower your gaze, your heart skips a beat.\nBetween the racks of old books you see steel desks. And on them... Sheer madness!\nAn old crone is hunched over one of the bodies all over the place, her back turned to you.\nThere is a horriffic muttering coming from her. She hasn't noticed you yet.\nRight behind her on the other side of the room, there is a two-winged door.\n Is it your way out?",
-    "Library - books, bodies and sheer madness. Could you get through the big door?",
-    "hide behind the rack, go back to the kitchen, quit"
+enter_library = Library(
+    name="library",
+    description="Is that a library? The huge room spreads in front of you like a giant vault.\nThe dimness is pierced through shimmering light that's coming from above.\nA roof window! Way out of reach though.\nSomething catches your eye. As you lower your gaze, your heart skips a beat.\nBetween the racks of old books you see steel desks. And on them... Sheer madness!\nAn old crone is hunched over one of the bodies all over the place, her back turned to you.\nThere is a horriffic muttering coming from her. She hasn't noticed you yet.\nRight behind her on the other side of the room, there is a two-winged door.\n Is it your way out?",
+    description_revisit="Library - books, bodies and sheer madness. Could you get through the big door?",
+    choices={
+        "1": "Hide behind the rack",
+        "2": "Go back to the kitchen"
+    }
 )
 
 rack_one = Location(

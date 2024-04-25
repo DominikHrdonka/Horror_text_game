@@ -2,6 +2,7 @@ import time
 import os
 from inventory import *
 from dialogues import creature
+from crone import *
 
 ### Global method to create separators between descr. and inputs ###
 def separators() -> None:
@@ -107,7 +108,7 @@ class BrowsingInventory(Location):
     ### Closing the inventory
     def close_inventory(self):
         Location.change_location(Location.get_last_location())
-        print(f"{Location.get_current_location_revisit()}")
+        print(f"{Location.get_current_location_description()}")
         separators()
 
             
@@ -117,6 +118,13 @@ class BrowsingInventory(Location):
                 print(f"You can craft {picklock.name}!!!")
                 self.choices["2"] = "Craft a picklock"
                 separators()
+    
+    def craft_picklock(self):
+        print(f"You combined the {clip.name} and {pliers.name} and crafted a {picklock.name}!")
+        Inventory.remove_item(clip)
+        Inventory.add_item(picklock)
+        del self.choices["2"]
+        separators()
             
     ### Method to show available inventory choices
     def get_inventory_choices(self):
@@ -178,11 +186,6 @@ class DarkRoom(Location):
             print(f"{Location.get_current_location_description()}")
             separators()
     
-    def craft_picklock(self):
-        print(f"You combined the {clip.name} and {pliers.name} and crafted a {picklock.name}!")
-        Inventory.remove_item(clip)
-        Inventory.add_item(picklock)
-        separators()
     
     ### going to the kitchen
     def go_kitchen(self) -> None:
@@ -341,6 +344,35 @@ class Library(Location):
         super().__init__(name, choices, description, description_revisit)
     
 
+    ### Hiding behin the first rack
+    def hide_behind_rack(self):
+        self.label("You slip behind the rack on the left.")
+        Location.change_location(library_rack)
+        print(f"{Location.get_current_location_description()}")
+        separators()
+    
+    ### Going back to the kitchen from the library
+    def go_back_kitchen(self) -> None:
+        self.label("You slip back through the steel door.")
+        Location.change_location(kitchen)
+        print(f"{Location.get_current_location_revisit()}")
+        separators()
+
+    ### go to the desk in library
+    def go_desk(self):
+        if "desk_pushed" not in Location.get_knowledge():
+            self.label("You approach the bloody desk.")
+            Location.change_location(desk_with_body)
+            print(f"{Location.get_current_location_description()}")
+            separators()
+        else:
+            self.label("The desk has been pushed away.")
+            Location.change_location(pushed_desk)
+            print(f"{Location.get_current_location_revisit()}")
+            if crone.get_position() == "at_the_desk":
+                print("The crone is examining the desk and body, hissing and twitching with rage.")
+            separators()
+    
 """
 INSTANCES OF LOCATION CLASSES
 """
@@ -502,11 +534,16 @@ enter_library = Library(
     }
 )
 
-rack_one = Location(
-    "rack_one",
-    "The high shadow conceals your body. You hardly breath.\nAfter a while, you dare steal a careful peek. The crone in ragged dress,\nhands covered in blood, wild hair hanging along her skinny skull.\nThe body beneath her touch twitching. And the giant knife in her hand...\nOn the left, hidden from the sight of the crone, you notice a desk with another body.\nOn the right, a few meters away from the crone, there is an axe stuck in the rack.",
-    "You crouch behind the rack. Breath stuck in your throat.",
-    "move to the desk, move to the remnants, go back to the steel door, quit"
+library_rack = Location(
+    name="Library rack",
+    description="The high shadow conceals your body. You hardly breath.\nAfter a while, you dare steal a careful peek. The crone in ragged dress,\nhands covered in blood, wild hair hanging along her skinny skull.\nThe body beneath her touch twitching. And the giant knife in her hand...\nOn the left, hidden from the sight of the crone, you notice a desk with another body.\nOn the right, a few meters away from the crone, there is an axe stuck in the rack.",
+    description_revisit="You crouch behind the rack. Breath stuck in your throat.",
+    choices={
+        "1": "Move to the desk",
+        "2": "Move to the remnants",
+        "3": "Go back to the steel door",
+        "i": "Open inventory"
+    }
 )
 
 old_remnants = Location(
@@ -532,17 +569,24 @@ mirror = Location(
 )
 
 desk_with_body = Location (
-    "desk_with_body",
-    "You feel sick. The body is awfully mutilated.\nHow many bodies are there anyway?\nYou notice little wheels at the desk's base. It is mobile.",
-    "The mobile desk - could you use it somehow?",
-    "push the desk, hide behind the rack, quit"
+    name="Desk with body",
+    description="You feel sick. The body is awfully mutilated.\nHow many bodies are there anyway?\nYou notice little wheels at the desk's base. It is mobile.",
+    description_revisit="The mobile desk - could you use it somehow?",
+    choices={
+        "1": "Push the desk",
+        "2": "Hide behind the rack",
+        "i": "Open inventory"
+    }
 )
 
 pushed_desk = Location (
-    "pushed_desk",
-    "The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
-    "The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
-    "hide behind the rack, quit"
+    name="Pushed desk",
+    description="The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
+    description_revisit="The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
+    choices={
+        "1": "Hide behind the rack",
+        "i": "Open inventory"
+    }
 )
 
 passageway = Location(

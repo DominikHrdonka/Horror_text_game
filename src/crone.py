@@ -1,8 +1,8 @@
 class Crone:
     def __init__(self) -> None:
-        self._position = "center_library"
-        self._health = ("[##########]")
-        self._choices = {
+        self.__position = "center_library"
+        self.__health = ("[##########]")
+        self.__choices = {
             "1": "center_library",
             "2": "at_the_desk",
             "3": "approaching_mirror",
@@ -10,10 +10,10 @@ class Crone:
         }
 
     def get_position(self):
-        return self._position
+        return self.__position
     
     def set_position(self, new_position):
-        self._position = new_position
-        return self._position
+        self.__position = new_position
+        return self.__position
     
 crone = Crone()

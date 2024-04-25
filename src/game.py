@@ -26,7 +26,7 @@ class Game:
             "Open the wardrobe": dark_room.open_wardrobe,
             "Take the clip": dark_room_window.take_clip,
             "Take the pliers": wardrobe.take_pliers,
-            "Craft a picklock": dark_room.craft_picklock,
+            "Craft a picklock": inventory.craft_picklock,
             "Examine the doll": wardrobe.examine_doll,
             "Close the wardrobe": wardrobe.close_wardrobe,
             "Go to the next room": dark_room.go_kitchen,
@@ -38,7 +38,9 @@ class Game:
             "Enter the code": kitchen.enter_code,
             "Examine the green door": kitchen.examine_green_door,
             "Talk to the creature": kitchen.talk_to_creature,
-            "Enter the room": kitchen.go_library
+            "Enter the room": kitchen.go_library,
+            "Hide behind the rack": enter_library.hide_behind_rack,
+            "Go back to the kitchen": enter_library.go_back_kitchen
             
         }
 
@@ -86,14 +88,6 @@ class Game:
         separators()
         pass
 
-    ### Hiding behin the first rack
-    def hide_behind_rack(self):
-        self.label("You slip behind the rack on the left.")
-        self.change_location("rack_one")
-        print(f"{self.get_current_location()}")
-        separators()
-        pass
-
     ### Moving back to the steel door
     def go_back_steel_door(self):
         self.label("You are at the entrance again.")
@@ -102,13 +96,6 @@ class Game:
         separators()
         pass
     
-    ### Going back to the kitchen from the library
-    def go_back_kitchen(self) -> None:
-        self.label("You slip back through the steel door.")
-        self.change_location("kitchen")
-        print(f"{self.get_current_location()}")
-        separators()
-        pass
 
     ### Moving to the stuck axe
     def go_old_remnants(self) -> None:
@@ -141,20 +128,6 @@ class Game:
             self.change_location("old_remnants_without_axe")
         pass
         
-    def go_desk(self):
-        if "desk_pushed" not in self.__knowledge:
-            self.label("You approach the bloody desk.")
-            self.change_location("desk_with_body")
-            print(f"{self.get_current_location()}")
-            separators()
-        else:
-            self.label("The desk has been pushed away.")
-            self.change_location("pushed_desk")
-            print(f"{self.get_current_location_revisit()}")
-            if crone.get_position() == "at_the_desk":
-                print("The crone is examining the desk and body, hissing and twitching with rage.")
-            separators()
-        pass
 
     def push_desk(self):
         self.label("The desk moves usrpisingly smoothly.")

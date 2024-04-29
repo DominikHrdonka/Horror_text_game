@@ -40,7 +40,10 @@ class Game:
             "Talk to the creature": kitchen.talk_to_creature,
             "Enter the room": kitchen.go_library,
             "Hide behind the rack": enter_library.hide_behind_rack,
-            "Go back to the kitchen": enter_library.go_back_kitchen
+            "Go back to the kitchen": enter_library.go_back_kitchen,
+            "Move to the desk": library_rack.go_desk,
+            "Push the desk": desk_with_body.push_desk,
+            "Move to the remnants": library_rack.go_remnants
             
         }
 
@@ -97,23 +100,6 @@ class Game:
         pass
     
 
-    ### Moving to the stuck axe
-    def go_old_remnants(self) -> None:
-        if crone.get_position() != "approaching_mirror":    
-            if "axe" not in self.__inventory:
-                self.label("You sneak up to the old remnants.")
-                self.change_location("old_remnants")
-                print(f"{self.get_current_location()}")
-                separators()
-            else:
-                self.label("You sneak up to the old remnants.")
-                self.change_location("old_remnants_without_axe")
-                print(f"{self.get_current_location()}")
-                separators()
-        else:
-            self.label("The crone would see you. You can't go there!")
-        pass
-
     ### Taking the axe
     def take_axe(self) -> None:
         if crone.get_position() == "center_library":
@@ -128,15 +114,6 @@ class Game:
             self.change_location("old_remnants_without_axe")
         pass
         
-
-    def push_desk(self):
-        self.label("The desk moves usrpisingly smoothly.")
-        print("The wheels squeek and soon the desk hits the rack on the opposite wall.\nFrom the center of the library, there comes a terrible hiss.\nThen heavy steps, and the sound of cloth sweeping on the floor.\nThe crone is on the move! She's gone to inspect the fuss at the opposite side.\n")
-        self.change_location("pushed_desk")
-        self.add_knowledge("desk_pushed")
-        crone.set_position("at_the_desk")
-        separators()
-        pass
 
     ### Moving to the mirror
     def go_mirror(self):

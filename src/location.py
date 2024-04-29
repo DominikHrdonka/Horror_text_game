@@ -177,7 +177,7 @@ class DarkRoom(Location):
     ### going to the window
     def go_window(self) -> None:
         self.label("You approach the window.")
-        if clip not in Inventory.get_inventory():
+        if clip not in Inventory.get_inventory() and picklock not in Inventory.get_inventory():
             Location.change_location(dark_room_window)
             print(f"{Location.get_current_location_description()}")
             separators()
@@ -360,7 +360,7 @@ class Library(Location):
 
     ### go to the desk in library
     def go_desk(self):
-        if "desk_pushed" not in Location.get_knowledge():
+        if "desk pushed" not in Location.get_knowledge():
             self.label("You approach the bloody desk.")
             Location.change_location(desk_with_body)
             print(f"{Location.get_current_location_description()}")
@@ -369,9 +369,34 @@ class Library(Location):
             self.label("The desk has been pushed away.")
             Location.change_location(pushed_desk)
             print(f"{Location.get_current_location_revisit()}")
-            if crone.get_position() == "at_the_desk":
+            if crone.get_position() == "at the desk":
                 print("The crone is examining the desk and body, hissing and twitching with rage.")
             separators()
+
+    ### Push desk in library to distract crone
+    def push_desk(self):
+        self.label("The desk moves usrpisingly smoothly.")
+        print("The wheels squeek and soon the desk hits the rack on the opposite wall.\nFrom the center of the library, there comes a terrible hiss.\nThen heavy steps, and the sound of cloth sweeping on the floor.\nThe crone is on the move! She's gone to inspect the fuss at the opposite side.\n")
+        Location.change_location(pushed_desk)
+        Location.add_knowledge("desk pushed")
+        crone.set_position("at the desk")
+        separators()
+    
+    ### Moving to the stuck axe
+    def go_remnants(self) -> None:
+        if crone.get_position() != "approaching_mirror":    
+            if axe not in Inventory.get_inventory():
+                self.label("You sneak up to the old remnants.")
+                Location.change_location(old_remnants)
+                print(f"{Location.get_current_location_description()}")
+                separators()
+            else:
+                self.label("You sneak up to the old remnants.")
+                Location.change_location(old_remnants_without_axe)
+                print(f"{Location.get_current_location_description()}")
+                separators()
+        else:
+            self.label("The crone would see you. You can't go there!")
     
 """
 INSTANCES OF LOCATION CLASSES
@@ -534,7 +559,7 @@ enter_library = Library(
     }
 )
 
-library_rack = Location(
+library_rack = Library(
     name="Library rack",
     description="The high shadow conceals your body. You hardly breath.\nAfter a while, you dare steal a careful peek. The crone in ragged dress,\nhands covered in blood, wild hair hanging along her skinny skull.\nThe body beneath her touch twitching. And the giant knife in her hand...\nOn the left, hidden from the sight of the crone, you notice a desk with another body.\nOn the right, a few meters away from the crone, there is an axe stuck in the rack.",
     description_revisit="You crouch behind the rack. Breath stuck in your throat.",
@@ -547,17 +572,25 @@ library_rack = Location(
 )
 
 old_remnants = Location(
-    "old_remnants",
-    "The rusty axe is thrust deep into the remnants of an old rack.\nOn the right, you see your ragged reflexion in a tall mirror.",
-    "The axe is still stuck deeú in the wood",
-    "take the axe, hide behind the rack, move to the mirror, quit"
+    name="Old remnants",
+    description="The rusty axe is thrust deep into the remnants of an old rack.\nOn the right, you see your ragged reflexion in a tall mirror.",
+    description_revisit="The axe is still stuck deeú in the wood",
+    choices={
+        "1": "Take the axe",
+        "2": "Hide behind the rack",
+        "3": "Move to the mirror",
+        "i": "Open inventory"
+    }
 )
 
 old_remnants_without_axe = Location(
-    "old_remnants_without_axe",
-    "The old remnants with a vicious scar where the axe used to be",
-    "The old remnants with a vicious scar where the axe used to be",
-    "hide behind the rack, move to the mirror, quit"
+    name="old_remnants_without_axe",
+    description="The old remnants with a vicious scar where the axe used to be",
+    choices={
+        "1": "Hide behind the rack",
+        "2": "Move to the mirror",
+        "i": "Open inventory"
+    }
 
 )
 
@@ -568,7 +601,7 @@ mirror = Location(
     "turn the mirror, enter the passageway, move to the remnants, quit"
 )
 
-desk_with_body = Location (
+desk_with_body = Library (
     name="Desk with body",
     description="You feel sick. The body is awfully mutilated.\nHow many bodies are there anyway?\nYou notice little wheels at the desk's base. It is mobile.",
     description_revisit="The mobile desk - could you use it somehow?",

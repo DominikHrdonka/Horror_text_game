@@ -70,7 +70,7 @@ creature = {
             ],
             "options": {
                 "1": (">>Tell me what you know<<", "code_answer_one"),
-                "2": (">>You'll regret it if you don't tell me!<<", "code_answer_two")
+                "2": (">>You'll regret it if you don't tell me!<<", "c e_answer_two")
             }
         },
         "code_answer_one":{

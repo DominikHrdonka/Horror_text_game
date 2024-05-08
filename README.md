@@ -15,15 +15,13 @@
 # NOTES ON WHAT YET NEEDS TO BE DONE:::::
 # ---------------------------------------
 # 
-# - use encapsulation to protect attributes from tampering
-# 
-# - build options and story for the library location
-# - user input must comply with the given choices (so far I will leave it for purpose of testing)
+#  
+# - dialogue refactor
+# - library - create subclasses of Library
 # -
 # - 
 # -
-# - INVENTORY - finish the logic to update inventory choices dynamically
-#             - add option to open inventory to every location
+# - 
 # 
 #
 #

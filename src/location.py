@@ -422,6 +422,23 @@ class Library(Location):
         Location.change_location(mirror)
         print(f"{Location.get_current_location_description()}")
         separators()
+
+    ### Turning the mirror
+    def turn_mirror(self):
+        self.label("You turn the mirror.")
+        if crone.get_position() != "approaching_mirror":
+            if crone.get_position() == "center_library":
+                print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
+                print("The light falls right on the crone. There is a furious roar, inhuman and ears-piercing.\nYou manage to slip behind the rack next to the mirror right in time.\nThe steps are approaching, the hissing grows.")
+                separators()
+                crone.set_position("approaching_mirror")
+            else:
+                print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
+                print("Nothing happens. Well, you don't even know what you expected.")
+                separators()
+        else:
+            print("The mirror is already turned and the crone is coming to you!")
+            separators()
     
 """
 INSTANCES OF LOCATION CLASSES
@@ -608,7 +625,7 @@ old_remnants = Library(
     }
 )
 
-old_remnants_without_axe = Location(
+old_remnants_without_axe = Library(
     name="old_remnants_without_axe",
     description="The old remnants with a vicious scar where the axe used to be",
     choices={
@@ -619,11 +636,15 @@ old_remnants_without_axe = Location(
 
 )
 
-mirror = Location(
-    "mirror",
-    "The mirror with several cracks distorts your shape\nas if you're a dim comic caricature. Ane perhaps you truly are.\nThis all seems like a nightmare anyway.\nThe mirror could be turned if needed. And there's a narrow passage\nbetween the racks and the right wall. In the dakr, you could sneak through without being seen.",
-    "The cracked mirror and the passageway along the right wall.",
-    "turn the mirror, enter the passageway, move to the remnants, quit"
+mirror = Library(
+    name="mirror",
+    description="The mirror with several cracks distorts your shape\nas if you're a dim comic caricature. Ane perhaps you truly are.\nThis all seems like a nightmare anyway.\nThe mirror could be turned if needed. And there's a narrow passage\nbetween the racks and the right wall. In the dakr, you could sneak through without being seen.",
+    description_revisit="The cracked mirror and the passageway along the right wall.",
+    choices={
+        "1": "Turn the mirror",
+        "2": "Enter the passageway",
+        "i": "Open inventory"
+    }
 )
 
 desk_with_body = Library (

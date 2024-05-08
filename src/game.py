@@ -46,6 +46,7 @@ class Game:
             "Move to the remnants": library_rack.go_remnants,
             "Take the axe": old_remnants.take_axe,
             "Move to the mirror": old_remnants.go_mirror,
+            "Turn the mirror": mirror.turn_mirror
             
         }
 
@@ -101,24 +102,6 @@ class Game:
         separators()
         pass
     
-
-    ### Turning the mirror
-    def turn_mirror(self):
-        self.label("You turn the mirror.")
-        if crone.get_position() != "approaching_mirror":
-            if crone.get_position() == "center_library":
-                print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
-                print("The light falls right on the crone. There is a furious roar, inhuman and ears-piercing.\nYou manage to slip behind the rack next to the mirror right in time.\nThe steps are approaching, the hissing grows.")
-                separators()
-                crone.set_position("approaching_mirror")
-            else:
-                print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
-                print("Nothing happens. Well, you don't even know what you expected.")
-                separators()
-        else:
-            print("The mirror is already turned and the crone is coming to you!")
-            separators()
-        pass
 
     ### Going to the passageway
     def go_passageway(self)-> None:

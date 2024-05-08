@@ -307,21 +307,27 @@ class Kitchen(Location):
                 print(line)
                 dialogue_pause()
             while True:
-                try:    
+                try:
                     if "options" in dialogue:
+                        print("------------------")
                         for option_key, (option_text, _) in dialogue["options"].items():
                             print(f"{option_key}. {option_text}")
+                        print("------------------")
                         choice = input("Choose an option: ")
+                    else:
+                        False
+
                     if choice in dialogue["options"]:
                         next_dialogue_key = dialogue["options"].get(choice)[1]
                         play_dialogue(next_dialogue_key)
                     else:
-                        raise ValueError("Invalid choice")
-
+                        raise ValueError("Invalid dialogue choice")
+                
                 except ValueError as e:
                     print("--------------")
                     print(f"{e}")
-                    print("--------------")
+                    print("--------------")     
+                
         if "revisiting creature" not in Location.get_knowledge():
             Location.add_knowledge("revisiting creature")
             play_dialogue("start")
@@ -397,6 +403,25 @@ class Library(Location):
                 separators()
         else:
             self.label("The crone would see you. You can't go there!")
+    
+    ### Take axe
+    def take_axe(self) -> None:
+        if crone.get_position() == "center_library":
+            print("-----------------------------------")
+            print("Removing the axe will make a noise.\nYou don't dare trying when the crone is so close.\nPerhaps you could lure her away?")
+            print("-----------------------------------")
+        else:
+            print("-----------------------------------")
+            print("Your muscles tense up as you pull.\nFinally, as the wood creaks, you successfully remove the axe.")
+            print("-----------------------------------")
+            Inventory.add_item(axe)
+            Location.change_location(old_remnants_without_axe)
+    
+    def go_mirror(self):
+        self.label("You approach the mirror.")
+        Location.change_location(mirror)
+        print(f"{Location.get_current_location_description()}")
+        separators()
     
 """
 INSTANCES OF LOCATION CLASSES
@@ -571,7 +596,7 @@ library_rack = Library(
     }
 )
 
-old_remnants = Location(
+old_remnants = Library(
     name="Old remnants",
     description="The rusty axe is thrust deep into the remnants of an old rack.\nOn the right, you see your ragged reflexion in a tall mirror.",
     description_revisit="The axe is still stuck deeú in the wood",

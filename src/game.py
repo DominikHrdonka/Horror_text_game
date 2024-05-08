@@ -43,7 +43,9 @@ class Game:
             "Go back to the kitchen": enter_library.go_back_kitchen,
             "Move to the desk": library_rack.go_desk,
             "Push the desk": desk_with_body.push_desk,
-            "Move to the remnants": library_rack.go_remnants
+            "Move to the remnants": library_rack.go_remnants,
+            "Take the axe": old_remnants.take_axe,
+            "Move to the mirror": old_remnants.go_mirror,
             
         }
 
@@ -99,29 +101,6 @@ class Game:
         separators()
         pass
     
-
-    ### Taking the axe
-    def take_axe(self) -> None:
-        if crone.get_position() == "center_library":
-            print("-----------------------------------")
-            print("Removing the axe will make a noise.\nYou don't dare trying when the crone is so close.\nPerhaps you could lure her away?")
-            print("-----------------------------------")
-        else:
-            print("-----------------------------------")
-            print("Your muscles tense up as you pull.\nFinally, as the wood creaks, you successfully remove the axe.")
-            print("-----------------------------------")
-            self.add_item(axe)
-            self.change_location("old_remnants_without_axe")
-        pass
-        
-
-    ### Moving to the mirror
-    def go_mirror(self):
-        self.label("You approach the mirror.")
-        self.change_location("mirror")
-        print(f"{self.get_current_location()}")
-        separators()
-        pass
 
     ### Turning the mirror
     def turn_mirror(self):
@@ -250,7 +229,9 @@ class Game:
             try:
                 self.actions[Location.get_current_location_choices()[user_input]]()
             except:
-                print("Invalid choice.")
+                print("--------------")
+                print("Invalid choice")
+                print("--------------")
 
 # Creating instance of Game
 game = Game()

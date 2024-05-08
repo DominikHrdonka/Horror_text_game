@@ -1,3 +1,4 @@
+
 creature = {
         "start": {
             "lines": ["You take a deep breath.",

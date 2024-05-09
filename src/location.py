@@ -440,6 +440,30 @@ class Library(Location):
             print("The mirror is already turned and the crone is coming to you!")
             separators()
     
+    ### Enter the passageway
+    def go_passageway(self)-> None:
+        self.label("You enter the passageway.")
+        Location.change_location(passageway)
+        if "revisiting_passgw" not in Location.get_knowledge():
+            print(f"{Location.get_current_location_description()}")
+            Location.add_knowledge("revisiting_passgw")
+            separators()
+        else:
+            print(f"{Location.get_current_location_revisit()}")
+            separators()
+    
+    ### Entering the service room
+    def climb_through_hole(self)-> None:
+        self.label("You climb through the hole.")
+        Location.change_location(service_room)
+        if "revisitting_servicer" not in Location.get_knowledge():
+            print(f"{Location.get_current_location_description()}")
+            separators()
+            Location.add_knowledge("revisitting_servicer")
+        else:
+            print(f"{Location.get_current_location_revisit()}")
+            separators()
+    
 """
 INSTANCES OF LOCATION CLASSES
 """
@@ -616,7 +640,7 @@ library_rack = Library(
 old_remnants = Library(
     name="Old remnants",
     description="The rusty axe is thrust deep into the remnants of an old rack.\nOn the right, you see your ragged reflexion in a tall mirror.",
-    description_revisit="The axe is still stuck deeú in the wood",
+    description_revisit="The axe is still stuck deep in the wood",
     choices={
         "1": "Take the axe",
         "2": "Hide behind the rack",
@@ -658,7 +682,7 @@ desk_with_body = Library (
     }
 )
 
-pushed_desk = Location (
+pushed_desk = Library (
     name="Pushed desk",
     description="The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
     description_revisit="The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
@@ -668,11 +692,14 @@ pushed_desk = Location (
     }
 )
 
-passageway = Location(
-    "passageway",
-    "You squeeze yourself inbetween the racks and the ragged wall.\nIf you're careful enough, you can get to the at the end of the library undetected.\nIn the narrow passageway, everything stinks of mold and.\nAt the end, you can see a dim hole in the wall. Where is it going?",
-    "The narrow passageway – an opportunity to get to the other side of the library.",
-    "move to the mirror, climb through the hole"
+passageway = Library(
+    name="passageway",
+    description="You squeeze yourself inbetween the racks and the ragged wall.\nIf you're careful enough, you can get to the at the end of the library undetected.\nIn the narrow passageway, everything stinks of mold and.\nAt the end, you can see a dim hole in the wall. Where is it going?",
+    description_revisit="The narrow passageway – an opportunity to get to the other side of the library.",
+    choices={
+        "1": "Move to the mirror",
+        "2" : "Climb through the hole"
+    }
 )
 
 service_room = Location(

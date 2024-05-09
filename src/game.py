@@ -46,7 +46,9 @@ class Game:
             "Move to the remnants": library_rack.go_remnants,
             "Take the axe": old_remnants.take_axe,
             "Move to the mirror": old_remnants.go_mirror,
-            "Turn the mirror": mirror.turn_mirror
+            "Turn the mirror": mirror.turn_mirror,
+            "Enter the passageway": mirror.go_passageway,
+            "Climb through the hole": passageway.climb_through_hole
             
         }
 
@@ -103,31 +105,7 @@ class Game:
         pass
     
 
-    ### Going to the passageway
-    def go_passageway(self)-> None:
-        self.label("You enter the passageway.")
-        self.change_location("passageway")
-        if "revisiting_passgw" not in self.__knowledge:
-            print(f"{self.get_current_location()}")
-            self.add_knowledge("revisiting_passgw")
-            separators()
-        else:
-            print(f"{self.get_current_location_revisit()}")
-            separators()
-        pass
 
-    ### Entering the service room
-    def climb_through_hole(self)-> None:
-        self.label("You climb through the hole.")
-        self.change_location("service_room")
-        if "revisitting_servicer" not in self.__knowledge:
-            print(f"{self.get_current_location()}")
-            separators()
-            self.add_knowledge("revisitting_servicer")
-        else:
-            print(f"{self.get_current_location_revisit()}")
-            separators()
-        pass
 
     ### Using the computer
     def use_computer(self)-> None:

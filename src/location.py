@@ -463,7 +463,48 @@ class Library(Location):
         else:
             print(f"{Location.get_current_location_revisit()}")
             separators()
+
+class ServiceRoom(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
     
+        ###Examine the fuse box
+    def examine_fuse_box(self)-> None:
+        self.label("You approach the fuse box.")
+        Location.change_location(fuse_box)
+        if "revisiting_fuse" not in Location.get_knowledge():
+            print(f"{Location.get_current_location_description()}")
+            separators()
+            Location.add_knowledge("revisiting_fuse")
+        else:
+            print(f"{Location.get_current_location_revisit()}")
+            separators()
+    
+    ### Use the computer
+    def use_computer(self)-> None:
+        print("---------------------------")
+        print("You press the power button.\nNothing happens. the machine is long dead.")
+        print("---------------------------")
+
+    ### Examine the garbage
+    def examine_garbage(self)-> None:
+        print("-------------------------")
+        print("You approach the garbage.\nOld carton boxes, some wires, papershreds... Oh, look, a rusty knife!")
+        print("-------------------------")
+        print("You took the rusty knife!")
+        separators()
+        Inventory.add_item(rusty_knife)
+    
+    ### Enter library from service room
+    def enter_library(self):
+        if crone.get_position() == "approaching_service_room":
+            self.label("You can't go there now, you'd bump right into the crone!")
+        else:
+            self.label("You enter the library")
+            Location.change_location(library_back)
+            print(Location.get_current_location_description())
+            separators()
+
 """
 INSTANCES OF LOCATION CLASSES
 """
@@ -702,23 +743,38 @@ passageway = Library(
     }
 )
 
-service_room = Location(
-    "service_room",
-    "You find yourself in an old service room. There is a rusty fuse box on the wall.\nSome garbage in the corner. A dusted computer. Door, most likely leading to the library.",
-    "The old service room – not much left but something could be useful.",
-    "enter the passageway, examine the fuse box, use the computer, examine the garbage, enter the library"
+service_room = ServiceRoom(
+    name="service_room",
+    description="You find yourself in an old service room. There is a rusty fuse box on the wall.\nSome garbage in the corner. A dusted computer. Door, most likely leading to the library.",
+    description_revisit="The old service room – not much left but something could be useful.",
+    choices={
+        "1": "Enter the passageway",
+        "2": "Examine the fuse box",
+        "3": "Use the computer",
+        "4": "Examine the garbage",
+        "5": "Enter the library",
+        "i": "Open inventory"
+    }
 )
 
-fuse_box = Location(
-    "fuse_box",
-    "The old fuse box is covered with cobwebs. There's a silent buzz coming out from it.\nCould it be still functional?",
-    "The old fuse box – still working",
-    "switch the button, look away"
+fuse_box = ServiceRoom(
+    name="fuse_box",
+    description="The old fuse box is covered with cobwebs. There's a silent buzz coming out from it.\nCould it be still functional?",
+    description_revisit="The old fuse box – still working",
+    choices={
+        "1": "Switch the button",
+        "2": "Look away",
+        "i": "Open inventory"
+    }
 )
 
-library_back = Location(
-    "library_back",
-    "You are in the front of the library. The two-wing door stand just right before you.\nThat's the only way out. The crone is far enough.\nDon't hesitate!",
-    "Front of the library – so close to the main entrance!",
-    "open the big door, enter the service room"
+library_back = Library(
+    name="library_back",
+    description="You are in the front of the library. The two-wing door stand just right before you.\nThat's the only way out. The crone is far enough.\nDon't hesitate!",
+    description_revisit="Front of the library – so close to the main entrance!",
+    choices={
+        "1": "Open the big door",
+        "2": "Enter the service room",
+        "i": "Open inventory"
+    }
 )

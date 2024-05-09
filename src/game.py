@@ -48,18 +48,12 @@ class Game:
             "Move to the mirror": old_remnants.go_mirror,
             "Turn the mirror": mirror.turn_mirror,
             "Enter the passageway": mirror.go_passageway,
-            "Climb through the hole": passageway.climb_through_hole
-            
+            "Climb through the hole": passageway.climb_through_hole,
+            "Examine the fuse box": service_room.examine_fuse_box,
+            "Use the computer": service_room.use_computer,
+            "Examine the garbage": service_room.examine_garbage,
+            "Enter the library": service_room.enter_library
         }
-
-    
-    
-    ### Method to add knowledge to knowledge list
-    def add_knowledge(self, knowledge) -> None:
-        self.__knowledge.append(knowledge)
-
-
-
     
     ### Method to start the game with an intr
     def start_game(self) -> None:
@@ -75,44 +69,7 @@ class Game:
         separators()
         Location.change_location(start)
         self.main_loop()
-
     
-    
-    ### Moving away from the doors in the kitchen
-    def move_away(self) -> None:
-        self.label("You turn back to the kitchen.")
-        self.change_location("kitchen")
-        print(f"{self.get_current_location_revisit()}")
-        separators()
-        pass
-
-            
-    
-    ### Going to the library 
-    def go_library(self):
-        self.label("The vast room reveals in front of you.")
-        self.change_location("library")
-        print(f"{self.get_current_location()}")
-        separators()
-        pass
-
-    ### Moving back to the steel door
-    def go_back_steel_door(self):
-        self.label("You are at the entrance again.")
-        self.change_location("library")
-        print(f"{self.get_current_location_revisit()}")
-        separators()
-        pass
-    
-
-
-
-    ### Using the computer
-    def use_computer(self)-> None:
-        print("---------------------------")
-        print("You press the power button.\nNothing happens. the machine is long dead.")
-        print("---------------------------")
-        pass
 
     ### Method to get a user input
     def get_input(self, clear):
@@ -124,28 +81,6 @@ class Game:
         return user_input
     
 
-    ### Examine the garbage
-    def examine_garbage(self)-> None:
-        print("-------------------------")
-        print("You approach the garbage.\nOld carton boxes, some wires, papershreds... Oh, look, a rusty knife!")
-        print("-------------------------")
-        print("You took the rusty knife!")
-        separators()
-        self.add_item("rusty_knife")
-        pass
-
-    ###Examining the fuse box
-    def examine_fuse_box(self)-> None:
-        self.label("You approach the fuse box.")
-        self.change_location("fuse_box")
-        if "revisiting_fuse" not in self.__knowledge:
-            print(f"{self.get_current_location()}")
-            separators()
-            self.add_knowledge("revisiting_fuse")
-        else:
-            print(f"{self.get_current_location_revisit()}")
-            separators()
-        pass
     
     ###Looking away from the fuse box
     def look_away(self)-> None:
@@ -163,15 +98,6 @@ class Game:
         separators()
         pass
     
-    def enter_library(self):
-        if crone.get_position() == "approaching_service_room":
-            self.label("You can't go there now, you'd bump right into the crone!")
-        else:
-            self.label("You enter the library")
-            self.change_location("library_back")
-            print(self.get_current_location())
-            separators()
-        pass
 
     ### Entering service room from library
     def enter_service_room(self):

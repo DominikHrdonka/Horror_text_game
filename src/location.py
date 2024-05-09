@@ -471,7 +471,7 @@ class ServiceRoom(Location):
         ###Examine the fuse box
     def examine_fuse_box(self)-> None:
         self.label("You approach the fuse box.")
-        Location.change_location(fuse_box)
+        Location.change_location(fuse_box_closed)
         if "revisiting_fuse" not in Location.get_knowledge():
             print(f"{Location.get_current_location_description()}")
             separators()
@@ -479,6 +479,29 @@ class ServiceRoom(Location):
         else:
             print(f"{Location.get_current_location_revisit()}")
             separators()
+    
+    ###Look away from the fuse box
+    def look_away(self)-> None:
+        self.label("You look away.")
+        Location.change_location(service_room)
+        print(f"{Location.get_current_location_revisit()}")
+        separators()
+
+    
+    ### Open closed fuse box
+    def open_fuse_box(self):
+        if "fuse_box_is_open" not in Location.get_knowledge():
+            if axe in Inventory.get_inventory():
+                self.label("You thrust the axe in the lid gap.")
+                Location.change_location(fuse_box_open)
+                print(f"{Location.get_current_location_description()}")
+                Location.add_knowledge("fuse_box_is_open")
+                separators()
+            else:
+                self.label("The lid won't budge. You need to find some tool.")
+        else:
+            Location.change_location(fuse_box_open)
+            print(f"{Location.get_current_location_revisit()}")
     
     ### Use the computer
     def use_computer(self)-> None:
@@ -759,7 +782,11 @@ service_room = ServiceRoom(
 
 fuse_box_closed = ServiceRoom(
     name="fuse_box_closed",
-    description="The old fuse box is covered with cobwebs. There's a silent buzz coming out from it.\nCould it be still functional? Anyway, the rusty lid is stuck.",
+    description="""
+The old fuse box is covered with cobwebs.
+There's a silent buzz coming out from it.
+Could it be still functional? Anyway, the rusty lid is stuck.
+    """,
     description_revisit="The old fuse box – still working but closed.",
     choices={
         "1": "Open the lid",
@@ -771,18 +798,19 @@ fuse_box_closed = ServiceRoom(
 fuse_box_open = ServiceRoom(
     name="fuse_box_open",
     description= """
-    You pry the lid open. Rusty sqeak shoots out in the room.
-    You blow off layers of dust from the control panel.
-    The little lightbulb is solid green. Next to it, an old button.
-    """,
-    description_revisit= "The old fuse box – still working, lid open."
-
+You pry the lid open. A rusty squeak shoots out in the room.
+You blow off layers of dust from the control panel.
+The little lightbulb is solid green. Next to it, an old button.
+""",
+    description_revisit="The old fuse box – still working, lid open.",
     choices={
         "1": "Switch the button",
         "2": "Look away",
-        "i": "Open inventory
+        "i": "Open inventory"
     }
 )
+
+
 
 library_back = Library(
     name="library_back",

@@ -50,6 +50,8 @@ class Game:
             "Enter the passageway": mirror.go_passageway,
             "Climb through the hole": passageway.climb_through_hole,
             "Examine the fuse box": service_room.examine_fuse_box,
+            "Open the lid": fuse_box_closed.open_fuse_box,
+            "Look away": fuse_box_closed.look_away,
             "Use the computer": service_room.use_computer,
             "Examine the garbage": service_room.examine_garbage,
             "Enter the library": service_room.enter_library
@@ -80,15 +82,6 @@ class Game:
         clear()
         return user_input
     
-
-    
-    ###Looking away from the fuse box
-    def look_away(self)-> None:
-        self.label("You look away.")
-        self.change_location("service_room")
-        print(f"{self.get_current_location_revisit()}")
-        separators()
-        pass
 
     ###Switching the button on the fuse box
     def switch_button(self)-> None:

@@ -505,15 +505,19 @@ class ServiceRoom(Location):
     
     ### Use the computer
     def use_computer(self)-> None:
-        print("---------------------------")
-        print("You press the power button.\nNothing happens. the machine is long dead.")
-        print("---------------------------")
+        self.label("You press the power button.")
+        print("Nothing happens. the machine is long dead.")
+        separators()
 
     ### Examine the garbage
     def examine_garbage(self)-> None:
-        print("-------------------------")
-        print("You approach the garbage.\nOld carton boxes, some wires, papershreds... Oh, look, a rusty knife!")
-        print("-------------------------")
+        self.label("You approach the garbage.")
+        print(
+            """
+Old carton boxes, some wires, papershreds...
+Oh, look, a rusty knife! That could come in handy so you take it.
+"""
+)
         print("You took the rusty knife!")
         separators()
         Inventory.add_item(rusty_knife)
@@ -539,12 +543,25 @@ inventory = BrowsingInventory(
     }
 )
 
-start = Start(name="Start", choices={"1": "Explore"})
+start = Start(
+    name="Start",
+    choices={
+        "1": "Explore"
+    }
+)
 
 dark_room = DarkRoom(
     name="Dark room",
-    description="As your eyes get used to the dark,\nyou start to distinguish a dark frame set on the opposite wall.\nA door! Next to it there's a black shadow of a wardrobe lurking,\nsitting quietly. The walls are empty, except for black mold. The air heavy with dust.\nOne window set in a wall like a dead painting.",
-    description_revisit="The same old dark room. Mold on the walls, wet stink. Is that fear?",
+    description="""
+As your eyes get used to the dark,
+you start to distinguish a dark frame set on the opposite wall.
+A door! Next to it there's a black shadow of a wardrobe lurking, sitting quietly.
+The walls are empty, except for black mold. The air heavy with dust.
+One window set in a wall like a dead painting.
+""",
+    description_revisit="""
+The same old dark room. Mold on the walls, wet stink. Is that fear?
+""",
     choices={
         "1": "Go to the window",
         "2": "Open the door",
@@ -557,7 +574,9 @@ dark_room = DarkRoom(
 
 dark_room_door_unlocked = DarkRoom(
     name="Unlocked door",
-    description="The door - the only way out of here?",
+    description="""
+The door - the only way out of here?
+""",
     choices={
         "1": "Go to the next room",
         "2": "Go to the window",
@@ -570,7 +589,13 @@ dark_room_door_unlocked = DarkRoom(
 
 wardrobe = DarkRoomWardrobe(
     name="wardrobe",
-    description="The wardrobe creaks. Awful smell gets out.\nYou feel sick and have to cover your nose.\nAs the shock passes, you notice something inside.\nA ragged doll with one eye. And there... old pliers!",
+    description=
+"""
+The wardrobe creaks. Awful smell gets out.
+You feel sick and have to cover your nose.
+As the shock passes, you notice something inside.
+A ragged doll with one eye. And there... old pliers!
+""",
     description_revisit="The wardrobe - a sad reminder of life long gone.",
     choices={
         "1": "Take the pliers",
@@ -581,7 +606,9 @@ wardrobe = DarkRoomWardrobe(
     )
 wardrobe_without_pliers = DarkRoomWardrobe(
     name="wardrobe without pliers",
-    description="The wardrobe - a sad reminder of life long gone.",
+    description="""
+The wardrobe - a sad reminder of life long gone.
+""",
     choices={
         "1": "Examine the doll",
         "2": "Close the wardrobe",
@@ -591,8 +618,16 @@ wardrobe_without_pliers = DarkRoomWardrobe(
 
 dark_room_window = DarkRoomWindow(
     name="Window",
-    description="The glass is covered in cobwebs.\nYou try to see through but realize the window is coverd with planks from outside.\nYou can't see anything except that there,\non the windowsill, there is a metal clip.",
-    description_revisit="The window - if only could you see outside...",
+    description="""
+The glass is covered in cobwebs.
+You try to see through but realize the window
+is coverd with planks from outside.
+You can't see anything except that there,
+on the windowsill, there is a metal clip.
+""",
+    description_revisit="""
+The window - if only could you see outside...
+    """,
     choices={
         "1": "Take the clip",
         "2": "Open the door",
@@ -603,7 +638,9 @@ dark_room_window = DarkRoomWindow(
 
 dark_room_window_without_clip = DarkRoomWindow(
     name="Window without clip",
-    description="The window - if only you could see outside...",
+    description="""
+The window - if only you could see outside...
+""",
     choices={
         "1": "Open the door",
         "2": "Open the wardrobe",
@@ -612,11 +649,18 @@ dark_room_window_without_clip = DarkRoomWindow(
 )
 
 
-
 kitchen = Kitchen(
     name="Kitchen",
-    description="You are in a kitchen. The smell is even worse here.\nAnd you can see why. There is something in the sink.\nAll covered in blood that's also dripping on the floor.\nThe tiles of the kitchen are old and worn just as a green door on the left.\nYou can hear some rumbling behind it.",
-    description_revisit="Kitchen - with a bloody sink and a green door.",
+    description="""
+You are in a kitchen. The smell is even worse here.
+And you can see why. There is something in the sink.
+All covered in blood that's also dripping on the floor.
+The tiles of the kitchen are old and worn just as a green door on the left.
+You can hear some rumbling behind it.
+""",
+    description_revisit="""
+Kitchen - with a bloody sink and a green door.
+""",
     choices={
         "1": "Examine the sink",
         "2": "Go back to the room",
@@ -628,8 +672,16 @@ kitchen = Kitchen(
 
 sink = Location(
     name="Sink",
-    description="The fur is painted by blackish red blood.\nYou lean over the dead animal, trying to make out what it is.\n Probably a rackoon, by the sad sight of it. And rather massacred one.\nWho did this? And why?\nYou notice a rusty scalpel in the sink.",
-    description_revisit="The bloody sink - it makes no sense.",
+    description="""
+The fur is painted by blackish red blood.
+You lean over the dead animal, trying to make out what it is.
+Probably a rackoon, by the sad sight of it. And rather massacred one.
+Who did this? And why?
+You notice a rusty scalpel in the sink.
+""",
+    description_revisit="""
+The bloody sink - it makes no sense.
+""",
     choices={
         "1": "Take the scalpel",
         "2": "Turn away",
@@ -639,7 +691,9 @@ sink = Location(
 )
 sink_without_scalpel = Kitchen(
     name="sink without scalpel",
-    description="The bloody sink - it makes no sense",
+    description="""
+The bloody sink - it makes no sense
+""",
     choices={
         "1": "Turn away",
         "i": "Open inventory"
@@ -648,8 +702,16 @@ sink_without_scalpel = Kitchen(
 
 keyhole = Kitchen(
     name="keyhole",
-    description="The rumbling is definitely coming from the other side!\nYou can feel your heart pounding loudly in your chest. Too loudly.\nYou crouch down and slowly move your eye to the keyhole.\nThe keyhole is small but you can see the creature on the other side.\nIts chest is heaving up and down. Whatever it is, it is in pain.",
-    description_revisit="The keyhole – window to another world.",
+    description="""
+The rumbling is definitely coming from the other side!
+You can feel your heart pounding loudly in your chest. Too loudly.
+You crouch down and slowly move your eye to the keyhole.
+The keyhole is small but you can see the creature on the other side.
+Its chest is heaving up and down. Whatever it is, it is in pain.
+""",
+    description_revisit="""
+The keyhole – window to another world.
+""",
     choices={
         "1": "Talk to the creature",
         "2": "Turn away",
@@ -659,8 +721,14 @@ keyhole = Kitchen(
 
 steel_door = Kitchen(
     name="steel_door",
-    description="The heavy door wouldn't budge even if you had a hammer.\nYou notice a keypad on the side though.\nIf you knew the right code, you might escape!",
-    description_revisit="The steel door and a keypad. What is the code?",
+    description="""
+The heavy door wouldn't budge even if you had a hammer.
+You notice a keypad on the side though.
+If you knew the right code, you might escape!
+""",
+    description_revisit="""
+The steel door and a keypad. What is the code?
+""",
     choices={
         "1": "Enter the code",
         "2": "Turn away",
@@ -669,8 +737,12 @@ steel_door = Kitchen(
 )
 steel_door_opened = Kitchen(
     name="steel_door_opened",
-    description="You feel a whif of old air enter from the other side.",
-    description_revisit="The steel door is opened",
+    description="""
+You feel a whif of old air enter from the other side.
+""",
+    description_revisit="""
+The steel door is opened
+""",
     choices={
         "1": "Enter the room",
         "2": "Turn away",
@@ -680,8 +752,23 @@ steel_door_opened = Kitchen(
 
 enter_library = Library(
     name="library",
-    description="Is that a library? The huge room spreads in front of you like a giant vault.\nThe dimness is pierced through shimmering light that's coming from above.\nA roof window! Way out of reach though.\nSomething catches your eye. As you lower your gaze, your heart skips a beat.\nBetween the racks of old books you see steel desks. And on them... Sheer madness!\nAn old crone is hunched over one of the bodies all over the place, her back turned to you.\nThere is a horriffic muttering coming from her. She hasn't noticed you yet.\nRight behind her on the other side of the room, there is a two-winged door.\n Is it your way out?",
-    description_revisit="Library - books, bodies and sheer madness. Could you get through the big door?",
+    description="""
+Is that a library?
+The huge room spreads in front of you like a giant vault.
+The dimness is pierced through shimmering light that's coming from above.
+A roof window! Way out of reach though.
+Something catches your eye. As you lower your gaze, your heart skips a beat.
+Between the racks of old books you see steel desks.
+And on them... Sheer madness! An old crone is hunched over one of the bodies
+all over the place, her back turned to you.
+There is a horriffic muttering coming from her. She hasn't noticed you yet.
+Right behind her on the other side of the room, there is a two-winged door.
+Is it your way out?
+""",
+    description_revisit="""
+Library - books, bodies and sheer madness.
+Could you get through the big door?
+""",
     choices={
         "1": "Hide behind the rack",
         "2": "Go back to the kitchen",
@@ -691,8 +778,17 @@ enter_library = Library(
 
 library_rack = Library(
     name="Library rack",
-    description="The high shadow conceals your body. You hardly breath.\nAfter a while, you dare steal a careful peek. The crone in ragged dress,\nhands covered in blood, wild hair hanging along her skinny skull.\nThe body beneath her touch twitching. And the giant knife in her hand...\nOn the left, hidden from the sight of the crone, you notice a desk with another body.\nOn the right, a few meters away from the crone, there is an axe stuck in the rack.",
-    description_revisit="You crouch behind the rack. Breath stuck in your throat.",
+    description="""
+The high shadow conceals your body. You hardly breath.
+After a while, you dare steal a careful peek. The crone in ragged dress,
+hands covered in blood, wild hair hanging along her skinny skull.
+The body beneath her touch twitching. And the giant knife in her hand...
+On the left, hidden from the sight of the crone, you notice a desk with another body.
+On the right, a few meters away from the crone, there is an axe stuck in the rack.
+""",
+    description_revisit="""
+You crouch behind the rack. Breath stuck in your throat.
+""",
     choices={
         "1": "Move to the desk",
         "2": "Move to the remnants",
@@ -703,8 +799,13 @@ library_rack = Library(
 
 old_remnants = Library(
     name="Old remnants",
-    description="The rusty axe is thrust deep into the remnants of an old rack.\nOn the right, you see your ragged reflexion in a tall mirror.",
-    description_revisit="The axe is still stuck deep in the wood",
+    description="""
+The rusty axe is thrust deep into the remnants of an old rack.
+On the right, you see your ragged reflexion in a tall mirror.
+""",
+    description_revisit="""
+The axe is still stuck deep in the wood
+""",
     choices={
         "1": "Take the axe",
         "2": "Hide behind the rack",
@@ -715,7 +816,9 @@ old_remnants = Library(
 
 old_remnants_without_axe = Library(
     name="old_remnants_without_axe",
-    description="The old remnants with a vicious scar where the axe used to be",
+    description="""
+The old remnants with a vicious scar where the axe used to be
+""",
     choices={
         "1": "Hide behind the rack",
         "2": "Move to the mirror",
@@ -726,8 +829,16 @@ old_remnants_without_axe = Library(
 
 mirror = Library(
     name="mirror",
-    description="The mirror with several cracks distorts your shape\nas if you're a dim comic caricature. Ane perhaps you truly are.\nThis all seems like a nightmare anyway.\nThe mirror could be turned if needed. And there's a narrow passage\nbetween the racks and the right wall. In the dakr, you could sneak through without being seen.",
-    description_revisit="The cracked mirror and the passageway along the right wall.",
+    description="""
+The mirror with several cracks distorts your shape
+as if you're a dim comic caricature. Ane perhaps you truly are.
+This all seems like a nightmare anyway. The mirror could be turned if needed.
+And there's a narrow passage between the racks and the right wall.
+In the dakr, you could sneak through without being seen.
+""",
+    description_revisit="""
+The cracked mirror and the passageway along the right wall.
+""",
     choices={
         "1": "Turn the mirror",
         "2": "Enter the passageway",
@@ -737,8 +848,14 @@ mirror = Library(
 
 desk_with_body = Library (
     name="Desk with body",
-    description="You feel sick. The body is awfully mutilated.\nHow many bodies are there anyway?\nYou notice little wheels at the desk's base. It is mobile.",
-    description_revisit="The mobile desk - could you use it somehow?",
+    description="""
+You feel sick. The body is awfully mutilated.
+How many bodies are there anyway?
+You notice little wheels at the desk's base. It is mobile.
+""",
+    description_revisit="""
+The mobile desk - could you use it somehow?
+""",
     choices={
         "1": "Push the desk",
         "2": "Hide behind the rack",
@@ -748,8 +865,16 @@ desk_with_body = Library (
 
 pushed_desk = Library (
     name="Pushed desk",
-    description="The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
-    description_revisit="The desk colided with the opposite wall.\nYou crouch behind the counter instead.",
+    description=
+"""
+The desk colided with the opposite wall.
+You crouch behind the counter instead.
+""",
+    description_revisit=
+"""
+The desk colided with the opposite wall.
+You crouch behind the counter instead.
+""",
     choices={
         "1": "Hide behind the rack",
         "i": "Open inventory"
@@ -758,8 +883,18 @@ pushed_desk = Library (
 
 passageway = Library(
     name="passageway",
-    description="You squeeze yourself inbetween the racks and the ragged wall.\nIf you're careful enough, you can get to the at the end of the library undetected.\nIn the narrow passageway, everything stinks of mold and.\nAt the end, you can see a dim hole in the wall. Where is it going?",
-    description_revisit="The narrow passageway – an opportunity to get to the other side of the library.",
+    description=
+"""
+You squeeze yourself inbetween the racks and the ragged wall.
+If you're careful enough, you can get to the at the end of the library undetected.
+In the narrow passageway, everything stinks of mold and.
+At the end, you can see a dim hole in the wall. Where is it going?
+""",
+    description_revisit=
+"""
+The narrow passageway.
+An opportunity to get to the other side of the library.
+""",
     choices={
         "1": "Move to the mirror",
         "2" : "Climb through the hole"
@@ -768,8 +903,15 @@ passageway = Library(
 
 service_room = ServiceRoom(
     name="service_room",
-    description="You find yourself in an old service room. There is a rusty fuse box on the wall.\nSome garbage in the corner. A dusted computer. Door, most likely leading to the library.",
-    description_revisit="The old service room – not much left but something could be useful.",
+    description="""
+You find yourself in an old service room.
+There is a rusty fuse box on the wall.
+Some garbage in the corner. A dusted computer.
+Door, most likely leading to the library.
+""",
+    description_revisit="""
+The old service room – not much left but something could be useful.
+""",
     choices={
         "1": "Enter the passageway",
         "2": "Examine the fuse box",
@@ -787,7 +929,9 @@ The old fuse box is covered with cobwebs.
 There's a silent buzz coming out from it.
 Could it be still functional? Anyway, the rusty lid is stuck.
     """,
-    description_revisit="The old fuse box – still working but closed.",
+    description_revisit="""
+The old fuse box – still working but closed.
+""",
     choices={
         "1": "Open the lid",
         "2": "Look away",
@@ -802,7 +946,9 @@ You pry the lid open. A rusty squeak shoots out in the room.
 You blow off layers of dust from the control panel.
 The little lightbulb is solid green. Next to it, an old button.
 """,
-    description_revisit="The old fuse box – still working, lid open.",
+    description_revisit="""
+The old fuse box – still working, lid open.
+""",
     choices={
         "1": "Switch the button",
         "2": "Look away",
@@ -814,8 +960,14 @@ The little lightbulb is solid green. Next to it, an old button.
 
 library_back = Library(
     name="library_back",
-    description="You are in the front of the library. The two-wing door stand just right before you.\nThat's the only way out. The crone is far enough.\nDon't hesitate!",
-    description_revisit="Front of the library – so close to the main entrance!",
+    description="""
+You are in the front of the library.
+The two-wing door stand just right before you.
+That's the only way out. The crone is far enough. Don't hesitate!
+""",
+    description_revisit="""
+Front of the library – so close to the main entrance!
+""",
     choices={
         "1": "Open the big door",
         "2": "Enter the service room",

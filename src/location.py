@@ -757,14 +757,30 @@ service_room = ServiceRoom(
     }
 )
 
-fuse_box = ServiceRoom(
-    name="fuse_box",
-    description="The old fuse box is covered with cobwebs. There's a silent buzz coming out from it.\nCould it be still functional?",
-    description_revisit="The old fuse box – still working",
+fuse_box_closed = ServiceRoom(
+    name="fuse_box_closed",
+    description="The old fuse box is covered with cobwebs. There's a silent buzz coming out from it.\nCould it be still functional? Anyway, the rusty lid is stuck.",
+    description_revisit="The old fuse box – still working but closed.",
+    choices={
+        "1": "Open the lid",
+        "2": "Look away",
+        "i": "Open inventory"
+    }
+)
+
+fuse_box_open = ServiceRoom(
+    name="fuse_box_open",
+    description= """
+    You pry the lid open. Rusty sqeak shoots out in the room.
+    You blow off layers of dust from the control panel.
+    The little lightbulb is solid green. Next to it, an old button.
+    """,
+    description_revisit= "The old fuse box – still working, lid open."
+
     choices={
         "1": "Switch the button",
         "2": "Look away",
-        "i": "Open inventory"
+        "i": "Open inventory
     }
 )
 

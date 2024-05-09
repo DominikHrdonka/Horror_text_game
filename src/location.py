@@ -564,17 +564,18 @@ You need to lure her off.
     ### Open main door from library
     def open_two_wing_door(self):
         self.label("You lean on the heavy door.")
-        print("""
-You can feel it move a little bit. It's not enough though.
-You gather all your strength and push harder. The door squeaks.
-From behind you, you can hear a furious hiss.
-Even harder you lean on the door, the gap slowly growing.
-Heavy steps approaching, inhuman squeel tearing your ears.
->>For God's sake, come on!<<
-Just as you feel the ominous presence at your back, you manage to push through.
-You fall hard on the floor in a long dim corridor.
-There are only two options now...
-""")
+        Location.change_location(corridor_behind_library)
+        Location.get_current_location_description()
+        separators()
+    
+class CorridorChase(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None):
+        super().__init__(name, choices, description, description_revisit)
+    
+    def run_in_corridor(self):
+        Location.change_location(wardrobe_in_corridor)
+        Location.get_current_location_description()
+        separators()
 
 """
 INSTANCES OF LOCATION CLASSES
@@ -1020,5 +1021,35 @@ Front of the library – so close to the main entrance!
 )
 
 corridor_behind_library = Location(
-    name="corridor"
+    name="corridor",
+    description=
+"""
+You can feel it move a little bit. It's not enough though.
+You gather all your strength and push harder. The door squeaks.
+From behind you, you can hear a furious hiss.
+Even harder you lean on the door, the gap slowly growing.
+Heavy steps approaching, inhuman squeel tearing your ears.
+>>For God's sake, come on!<<
+Just as you feel the ominous presence at your back, you manage to push through.
+You fall hard on the floor in a long dim corridor.
+There is only one option now...
+RUN!!!
+""",
+    choices={
+        "1": "Run",
+    }
+)
+
+wardrobe_in_corridor = CorridorChase(
+    name="wardrobe_in_corridor",
+    description="""
+    You scramble up on your feet, stumbling forward you miss a serious blow.
+    The crone roars in an undead scream. You run down the dim corridor,
+    not knowing where it leads. In front of you, you distinguish an ominous shape.
+    An old wardrobe leaning across the corridor. You can stop now!
+    """,
+    choices={
+        "1": "Climb over the wardrobe",
+        "2": "Climb under the wardrobe"
+    }
 )

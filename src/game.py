@@ -47,7 +47,8 @@ class Game:
             "Switch the button": fuse_box_open.switch_button,
             "Use the computer": service_room.use_computer,
             "Examine the garbage": service_room.examine_garbage,
-            "Enter the library": service_room.enter_library
+            "Enter the library": service_room.enter_library,
+            
         }
     
     ### Method to start the game with an intr

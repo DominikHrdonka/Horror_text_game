@@ -427,17 +427,26 @@ class Library(Location):
     def turn_mirror(self):
         self.label("You turn the mirror.")
         if crone.get_position() != "approaching_mirror":
-            if crone.get_position() == "center_library":
-                print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
-                print("The light falls right on the crone. There is a furious roar, inhuman and ears-piercing.\nYou manage to slip behind the rack next to the mirror right in time.\nThe steps are approaching, the hissing grows.")
+            if crone.get_position() == "center_library" or crone.get_position()== "approaching_service_room":
+                print("""
+As the cracked glass catches the dim sunlight coming from the roof window
+reflection gets thrown at the center of the library.
+The light falls right on the crone.
+There is a furious roar, inhuman and ears-piercing.
+You manage to slip behind the rack next to the mirror right in time.
+The steps are approaching, the hissing grows."
+""")
                 separators()
                 crone.set_position("approaching_mirror")
             else:
-                print("As the cracked glass catches the dim sunlight coming from the roof window\nreflection gets thrown at the center of the library.")
-                print("Nothing happens. Well, you don't even know what you expected.")
+                print("""
+As the cracked glass catches the dim sunlight coming from the roof window
+reflection gets thrown at the center of the library.
+Nothing happens. Well, you don't even know what you expected.
+""")
                 separators()
         else:
-            print("The mirror is already turned and the crone is coming to you!")
+            print("The mirror is already turned and the crone is coming to you! Get lost!")
             separators()
     
     ### Enter the passageway
@@ -503,10 +512,24 @@ class ServiceRoom(Location):
             Location.change_location(fuse_box_open)
             print(f"{Location.get_current_location_revisit()}")
     
+    ### Switch fuse box button
+    def switch_button(self)-> None:
+        self.label("You switch the button.")
+        print("""
+There is a spark.
+From below the door you see light entering the service room.
+And with the light, there comes a shriek. The crone's coming here!
+""")
+        crone.set_position("approaching_service_room")
+        separators()
+        
+    
     ### Use the computer
     def use_computer(self)-> None:
         self.label("You press the power button.")
-        print("Nothing happens. the machine is long dead.")
+        print("""
+Nothing happens. the machine is long dead.
+""")
         separators()
 
     ### Examine the garbage
@@ -526,11 +549,32 @@ Oh, look, a rusty knife! That could come in handy so you take it.
     def enter_library(self):
         if crone.get_position() == "approaching_service_room":
             self.label("You can't go there now, you'd bump right into the crone!")
+        elif crone.get_position() == "at_the_desk":
+            self.label("You slowly open the door but close it immediately.")
+            print("""
+The crone standing at the desk would see you right away.
+You need to lure her off.
+""")
         else:
             self.label("You enter the library")
             Location.change_location(library_back)
             print(Location.get_current_location_description())
             separators()
+    
+    ### Open main door from library
+    def open_two_wing_door(self):
+        self.label("You lean on the heavy door.")
+        print("""
+You can feel it move a little bit. It's not enough though.
+You gather all your strength and push harder. The door squeaks.
+From behind you, you can hear a furious hiss.
+Even harder you lean on the door, the gap slowly growing.
+Heavy steps approaching, inhuman squeel tearing your ears.
+>>For God's sake, come on!<<
+Just as you feel the ominous presence at your back, you manage to push through.
+You fall hard on the floor in a long dim corridor.
+There are only two options now...
+""")
 
 """
 INSTANCES OF LOCATION CLASSES
@@ -973,4 +1017,8 @@ Front of the library – so close to the main entrance!
         "2": "Enter the service room",
         "i": "Open inventory"
     }
+)
+
+corridor_behind_library = Location(
+    name="corridor"
 )

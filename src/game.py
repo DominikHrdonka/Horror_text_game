@@ -9,14 +9,6 @@ from inventory import *
 class Game:
     def __init__(self) -> None:
         self.__game_over = False
-    
-        self.__inventory = []
-        self.__knowledge = []
-
-        self.inventory_choices = {
-            "1": "exit"
-        }
-
         self.actions={
             "Open inventory": inventory.open_inventory,
             "Close inventory": inventory.close_inventory,
@@ -52,6 +44,7 @@ class Game:
             "Examine the fuse box": service_room.examine_fuse_box,
             "Open the lid": fuse_box_closed.open_fuse_box,
             "Look away": fuse_box_closed.look_away,
+            "Switch the button": fuse_box_open.switch_button,
             "Use the computer": service_room.use_computer,
             "Examine the garbage": service_room.examine_garbage,
             "Enter the library": service_room.enter_library
@@ -63,11 +56,14 @@ class Game:
         print("==================================================")
         print("--------------WELCOME TO THE GAME-----------------")
         print("==================================================")
-        print("You open your eyes slowly. Your head is throbbing.")
-        print("The room is dimly lit, not anything like your memory.")
-        print("That is lost in a black hole of oblivion.")
-        print("You get up slowly from the floor. The wood creaks beneath your feet.")
-        print("You need to find your way out of here.")
+        print("""
+You open your eyes slowly. Your head is throbbing.
+The room is dimly lit, not anything like your memory.
+The room is dimly lit, not anything like your memory.
+That is lost in a black hole of oblivion.
+You get up slowly from the floor. The wood creaks beneath your feet.
+You need to find your way out of here.
+""")
         separators()
         Location.change_location(start)
         self.main_loop()
@@ -81,24 +77,6 @@ class Game:
         user_input = input(f"What do you want to do? ({list_choices.rstrip(", ")}) > ").lower()
         clear()
         return user_input
-    
-
-    ###Switching the button on the fuse box
-    def switch_button(self)-> None:
-        self.label("You switch the button.")
-        print("There is a spark.\nFrom below the door you see light entering the service room.\nAnd with the light, there comes a shriek. The crone's coming here!")
-        crone.set_position("approaching_service_room")
-        separators()
-        pass
-    
-
-    ### Entering service room from library
-    def enter_service_room(self):
-        self.label("You enter the service room")
-        self.change_location("service_room")
-        print(self.get_current_location_revisit())
-        separators()
-        pass
         
 
 ########### MAIN LOOP OF THE GAME # #########

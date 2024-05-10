@@ -106,8 +106,8 @@ class BrowsingInventory(Location):
             self.label("Your inventory contains:")
             for item in Inventory.get_inventory():
                 print(f"{item.name}")
-            separators()
             self.update_invetory_choices()
+            separators()
         else:
             self.label("The inventory is empty.")
 
@@ -123,9 +123,9 @@ class BrowsingInventory(Location):
         if pliers in Inventory.get_inventory() and clip in Inventory.get_inventory():
             print(f"You can craft {picklock.name}!!!")
             self.choices["2"] = "Craft a picklock"
-            separators()
         if old_cable in Inventory.get_inventory() and scalpel in Inventory.get_inventory():
             self.choices["2"] = "Cut off the old cable rubber"
+        separators()
 
     
     def craft_picklock(self):
@@ -186,10 +186,9 @@ class DarkRoom(Location):
         Location.change_location(wardrobe)
         if pliers not in Inventory.get_inventory():
             print(f"{Location.get_current_location_description()}")
-            separators()
         else:
             print(f"{Location.get_current_location_revisit()}")
-            separators()
+        separators()
     
     ### going to the window
     def go_window(self) -> None:
@@ -295,10 +294,9 @@ class Kitchen(Location):
             self.label("The keypad light turns green!")
             Location.change_location(steel_door_opened)
             print(f"{Location.get_current_location_description()}")
-            separators()
         else:
             print("Invalid code")
-            separators()
+        separators()
     
     ### Examining the green door
     def examine_green_door(self) -> None:
@@ -382,14 +380,13 @@ class Library(Location):
             self.label("You approach the bloody desk.")
             Location.change_location(desk_with_body)
             print(f"{Location.get_current_location_description()}")
-            separators()
         else:
             self.label("The desk has been pushed away.")
             Location.change_location(pushed_desk)
             print(f"{Location.get_current_location_revisit()}")
             if crone.get_position() == "at the desk":
                 print("The crone is examining the desk and body, hissing and twitching with rage.")
-            separators()
+        separators()
 
     ### Push desk in library to distract crone
     def push_desk(self):
@@ -420,15 +417,14 @@ class Library(Location):
     ### Take axe
     def take_axe(self) -> None:
         if crone.get_position() == "center_library":
-            print("-----------------------------------")
-            print("Removing the axe will make a noise.\nYou don't dare trying when the crone is so close.\nPerhaps you could lure her away?")
-            print("-----------------------------------")
+            self.label("Removing the axe will make a noise.")
+            print("You don't dare trying when the crone is so close.\nPerhaps you could lure her away?")
         else:
             self.label("You grab the axe handle.")
             print("\nYour muscles tense up as you pull.\nFinally, as the wood creaks, you successfully remove the axe.\n")
             Inventory.add_item(axe)
             del old_remnants.choices["3"]
-            separators()
+        separators()
     
     def go_mirror(self):
         self.label("You approach the mirror.")
@@ -449,7 +445,6 @@ There is a furious roar, inhuman and ears-piercing.
 You manage to slip behind the rack next to the mirror right in time.
 The steps are approaching, the hissing grows."
 """)
-                separators()
                 crone.set_position("approaching_mirror")
             else:
                 print("""
@@ -457,10 +452,9 @@ As the cracked glass catches the dim sunlight coming from the roof window
 reflection gets thrown at the center of the library.
 Nothing happens. Well, you don't even know what you expected.
 """)
-                separators()
         else:
             print("The mirror is already turned and the crone is coming to you! Get lost!")
-            separators()
+        separators()
     
     ### Enter the passageway
     def go_passageway(self)-> None:
@@ -469,10 +463,9 @@ Nothing happens. Well, you don't even know what you expected.
         if "revisiting_passgw" not in Location.get_knowledge():
             print(f"{Location.get_current_location_description()}")
             Location.add_knowledge("revisiting_passgw")
-            separators()
         else:
             print(f"{Location.get_current_location_revisit()}")
-            separators()
+        separators()
     
     ### Entering the service room
     def climb_through_hole(self)-> None:
@@ -480,16 +473,16 @@ Nothing happens. Well, you don't even know what you expected.
         Location.change_location(service_room)
         if "revisitting_servicer" not in Location.get_knowledge():
             print(f"{Location.get_current_location_description()}")
-            separators()
             Location.add_knowledge("revisitting_servicer")
         else:
             print(f"{Location.get_current_location_revisit()}")
-            separators()
+        separators()
     
     def enter_service_room(self):
         self.label("You enter the service room")
         Location.change_location(service_room)
         print(f"{Location.get_current_location_revisit()}")
+        separators()
 
      ### Open main door from library
     def open_two_wing_door(self):
@@ -509,11 +502,10 @@ class ServiceRoom(Location):
             Location.change_location(fuse_box_closed)
             if "revisiting_fuse" not in Location.get_knowledge():
                 print(f"{Location.get_current_location_description()}")
-                separators()
                 Location.add_knowledge("revisiting_fuse")
             else:
                 print(f"{Location.get_current_location_revisit()}")
-                separators()
+            separators()
         else:
             fuse_box_closed.open_fuse_box()
     
@@ -533,17 +525,15 @@ class ServiceRoom(Location):
                 Location.change_location(fuse_box_open)
                 print(f"{Location.get_current_location_description()}")
                 Location.add_knowledge("fuse_box_is_open")
-                separators()
             else:
                 self.label("You try to open the lid.")
                 print("\nIt won't budge. You need to find some tool.\n")
-                separators()
         else:
             self.label("You open the lid.")
             Location.change_location(fuse_box_open)
             #Condition to show a new choice if crafted cable in Inventory
             print(f"{Location.get_current_location_revisit()}")
-            separators()
+        separators()
     
     ### Switch fuse box button
     def switch_button(self)-> None:
@@ -556,10 +546,9 @@ From below the door you see light entering the service room.
 And with the light, there comes a shriek. The crone's coming here!
 """)
             crone.set_position("approaching_service_room")
-            separators()
         else:
             print("\nNothing happens. The switch is dead. A cable is missing\n")
-            separators()
+        separators()
 
     ### Connect crafted cable to fuse box
     def connect_cable(self):
@@ -586,9 +575,9 @@ Oh, look, a rusty knife and old piece of cable!
 That could come in handy. You take both.
 """
 )
-        separators()
         Inventory.add_item(rusty_knife)
         Inventory.add_item(old_cable)
+        separators()
     
     ### Enter library from service room
     def enter_library(self):
@@ -604,7 +593,7 @@ You need to lure her off.
             self.label("You enter the library")
             Location.change_location(library_back)
             print(Location.get_current_location_description())
-            separators()
+        separators()
     
     
 class CorridorChase(Location):

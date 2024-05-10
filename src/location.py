@@ -371,7 +371,7 @@ class Library(Location):
     def go_library_entrance(self):
         self.label("You get back to the steel door.")
         Location.change_location(enter_library)
-        Location.get_current_location_revisit()
+        print(f"{Location.get_current_location_revisit()}")
         separators()
 
     ### Going back to the kitchen from the library
@@ -825,7 +825,7 @@ Is it your way out?
 """,
     description_revisit="""
 Library - books, bodies and sheer madness.
-Could you get through the big door?
+Could you get through the big door on the other side?
 """,
     choices={
         "1": "Hide behind the rack",

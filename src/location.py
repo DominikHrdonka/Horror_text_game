@@ -188,14 +188,13 @@ class DarkRoom(Location):
     ### going to the window
     def go_window(self) -> None:
         self.label("You approach the window.")
-        if clip not in Inventory.get_inventory() and picklock not in Inventory.get_inventory():
-            Location.change_location(dark_room_window)
+        Location.change_location(dark_room_window)
+        if clip not in Inventory.get_inventory():
             print(f"{Location.get_current_location_description()}")
-            separators()
         else:
-            Location.change_location(dark_room_window_without_clip)
-            print(f"{Location.get_current_location_description()}")
-            separators()
+            print(f"{Location.get_current_location_revisit()}")
+        separators()
+
     
     
     ### going to the kitchen
@@ -236,7 +235,7 @@ class DarkRoomWindow(DarkRoom):
     def take_clip(self):
         self.label("You took the clip!")
         Inventory.add_item(clip)
-        Location.change_location(dark_room_window_without_clip)
+        del dark_room_window.choices["3"]
         
 
 class Kitchen(Location):
@@ -701,24 +700,13 @@ on the windowsill, there is a metal clip.
 The window - if only could you see outside...
     """,
     choices={
-        "1": "Take the clip",
-        "2": "Open the door",
-        "3": "Open the wardrobe",
+        "1": "Open the door",
+        "2": "Open the wardrobe",
+        "3": "Take the clip",
         "i": "Open inventory"
     }
 )
 
-dark_room_window_without_clip = DarkRoomWindow(
-    name="Window without clip",
-    description="""
-The window - if only you could see outside...
-""",
-    choices={
-        "1": "Open the door",
-        "2": "Open the wardrobe",
-        "i": "Open inventory"
-    }
-)
 
 
 kitchen = Kitchen(

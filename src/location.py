@@ -29,10 +29,11 @@ class Location:
     __last_location = None
     __knowledge = []
 
-    def __init__(self, name, choices, description=None, description_revisit=None):
+    def __init__(self, name, choices, description=None, description_revisit=None, description_revisit2=None):
         self.name = name
         self.description = description
         self.description_revisit = description_revisit
+        self.description_revisit2= description_revisit2
         self.choices = choices
     
     ### add label to actions
@@ -61,6 +62,11 @@ class Location:
     @classmethod
     def get_current_location_revisit(cls):
         return cls.__current_location.description_revisit
+
+    ### get current location revisit description2
+    @classmethod
+    def get_current_location_revisit2(cls):
+        return cls.__current_location.description_revisit2
 
     ###change current location
     @classmethod
@@ -352,8 +358,8 @@ class Kitchen(Location):
         separators()
 
 class Library(Location):
-    def __init__(self, name, choices, description=None, description_revisit=None):
-        super().__init__(name, choices, description, description_revisit)
+    def __init__(self, name, choices, description=None, description_revisit=None, description_revisit2=None):
+        super().__init__(name, choices, description, description_revisit, description_revisit2)
     
 
     ### Hiding behin the first rack
@@ -397,18 +403,19 @@ class Library(Location):
     ### Moving to the stuck axe
     def go_remnants(self) -> None:
         if crone.get_position() != "approaching_mirror":    
-            if axe not in Inventory.get_inventory():
-                self.label("You sneak up to the old remnants.")
-                Location.change_location(old_remnants)
+            self.label("You sneak up to the old remnants.")
+            Location.change_location(old_remnants)
+            if "remnants_revisit" not in Location.get_knowledge():
+                Location.add_knowledge("remnants_revisit")
                 print(f"{Location.get_current_location_description()}")
-                separators()
             else:
-                self.label("You sneak up to the old remnants.")
-                Location.change_location(old_remnants_without_axe)
-                print(f"{Location.get_current_location_description()}")
-                separators()
+                if axe not in Inventory.get_inventory():
+                    print(f"{Location.get_current_location_revisit()}")
+                else:
+                    print(f"{Location.get_current_location_revisit2()}")
         else:
             self.label("The crone would see you. You can't go there!")
+        separators()
     
     ### Take axe
     def take_axe(self) -> None:
@@ -418,9 +425,9 @@ class Library(Location):
             print("-----------------------------------")
         else:
             self.label("You grab the axe handle.")
-            print("\nYour muscles tense up as you pull.\nFinally, as the wood creaks, you successfully remove the axe.")
+            print("\nYour muscles tense up as you pull.\nFinally, as the wood creaks, you successfully remove the axe.\n")
             Inventory.add_item(axe)
-            Location.change_location(old_remnants_without_axe)
+            del old_remnants.choices["3"]
             separators()
     
     def go_mirror(self):
@@ -852,25 +859,13 @@ On the right, you see your ragged reflexion in a tall mirror.
     description_revisit="""
 The axe is still stuck deep in the wood
 """,
-    choices={
-        "1": "Take the axe",
-        "2": "Hide behind the rack",
-        "3": "Move to the mirror",
-        "i": "Open inventory"
-    }
-)
-
-old_remnants_without_axe = Library(
-    name="old_remnants_without_axe",
-    description="""
-The old remnants with a vicious scar where the axe used to be
-""",
+description_revisit2= "\nThe old remnants with a vicious scar where the axe used to be.\n",
     choices={
         "1": "Hide behind the rack",
         "2": "Move to the mirror",
+        "3": "Take the axe",
         "i": "Open inventory"
     }
-
 )
 
 mirror = Library(

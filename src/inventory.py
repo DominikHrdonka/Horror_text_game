@@ -33,6 +33,8 @@ key = Items("key")
 pliers = Items("pliers")
 clip = Items("clip")
 picklock = Items("picklock")
+old_cable = Items("old cable")
+cable = Items("cable")
 
 ### Weapons instances
 scalpel = Weapons("scalpel", 4)

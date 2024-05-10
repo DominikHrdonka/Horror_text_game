@@ -45,6 +45,7 @@ class Game:
             "Open the lid": fuse_box_closed.open_fuse_box,
             "Look away": fuse_box_closed.look_away,
             "Switch the button": fuse_box_open.switch_button,
+            "Cut off the old cable rubber": inventory.cut_off_rubber,
             "Use the computer": service_room.use_computer,
             "Examine the garbage": service_room.examine_garbage,
             "Enter the library": service_room.enter_library,

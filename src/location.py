@@ -115,14 +115,24 @@ class BrowsingInventory(Location):
     ### Method to update inventory choices to craft new items
     def update_invetory_choices(self):
         if pliers in Inventory.get_inventory() and clip in Inventory.get_inventory():
-                print(f"You can craft {picklock.name}!!!")
-                self.choices["2"] = "Craft a picklock"
-                separators()
+            print(f"You can craft {picklock.name}!!!")
+            self.choices["2"] = "Craft a picklock"
+            separators()
+        if old_cable in Inventory.get_inventory() and scalpel in Inventory.get_inventory():
+            self.choices["2"] = "Cut off the old cable rubber"
+
     
     def craft_picklock(self):
         print(f"You combined the {clip.name} and {pliers.name} and crafted a {picklock.name}!")
         Inventory.remove_item(clip)
         Inventory.add_item(picklock)
+        del self.choices["2"]
+        separators()
+    
+    def cut_off_rubber(self):
+        print(f"You used the {scalpel.name} to cut the old rubber off the {old_cable.name}!")
+        Inventory.remove_item(old_cable)
+        Inventory.add_item(cable)
         del self.choices["2"]
         separators()
             
@@ -522,19 +532,34 @@ class ServiceRoom(Location):
                 self.label("The lid won't budge. You need to find some tool.")
         else:
             Location.change_location(fuse_box_open)
+            #Condition to show a new choice if crafted cable in Inventory
+            if cable in Inventory.get_inventory():
+                self.choices["3"] = "Connect the cable"
             print(f"{Location.get_current_location_revisit()}")
     
     ### Switch fuse box button
     def switch_button(self)-> None:
         self.label("You switch the button.")
-        print("""
+        if "button_functional" in Location.get_knowledge:
+
+            print("""
 There is a spark.
 From below the door you see light entering the service room.
 And with the light, there comes a shriek. The crone's coming here!
 """)
-        crone.set_position("approaching_service_room")
+            crone.set_position("approaching_service_room")
+            separators()
+        else:
+            print("Nothing happens. The switch is dead. A cable is missing")
+    
+    ### Connect crafted cable to fuse box
+    def connect_cable(self):
+        self.label("You connected the cable!")
+        print("The little light in the fuse box flickers green and stays on.")
+        Location.add_knowledge("button_functional")
+        del self.choices["3"]
         separators()
-        
+
     
     ### Use the computer
     def use_computer(self)-> None:
@@ -550,12 +575,12 @@ Nothing happens. the machine is long dead.
         print(
             """
 Old carton boxes, some wires, papershreds...
-Oh, look, a rusty knife! That could come in handy so you take it.
+Oh, look, a rusty knife and old piece of cable! That could come in handy so you take both.
 """
 )
-        print("You took the rusty knife!")
         separators()
         Inventory.add_item(rusty_knife)
+        Inventory.add_item(old_cable)
     
     ### Enter library from service room
     def enter_library(self):
@@ -995,7 +1020,7 @@ fuse_box_open = ServiceRoom(
     description= """
 You pry the lid open. A rusty squeak shoots out in the room.
 You blow off layers of dust from the control panel.
-The little lightbulb is solid green. Next to it, an old button.
+The little lightbulb is dead. Next to it, an old button.
 """,
     description_revisit="""
 The old fuse box – still working, lid open.

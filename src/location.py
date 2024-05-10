@@ -135,6 +135,7 @@ class BrowsingInventory(Location):
         Inventory.remove_item(old_cable)
         Inventory.add_item(cable)
         del self.choices["2"]
+        fuse_box_open.choices["3"] = "Connect the cable"
         separators()
             
     ### Method to show available inventory choices
@@ -540,8 +541,6 @@ class ServiceRoom(Location):
             self.label("You open the lid.")
             Location.change_location(fuse_box_open)
             #Condition to show a new choice if crafted cable in Inventory
-            if cable in Inventory.get_inventory():
-                self.choices["3"] = "Connect the cable"
             print(f"{Location.get_current_location_revisit()}")
             separators()
     

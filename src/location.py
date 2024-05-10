@@ -245,22 +245,18 @@ class Kitchen(Location):
     ##Examining the sink
     def examine_sink(self) -> None:
         self.label("You approach the sink.")
+        Location.change_location(sink)
         if scalpel not in Inventory.get_inventory():    
-            Location.change_location(sink)
             print(f"{Location.get_current_location_description()}")
-            separators()
         else:
-            Location.change_location(sink_without_scalpel)
-            print(f"{Location.get_current_location_description()}")
-            separators()
+            print(f"{Location.get_current_location_revisit()}")
+        separators()
     
     ### Taking the scalpel
     def take_scalpel(self) -> None:
         self.label("You took the scalpel!")
         Inventory.add_item(scalpel)
-        Location.change_location(sink_without_scalpel)
-        print(f"{Location.get_current_location_description()}")
-        separators()
+        del sink.choices["2"]
     
     ### Turning away from the sink
     def turn_away(self) -> None:
@@ -743,21 +739,11 @@ You notice a rusty scalpel in the sink.
 The bloody sink - it makes no sense.
 """,
     choices={
-        "1": "Take the scalpel",
-        "2": "Turn away",
+        "1": "Turn away",
+        "2": "Take the scalpel",
         "i": "Open inventory"
     }
 
-)
-sink_without_scalpel = Kitchen(
-    name="sink without scalpel",
-    description="""
-The bloody sink - it makes no sense
-""",
-    choices={
-        "1": "Turn away",
-        "i": "Open inventory"
-    }
 )
 
 keyhole = Kitchen(

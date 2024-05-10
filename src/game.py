@@ -48,7 +48,9 @@ class Game:
             "Use the computer": service_room.use_computer,
             "Examine the garbage": service_room.examine_garbage,
             "Enter the library": service_room.enter_library,
-            
+            "Enter the service room": library_back.enter_service_room,
+            "Open the two-wing door": library_back.open_two_wing_door,
+
         }
     
     ### Method to start the game with an intr

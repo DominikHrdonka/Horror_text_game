@@ -472,6 +472,18 @@ Nothing happens. Well, you don't even know what you expected.
         else:
             print(f"{Location.get_current_location_revisit()}")
             separators()
+    
+    def enter_service_room(self):
+        self.label("You enter the service room")
+        Location.change_location(service_room)
+        print(f"{Location.get_current_location_revisit()}")
+
+     ### Open main door from library
+    def open_two_wing_door(self):
+        self.label("You lean on the heavy door.")
+        Location.change_location(corridor_behind_library)
+        Location.get_current_location_description()
+        separators()
 
 class ServiceRoom(Location):
     def __init__(self, name, choices, description=None, description_revisit=None):
@@ -561,12 +573,6 @@ You need to lure her off.
             print(Location.get_current_location_description())
             separators()
     
-    ### Open main door from library
-    def open_two_wing_door(self):
-        self.label("You lean on the heavy door.")
-        Location.change_location(corridor_behind_library)
-        Location.get_current_location_description()
-        separators()
     
 class CorridorChase(Location):
     def __init__(self, name, choices, description=None, description_revisit=None):
@@ -1014,7 +1020,7 @@ That's the only way out. The crone is far enough. Don't hesitate!
 Front of the library – so close to the main entrance!
 """,
     choices={
-        "1": "Open the big door",
+        "1": "Open the two-wing door",
         "2": "Enter the service room",
         "i": "Open inventory"
     }

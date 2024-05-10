@@ -177,13 +177,12 @@ class DarkRoom(Location):
     ### opening the wardrobe
     def open_wardrobe(self) -> None:
         self.label("You opened the wardrobe!")
+        Location.change_location(wardrobe)
         if pliers not in Inventory.get_inventory():
-            Location.change_location(wardrobe)
             print(f"{Location.get_current_location_description()}")
             separators()
         else:
-            Location.change_location(wardrobe_without_pliers)
-            print(f"{Location.get_current_location_description()}")
+            print(f"{Location.get_current_location_revisit()}")
             separators()
     
     ### going to the window
@@ -227,7 +226,7 @@ class DarkRoomWardrobe(Location):
     def take_pliers(self) -> None:
         self.label("You took the pliers!")
         Inventory.add_item(pliers)
-        Location.change_location(wardrobe_without_pliers)
+        del wardrobe.choices["3"]
 
 class DarkRoomWindow(DarkRoom):
     def __init__(self, name, choices, description=None, description_revisit=None):
@@ -563,7 +562,7 @@ And with the light, there comes a shriek. The crone's coming here!
     ### Connect crafted cable to fuse box
     def connect_cable(self):
         self.label("You connected the cable!")
-        print("The little light in the fuse box flickers green and stays on.")
+        print("\nThe little light in the fuse box flickers green and stays on.\n")
         Location.add_knowledge("button_functional")
         del self.choices["3"]
         separators()
@@ -572,9 +571,7 @@ And with the light, there comes a shriek. The crone's coming here!
     ### Use the computer
     def use_computer(self)-> None:
         self.label("You press the power button.")
-        print("""
-Nothing happens. the machine is long dead.
-""")
+        print("\nNothing happens. the machine is long dead.\n")
         separators()
 
     ### Examine the garbage
@@ -583,7 +580,8 @@ Nothing happens. the machine is long dead.
         print(
             """
 Old carton boxes, some wires, papershreds...
-Oh, look, a rusty knife and old piece of cable! That could come in handy so you take both.
+Oh, look, a rusty knife and old piece of cable!
+That could come in handy. You take both.
 """
 )
         separators()
@@ -680,25 +678,15 @@ You feel sick and have to cover your nose.
 As the shock passes, you notice something inside.
 A ragged doll with one eye. And there... old pliers!
 """,
-    description_revisit="The wardrobe - a sad reminder of life long gone.",
-    choices={
-        "1": "Take the pliers",
-        "2": "Examine the doll",
-        "3": "Close the wardrobe",
-        "i": "Open inventory"
-    }
-    )
-wardrobe_without_pliers = DarkRoomWardrobe(
-    name="wardrobe without pliers",
-    description="""
-The wardrobe - a sad reminder of life long gone.
-""",
+    description_revisit="\nThe wardrobe - a sad reminder of life long gone.\n",
     choices={
         "1": "Examine the doll",
         "2": "Close the wardrobe",
+        "3": "Take the pliers",
         "i": "Open inventory"
     }
-)
+    )
+
 
 dark_room_window = DarkRoomWindow(
     name="Window",

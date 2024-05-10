@@ -130,7 +130,8 @@ class BrowsingInventory(Location):
         separators()
     
     def cut_off_rubber(self):
-        print(f"You used the {scalpel.name} to cut the old rubber off the {old_cable.name}!")
+        self.label(f"You used the {scalpel.name} to cut the old rubber off the {old_cable.name}!")
+        print("You expose a few tiny wires. Luckily they are rust-free.")
         Inventory.remove_item(old_cable)
         Inventory.add_item(cable)
         del self.choices["2"]
@@ -421,11 +422,11 @@ class Library(Location):
             print("Removing the axe will make a noise.\nYou don't dare trying when the crone is so close.\nPerhaps you could lure her away?")
             print("-----------------------------------")
         else:
-            print("-----------------------------------")
-            print("Your muscles tense up as you pull.\nFinally, as the wood creaks, you successfully remove the axe.")
-            print("-----------------------------------")
+            self.label("You grab the axe handle.")
+            print("\nYour muscles tense up as you pull.\nFinally, as the wood creaks, you successfully remove the axe.")
             Inventory.add_item(axe)
             Location.change_location(old_remnants_without_axe)
+            separators()
     
     def go_mirror(self):
         self.label("You approach the mirror.")
@@ -501,15 +502,18 @@ class ServiceRoom(Location):
     
         ###Examine the fuse box
     def examine_fuse_box(self)-> None:
-        self.label("You approach the fuse box.")
-        Location.change_location(fuse_box_closed)
-        if "revisiting_fuse" not in Location.get_knowledge():
-            print(f"{Location.get_current_location_description()}")
-            separators()
-            Location.add_knowledge("revisiting_fuse")
+        if "fuse_box_is_open" not in Location.get_knowledge():
+            self.label("You approach the fuse box.")
+            Location.change_location(fuse_box_closed)
+            if "revisiting_fuse" not in Location.get_knowledge():
+                print(f"{Location.get_current_location_description()}")
+                separators()
+                Location.add_knowledge("revisiting_fuse")
+            else:
+                print(f"{Location.get_current_location_revisit()}")
+                separators()
         else:
-            print(f"{Location.get_current_location_revisit()}")
-            separators()
+            fuse_box_closed.open_fuse_box()
     
     ###Look away from the fuse box
     def look_away(self)-> None:
@@ -529,18 +533,22 @@ class ServiceRoom(Location):
                 Location.add_knowledge("fuse_box_is_open")
                 separators()
             else:
-                self.label("The lid won't budge. You need to find some tool.")
+                self.label("You try to open the lid.")
+                print("\nIt won't budge. You need to find some tool.\n")
+                separators()
         else:
+            self.label("You open the lid.")
             Location.change_location(fuse_box_open)
             #Condition to show a new choice if crafted cable in Inventory
             if cable in Inventory.get_inventory():
                 self.choices["3"] = "Connect the cable"
             print(f"{Location.get_current_location_revisit()}")
+            separators()
     
     ### Switch fuse box button
     def switch_button(self)-> None:
         self.label("You switch the button.")
-        if "button_functional" in Location.get_knowledge:
+        if "button_functional" in Location.get_knowledge():
 
             print("""
 There is a spark.
@@ -550,8 +558,9 @@ And with the light, there comes a shriek. The crone's coming here!
             crone.set_position("approaching_service_room")
             separators()
         else:
-            print("Nothing happens. The switch is dead. A cable is missing")
-    
+            print("\nNothing happens. The switch is dead. A cable is missing\n")
+            separators()
+
     ### Connect crafted cable to fuse box
     def connect_cable(self):
         self.label("You connected the cable!")
@@ -916,7 +925,8 @@ In the dakr, you could sneak through without being seen.
 The cracked mirror and the passageway along the right wall.
 """,
     choices={
-        "1": "Turn the mirror",
+        "1": "Move to the remnants",
+        "2": "Turn the mirror",
         "2": "Enter the passageway",
         "i": "Open inventory"
     }

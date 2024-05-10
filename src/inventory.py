@@ -39,4 +39,4 @@ cable = Items("cable")
 ### Weapons instances
 scalpel = Weapons("scalpel", 4)
 axe = Weapons("axe", 7)
-rusty_knife = Weapons("rusty_knife", 3)
+rusty_knife = Weapons("rusty knife", 3)

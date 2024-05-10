@@ -18,7 +18,7 @@
 #  
 # - dialogue refactor
 # - library - create subclasses of Library
-# - Location choice adaptation through adding or removing dictionary items!!! 
+# 
 # - 
 # -
 # - 

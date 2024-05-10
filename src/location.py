@@ -366,7 +366,14 @@ class Library(Location):
         Location.change_location(library_rack)
         print(f"{Location.get_current_location_description()}")
         separators()
-    
+
+    ### Going back to the library entrance
+    def go_library_entrance(self):
+        self.label("You get back to the steel door.")
+        Location.change_location(enter_library)
+        Location.get_current_location_revisit()
+        separators()
+
     ### Going back to the kitchen from the library
     def go_back_kitchen(self) -> None:
         self.label("You slip back through the steel door.")
@@ -376,24 +383,32 @@ class Library(Location):
 
     ### go to the desk in library
     def go_desk(self):
-        if "desk pushed" not in Location.get_knowledge():
+        Location.change_location(desk_with_body)
+        if "desk_pushed" not in Location.get_knowledge():
             self.label("You approach the bloody desk.")
-            Location.change_location(desk_with_body)
-            print(f"{Location.get_current_location_description()}")
+            if "desk_revisit" not in Location.get_knowledge():
+                Location.add_knowledge("desk_revisit")
+                print(f"{Location.get_current_location_description()}")
+            else:
+                print(f"{Location.get_current_location_revisit()}")
         else:
             self.label("The desk has been pushed away.")
-            Location.change_location(pushed_desk)
-            print(f"{Location.get_current_location_revisit()}")
+            print(f"{Location.get_current_location_revisit2()}")
             if crone.get_position() == "at the desk":
-                print("The crone is examining the desk and body, hissing and twitching with rage.")
+                print("The crone is examining the desk and body, hissing and twitching with rage.\nLuckily, she doesn't notice you.")
         separators()
 
     ### Push desk in library to distract crone
     def push_desk(self):
         self.label("The desk moves usrpisingly smoothly.")
-        print("The wheels squeek and soon the desk hits the rack on the opposite wall.\nFrom the center of the library, there comes a terrible hiss.\nThen heavy steps, and the sound of cloth sweeping on the floor.\nThe crone is on the move! She's gone to inspect the fuss at the opposite side.\n")
-        Location.change_location(pushed_desk)
-        Location.add_knowledge("desk pushed")
+        print("""
+The wheels squeek and soon the desk hits the rack on the opposite wall.
+From the center of the library, there comes a terrible hiss.
+Then heavy steps, and the sound of cloth sweeping on the floor.
+The crone is on the move! She's gone to inspect the fuss at the opposite side.
+""")
+        Location.add_knowledge("desk_pushed")
+        del desk_with_body.choices["2"]
         crone.set_position("at the desk")
         separators()
     
@@ -589,11 +604,12 @@ That could come in handy. You take both.
 The crone standing at the desk would see you right away.
 You need to lure her off.
 """)
+            separators()
         else:
             self.label("You enter the library")
             Location.change_location(library_back)
             print(Location.get_current_location_description())
-        separators()
+            separators()
     
     
 class CorridorChase(Location):
@@ -834,7 +850,7 @@ You crouch behind the rack. Breath stuck in your throat.
     choices={
         "1": "Move to the desk",
         "2": "Move to the remnants",
-        "3": "Go back to the steel door",
+        "3": "Go back to the library entrance",
         "i": "Open inventory"
     }
 )
@@ -887,27 +903,13 @@ You notice little wheels at the desk's base. It is mobile.
     description_revisit="""
 The mobile desk - could you use it somehow?
 """,
-    choices={
-        "1": "Push the desk",
-        "2": "Hide behind the rack",
-        "i": "Open inventory"
-    }
-)
-
-pushed_desk = Library (
-    name="Pushed desk",
-    description=
-"""
-The desk colided with the opposite wall.
-You crouch behind the counter instead.
-""",
-    description_revisit=
-"""
+    description_revisit2= """
 The desk colided with the opposite wall.
 You crouch behind the counter instead.
 """,
     choices={
         "1": "Hide behind the rack",
+        "2": "Push the desk",
         "i": "Open inventory"
     }
 )

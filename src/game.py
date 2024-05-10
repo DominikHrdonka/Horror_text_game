@@ -32,6 +32,7 @@ class Game:
             "Talk to the creature": kitchen.talk_to_creature,
             "Enter the room": kitchen.go_library,
             "Hide behind the rack": enter_library.hide_behind_rack,
+            "Go back to the library entrance": library_rack.go_library_entrance,
             "Go back to the kitchen": enter_library.go_back_kitchen,
             "Move to the desk": library_rack.go_desk,
             "Push the desk": desk_with_body.push_desk,

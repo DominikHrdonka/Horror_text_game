@@ -618,8 +618,17 @@ class CorridorChase(Location):
     
     def run_in_corridor(self):
         Location.change_location(wardrobe_in_corridor)
-        Location.get_current_location_description()
+        print(Location.get_current_location_description())
         separators()
+    
+    def climb_over_wardrobe(self):
+        self.label("You scramble over the old wood.")
+        Location.change_location(door_in_corridor)
+        print(Location.get_current_location_description)
+        separators()
+
+
+
 
 """
 INSTANCES OF LOCATION CLASSES
@@ -1031,13 +1040,26 @@ RUN!!!
 wardrobe_in_corridor = CorridorChase(
     name="wardrobe_in_corridor",
     description="""
-    You scramble up on your feet, stumbling forward you miss a serious blow.
-    The crone roars in an undead scream. You run down the dim corridor,
-    not knowing where it leads. In front of you, you distinguish an ominous shape.
-    An old wardrobe leaning across the corridor. You can stop now!
-    """,
+You scramble up on your feet, stumbling forward you miss a serious blow.
+The crone roars in an undead scream. You run down the dim corridor,
+not knowing where it leads. In front of you, you distinguish an ominous shape.
+An old wardrobe leaning across the corridor. You can't stop now!
+""",
     choices={
         "1": "Climb over the wardrobe",
         "2": "Climb under the wardrobe"
+    }
+)
+
+door_in_corridor= CorridorChase(
+    name= "door in corridor",
+    description="""
+The corridor ends abruptly. You bump into the cold metal, panting,
+heart beating like if it was about to leave your body.
+The furious shriek travels through the corridor and penetrates your ears.
+Behind you, there is a shadow moving, growing, approaching.
+""",
+    choices={
+        "1": "Bash through the door",
     }
 )

@@ -123,7 +123,7 @@ creature = Dialogue(
     }
 )
 
-crone = Dialogue(
+crone_dialogue = Dialogue(
     content={
         "start": {
             "lines": [

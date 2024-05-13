@@ -3,7 +3,8 @@ import os
 from inventory import *
 from dialogues import (
         Dialogue,
-        creature
+        creature,
+        crone_dialogue
     )
 from crone import *
 
@@ -612,9 +613,11 @@ class Yard(Location):
     ### Turn around to face the crone
     def turn_around(self):
         self.label("Slowly, you turn around.")
-        pass
-
-    ### Dialogue with the crone
+        time.sleep(2)
+        crone_dialogue.play_dialogue("start")
+        Location.change_location(crone_grip)
+        print(Location.get_current_location_description)
+        separators()
     
 
 
@@ -1067,5 +1070,16 @@ What is this place?
 """,
 choices={
     "1": "Turn around"
+}
+)
+
+crone_grip = Yard(
+    name="crone_grip",
+    description="""
+And with that, the crone's arm shoots forward and you feel your throat burning,
+your feet lifting off the ground. The undead face approaches yours with a sick smile.
+A long tongue tracing rotten lips. Is this how it ends?""",
+choices= {
+    "1": "Use the scalpel"
 }
 )

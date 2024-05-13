@@ -122,3 +122,69 @@ creature = Dialogue(
         }
     }
 )
+
+crone = Dialogue(
+    content={
+        "start": {
+            "lines": [
+                ">>There's no way to get out, you filth!<<",
+                "A horrible underground voice shatters the moment of stillness.\nThe crone stands in front of you, even more horrific in the full-moon light."
+            ],
+            "options": {
+                "1": ("Leave me alone!", "answer_one"),
+                "2": ("What are you?", "answer_two")
+            }
+        },
+        "answer_one": {
+            "lines": [
+                ">>Silence!<<",
+                ">>You belong to me.<<",
+                ">>You turned yourself in.<<",
+                ">>Now, you will pay the debt.<<",
+                "The roar deafening, shattering your skull from within."
+            ]
+        },
+        "answer_two": {
+            "lines": [
+                ">>Your judge.<<",
+                ">>Your executioner.<<",
+                ">>Get on your knees, worm! You are not worthy.<<"
+            ],
+            "options": {
+                "1": ("What are you talking about?", "answer_three"),
+                "2": ("You will never get me!", "answer_three")
+            }
+        },
+        "answer_three": {
+            "lines": [
+                ">> Earthling filth!<<",
+                ">>Your heart will adorn the gate of my Kingdom<<",
+                ">>But make no mistake. With your sacrifice, the others got only a little bit more time.<<",
+                ">>Their time will come as well.<<",
+                "Suddenly, there is a vision entering the corner of your eyes.",
+                """A group of people in a circle on a dark night. All of them holding hands, chanting.
+Flames burning in the middle. You stand next to the crackling fire,
+your arms raised high above.
+Ecstatic, the voices intertwine and swirl around the trees.""",
+                ">>It is time, Joel<<",
+                """A woman says and lays her hand on your shoulder.
+You look at her sad face. Tears are rolling down her cheek.""",
+                ">>We will never be able to repay you.<<",
+                "You inhale the heavy air.",
+                ">>Just take care of her.<<",
+                "And then, you throw yourself into the flames.",
+                "Darkness and nothing more…"
+            ],
+            "options": {
+                "1": ("Maria…", "answer_four")
+            }
+        },
+        "answer_four": {
+            "lines": [
+                ">>Oh don't worry, you piece of dying meat. <<",
+                "The crone's voice gets you back into the presence.",
+                ">>I will rip her throat as well.<<"
+            ]
+        }
+    }
+)

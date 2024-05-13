@@ -308,9 +308,8 @@ class Kitchen(Location):
         print(Location.get_current_location_description())
         separators()
     
-    ###Talking to the creature
+    ###Talk to the creature
     def talk_to_creature(self) -> None:
-
         if "revisiting creature" not in Location.get_knowledge():
             Location.add_knowledge("revisiting creature")
             creature.play_dialogue("start")

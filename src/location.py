@@ -1,7 +1,10 @@
 import time
 import os
 from inventory import *
-from dialogues import creature
+from dialogues import (
+        Dialogue,
+        creature
+    )
 from crone import *
 
 ### Global method to create separators between descr. and inputs ###
@@ -305,46 +308,18 @@ class Kitchen(Location):
         print(Location.get_current_location_description())
         separators()
     
-    ########Talking to the creature: dialogue########
+    ###Talking to the creature
     def talk_to_creature(self) -> None:
 
-        def dialogue_pause() -> None:
-            time.sleep(2)
-
-        def play_dialogue(dialogue_key) -> None:
-            dialogue = creature[dialogue_key]
-            for line in dialogue["lines"]:
-                print(line)
-                dialogue_pause()
-            while True:
-                try:
-                    if "options" in dialogue:
-                        print("------------------")
-                        for option_key, (option_text, _) in dialogue["options"].items():
-                            print(f"{option_key}. {option_text}")
-                        print("------------------")
-                        choice = input("Choose an option: ")
-                    else:
-                        False
-
-                    if choice in dialogue["options"]:
-                        next_dialogue_key = dialogue["options"].get(choice)[1]
-                        play_dialogue(next_dialogue_key)
-                    else:
-                        raise ValueError("Invalid dialogue choice")
-                
-                except ValueError as e:
-                    self.label(f"{e}")     
-                
         if "revisiting creature" not in Location.get_knowledge():
             Location.add_knowledge("revisiting creature")
-            play_dialogue("start")
+            creature.play_dialogue("start")
         else:
             if "keypad discovered" not in Location.get_knowledge():
                 print(">>Leave me alone!<<")
                 separators()
             else:
-                play_dialogue("code_answer")
+                creature.play_dialogue("code_answer")
 
     ### Going to the library 
     def go_library(self):
@@ -625,10 +600,23 @@ class CorridorChase(Location):
         print(Location.get_current_location_description)
         separators()
     
-    def climb_under_wardrobe(self):
+    def bash_door(self):
+        self.label("You burst out into fresh air")
+        Location.change_location(yard)
+        print(Location.get_current_location_description)
+        separators()
+
+class Yard(Location):
+    def __init__(self, name, choices, description=None, description_revisit=None, description_revisit2=None):
+        super().__init__(name, choices, description, description_revisit, description_revisit2)
+
+    ### Turn around to face the crone
+    def turn_around(self):
+        self.label("Slowly, you turn around.")
         pass
 
-
+    ### Dialogue with the crone
+    
 
 
 """
@@ -1018,7 +1006,7 @@ Front of the library – so close to the main entrance!
     }
 )
 
-corridor_behind_library = Location(
+corridor_behind_library = CorridorChase(
     name="corridor",
     description=
 """
@@ -1047,8 +1035,7 @@ not knowing where it leads. In front of you, you distinguish an ominous shape.
 An old wardrobe leaning across the corridor. You can't stop now!
 """,
     choices={
-        "1": "Climb over the wardrobe",
-        "2": "Climb under the wardrobe"
+        "1": "Climb over the wardrobe"
     }
 )
 
@@ -1063,4 +1050,23 @@ Behind you, there is a shadow moving, growing, approaching.
     choices={
         "1": "Bash through the door",
     }
+)
+
+yard = Yard(
+    name= "yard",
+    description="""
+Something catches your leg and you fall hard on the ground.
+Shaken, as you lift your gaze you spot an old yard
+surrounded by high walls on all the sides. 
+The tiles broken by entwining roots, dirt and low bushes.
+Several trees in the yard climb towards the starry sky above.
+Every now and then, there are stone lumps,
+bearing witness to once-high columns.
+In front of you, there is a solid gate.
+Through its bar, you can see darkness looming among trees.
+What is this place?
+""",
+choices={
+    "1": "Turn around"
+}
 )

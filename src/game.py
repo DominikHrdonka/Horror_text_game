@@ -53,6 +53,9 @@ class Game:
             "Enter the library": service_room.enter_library,
             "Enter the service room": library_back.enter_service_room,
             "Open the two-wing door": library_back.open_two_wing_door,
+            "Run": corridor_behind_library.run_in_corridor,
+            "Climb over the wardrobe": wardrobe_in_corridor.climb_over_wardrobe,
+            "Bash through the door": door_in_corridor.bash_door,
 
         }
     

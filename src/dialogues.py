@@ -1,5 +1,34 @@
+import time
+class Dialogue:
 
-creature = {
+    def __init__(self, content) -> None:
+        self.content = content
+
+    def play_dialogue(self, dialogue_key) -> None:
+        while dialogue_key:
+            dialogue = self.content[dialogue_key]
+            for line in dialogue["lines"]:
+                print(line)
+                time.sleep(2)
+
+            next_dialogue_key = None
+            if "options" in dialogue:
+                while True:
+                    print("------------------")
+                    for option_key, (option_text, _) in dialogue["options"].items():
+                        print(f"{option_key}. {option_text}")
+                    print("------------------")
+                    choice = input("Choose an option: ")
+                    if choice in dialogue["options"]:
+                        next_dialogue_key = dialogue["options"].get(choice)[1]
+                        break
+                    else:
+                        print("Invalid dialogue choice")
+                    
+            dialogue_key = next_dialogue_key
+
+creature = Dialogue(
+    content={
         "start": {
             "lines": ["You take a deep breath.",
                       ">> Hello? Can you hear me?<<",
@@ -83,7 +112,7 @@ creature = {
                 ">>I highly doubt that.<<"
             ]
         },
-        "code_answe_two":{
+        "code_answer_two":{
             "lines": [
                 ">>Threats mean nothing in here. You will learn soon...<<"
             ],
@@ -92,3 +121,4 @@ creature = {
             }
         }
     }
+)
